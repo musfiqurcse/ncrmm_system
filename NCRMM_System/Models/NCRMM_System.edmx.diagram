@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="102abfca1d144dbdb8a5090cd08b52a9" Name="Diagram1">
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.Address_tbl" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.Crops_tbl" Width="1.5" PointX="12" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.CropsCatagory_tbl" Width="1.5" PointX="9.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.District_tbl" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.Division_tbl" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.EmployeeRoleTable" Width="1.5" PointX="9.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.OrderDetailsTemp_tbl" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.OrderDetalis_tbl" Width="1.5" PointX="18.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.OrderMaster_tbl" Width="1.5" PointX="16.5" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.ProductsList_tbl" Width="1.5" PointX="16.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.SecurityCheck_tbl" Width="1.5" PointX="9.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.StockDetailsRecord_tbl" Width="1.5" PointX="14.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.StockMasterRecordCrops_tbl" Width="1.5" PointX="12" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.StockReleaseDetails_tbl" Width="1.5" PointX="16.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.sysdiagram" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.UserType_tbl" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_Address_tbl_District_tbl" ManuallyRouted="false" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_Crops_tbl_CropsCatagory_tbl" ManuallyRouted="false" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_OrderDetalis_tbl_Crops_tbl" ManuallyRouted="false" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_Crops_tbl" ManuallyRouted="false" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_District_tbl_Division_tbl" ManuallyRouted="false" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl" ManuallyRouted="false" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_OrderDetalis_tbl_OrderMaster_tbl" ManuallyRouted="false" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_OrderDetalis_tbl_ProductsList_tbl" ManuallyRouted="false" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_ProductsList_tbl_StockDetailsRecord_tbl" ManuallyRouted="false" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl" ManuallyRouted="false" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl" ManuallyRouted="false" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.StorageCompany_tbl" Width="1.5" PointX="7.5" PointY="4.75" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.User_tbl" Width="1.5" PointX="7.5" PointY="8.25" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_SecurityCheck_tbl_User_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_User_tbl_UserType_tbl" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
