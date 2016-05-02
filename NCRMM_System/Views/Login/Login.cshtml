@@ -21,10 +21,27 @@
     <link href="~/assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
     <link href="~/assets/css/animate.min.css" rel="stylesheet" />
     <link href="~/assets/css/style.min.css" rel="stylesheet" />
     <link href="~/assets/css/style-responsive.min.css" rel="stylesheet" />
-    <link href="~/assets/css/theme/default.css" rel="stylesheet" id="theme" />
+    <link href="~/assets/css/theme/default.css" rel="stylesheet" id="theme"/>
+    <script src="~/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
+    <script src="~/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
+    <script src="~/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/assets/plugins/gritter/js/jquery.gritter.js"></script>
+    <!--[if lt IE 9]>
+        <script src="assets/crossbrowserjs/html5shiv.js"></script>
+        <script src="assets/crossbrowserjs/respond.min.js"></script>
+        <script src="assets/crossbrowserjs/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="~/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
+    <!-- ================== END BASE JS ================== -->
+    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+    <script src="~/assets/js/login-v2.demo.min.js"></script>
+    <script src="~/assets/js/apps.min.js"></script>
     <style>
         .btn.btn-success {
             border-color: #384716;
@@ -33,7 +50,7 @@
 
             .btn.btn-success.active, .btn.btn-success:active, .btn.btn-success:focus, .btn.btn-success:hover, .open .dropdown-toggle.btn-success {
                 border-color: #2ede2a;
-                ;
+                
             }
             .custom {
                 text-decoration: none;
@@ -54,7 +71,7 @@
     </style>
     <!-- ================== END BASE CSS STYLE ================== -->
     <!-- ================== BEGIN BASE JS ================== -->
-    <script src="assets/plugins/pace/pace.min.js"></script>
+    @*<script src="assets/plugins/pace/pace.min.js"></script>*@
     <!-- ================== END BASE JS ================== -->
     <style>
  
@@ -103,6 +120,7 @@
             <img src="~/assets/img/login-bg/IMG_5609.JPG" data-id="login-cover-image" alt="" />
         </div>
         <div class="login-cover-bg"></div>
+        <h1 id="nameClass" style="display: none">@ViewBag.CustomMessage</h1>
     </div>
     <!-- begin #page-container -->
     <div id="page-container" class="fade">
@@ -235,38 +253,38 @@
     </div>
     <!-- end page container -->
     <!-- ================== BEGIN BASE JS ================== -->
-    <script src="~/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
-    <script src="~/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
-    <script src="~/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <!--[if lt IE 9]>
-        <script src="assets/crossbrowserjs/html5shiv.js"></script>
-        <script src="assets/crossbrowserjs/respond.min.js"></script>
-        <script src="assets/crossbrowserjs/excanvas.min.js"></script>
-    <![endif]-->
-    <script src="~/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="~/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
-    <!-- ================== END BASE JS ================== -->
-    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
-    <script src="~/assets/js/login-v2.demo.min.js"></script>
-    <script src="~/assets/js/apps.min.js"></script>
+    
     <!-- ================== END PAGE LEVEL JS ================== -->
 
     <script>
         $(document).ready(function () {
             App.init();
             LoginV2.init();
+            console.log("I ama mama");
+            var checkType = $('#nameClass').text();
+            console.log = checkType;
+            if (checkType == "Success") {
+              //  alert(checkType);
+                $.gritter.add({
+                    title: 'User Registration Done!',
+                    text: 'Saved User Information Succesfully',
+                    sticky: false,
+                    // (int | optional) the time you want it to be alive for before fading out
+                    time: '1500'
+                });
+               // return false;
+            }
             $('#isEmployee').on('click', function () {
 
-                // alert("ratul is a mokless");
+                alert("ratul is a mokless");
                 var url = "/Home/Index";
-                window.location.href = '@Url.Action("Index", "Home")';
+                window.location.href = '@Url.Action("Create", "User")';
             });
             $('#isUser').on('click', function () {
 
                 // alert("ratul is a mokless");
                 var url = "/Home/Index";
-                window.location.href = '@Url.Action("Index", "Home")';
+                window.location.href = '@Url.Action("Create", "User")';
             });
 
         });

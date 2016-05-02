@@ -11,7 +11,9 @@ namespace NCRMM_System.Controllers
         // GET: Login
         public ActionResult Login()
         {
+            ViewBag.CustomMessage = "Success";
             return View();
         }
+        
     }
 }
