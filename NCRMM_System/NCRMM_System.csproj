@@ -1123,6 +1123,7 @@
     <Content Include="Views\Address_tbl\Details.cshtml" />
     <Content Include="Views\Address_tbl\Edit.cshtml" />
     <Content Include="Views\Address_tbl\Index.cshtml" />
+    <Content Include="Views\Shared\AddressPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
