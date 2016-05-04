@@ -40,6 +40,7 @@ namespace NCRMM_System.Controllers
         public ActionResult Create()
         {
             ViewBag.UserTypeId = new SelectList(db.UserType_tbl, "UserTypeId", "UserType");
+            ViewBag.DistrictId = new SelectList(db.District_tbl, "DistrictId", "DistrictName");
             return View();
         }
 
