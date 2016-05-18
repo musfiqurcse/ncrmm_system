@@ -39,8 +39,9 @@ namespace NCRMM_System.Controllers
         // GET: User/Create
         public ActionResult Create()
         {
-            ViewBag.UserTypeId = new SelectList(db.UserType_tbl, "UserTypeId", "UserType");
-            ViewBag.DistrictId = new SelectList(db.District_tbl, "DistrictId", "DistrictName");
+            //ViewBag.UserTypeId = new SelectList(db.UserType_tbl, "UserTypeId", "UserType");
+            ViewBag.DivisionId = new SelectList(db.Division_tbl, "DivisionId", "DivisionName");
+            ViewBag.DistrictId = new SelectList(new List<District_tbl>(), "DistrictId", "DistrictName");
             return View();
         }
 
@@ -49,20 +50,28 @@ namespace NCRMM_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,UserName,Pass,FullName,DateOfBirth,NIDNumber")] User_tbl user_tbl)
+        public ActionResult Create([Bind(Include = "UserId,UserName,Pass,FullName,DateOfBirth,NIDNumber")] User_tbl user_tbl,Address_tbl address,int divisionId=0)
         {
             user_tbl.UserTypeId = 3;
             user_tbl.IsActive = true;
-
+            
+            
             if (ModelState.IsValid)
             {
                 db.User_tbl.Add(user_tbl);
                 db.SaveChanges();
-                return RedirectToAction("Login","Login");
+
+                
+                
             }
+            address.SourceType = "User";
+            address.SourceId = user_tbl.UserId;
+
 
             ViewBag.UserTypeId = new SelectList(db.UserType_tbl, "UserTypeId", "UserType", user_tbl.UserTypeId);
-            return View(user_tbl);
+            ViewBag.DivisionId = new SelectList(db.Division_tbl, "DivisionId", "DivisionName");
+            ViewBag.DistrictId = new SelectList(db.District_tbl.Where(dis=>dis.DivisionId==divisionId), "DistrictId", "DistrictName");
+            return RedirectToAction("Login", "Login");
         }
 
         // GET: User/Edit/5

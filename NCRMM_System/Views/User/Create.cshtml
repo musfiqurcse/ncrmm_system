@@ -1,10 +1,19 @@
 ﻿@using System.Web.Services.Description
+@using NCRMM_System.Models
 @model NCRMM_System.Models.User_tbl
 
 @{
     ViewBag.Title = "Create";
-   // Layout = "~/Views/Shared/_MainEmployeeLayout.cshtml";
+    // Layout = "~/Views/Shared/_MainEmployeeLayout.cshtml";
     Layout = null;
+
+    List<District_tbl> list=new List<District_tbl>();
+
+    if (ViewBag.JList != null)
+    {
+        list = (List<District_tbl>)ViewBag.JList;
+    }
+
 }
 
 <!DOCTYPE html>
@@ -32,8 +41,13 @@
 
 
 
-    <script src="/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
-    <script src="/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
+    @*<script src="/assets/plugins/jquery/jquery-1.9.1.min.js"></script>*@
+    
+    <script src="~/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
+
+    @*<script src="/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>*@
+
+    <script src="~/Scripts/jquery.validate.js"></script>
     <script src="/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
     <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <!--[if lt IE 9]>
@@ -45,7 +59,7 @@
     <script src="/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
     <!-- ================== END BASE JS ================== -->
     <!-- ================== BEGIN PAGE LEVEL JS ================== -->
-    @*<script src="/assets/plugins/gritter/js/jquery.gritter.js"></script>*@
+    <script src="/assets/plugins/gritter/js/jquery.gritter.js"></script>
     <script src="/assets/plugins/flot/jquery.flot.min.js"></script>
     <script src="/assets/plugins/flot/jquery.flot.time.min.js"></script>
     <script src="/assets/plugins/flot/jquery.flot.resize.min.js"></script>
@@ -55,20 +69,44 @@
     <script src="/assets/plugins/jquery-jvectormap/jquery-jvectormap-world-mill-en.js"></script>
     <script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="/assets/js/dashboard.min.js"></script>
-    <script src="/assets/js/apps.min.js"></script>
-
+    @*<script src="/assets/js/apps.min.js"></script>*@
+    
+    
     @*<script src="/assets/plugins/pace/pace.min.js"></script>*@
+    <style>
+        .error {
+            color: red;
+            border-color: red;
+            text-align: left;
+            
+        }
+    </style>
+    
 </head>
 <body>
   
-    <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
-      
+    @*<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">*@
+<div>
+    <table>
+    @foreach (var citem in list)
+    {
+        <tr>
+            <td>
+                @Html.Display(citem.DistrictName)
+            </td>
+            <td>
+                @Html.Display(citem.Division_tbl.DivisionName)
+            </td>
+        </tr>
+    }
+        </table>
+</div>
         <div class="content" style="padding-right: 10%;align-content: center">
-            <form method="POST" enctype="multipart/form-data" class="form-horizontal">
+            <form method="POST" enctype="multipart/form-data" class="form-horizontal" id="form1">
 
 
                 @Html.AntiForgeryToken()
-
+               
 
                 <div class="panel panel-inverse">
                     <div class="panel-heading">
@@ -77,62 +115,71 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <div class="form-horizontal">
+                        <div class="row">
+                            <div class="form-horizontal">
 
 
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Full Name</label>
-                                <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.FullName)
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Full Name</label>
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.FullName, new {@class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.FullName)
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Date of Birth</label>
-                                <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.DateOfBirth)
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Date of Birth</label>
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.DateOfBirth, new {@class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.DateOfBirth)
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="control-label col-md-2">NID Number</label>
-                                <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.NIDNumber, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.NIDNumber)
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">NID Number</label>
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.NIDNumber, new {@class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.NIDNumber)
+                                    </div>
                                 </div>
-                            </div>
-                            @Html.Partial("AddressPartial");
-                            <div class="form-group">
-                                <label class="control-label col-md-2">User Name</label>
-                                <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.UserName)
+                                @Html.Partial("AddressPartial");
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">User Name</label>
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.UserName, new {@class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.UserName)
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Password</label>
-                                <div class="col-md-10">
-                                    @Html.PasswordFor(model => model.Pass, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Pass)
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Password</label>
+                                    <div class="col-md-10">
+                                        @Html.PasswordFor(model => model.Pass, new {@class = "form-control", @id = "Pass"})
+                                        @*@Html.ValidationMessageFor(model => model.Pass)*@
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Create" class="btn btn-success" />
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Re-Enter Password</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="password" id="repassword" name="repassword" value=""/>
+                                    </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Create" class="btn btn-success"/>
+                                    </div>
+                                </div>
+
+
                             </div>
-
-
                         </div>
+
                         @Html.ValidationSummary(true)
                     </div>
 
 
-                    <hr />
+                    <hr/>
 
 
                 </div>
@@ -144,11 +191,39 @@
 
             </form>
             <script type="text/javascript">
-                $(document).ready(function () {
+                
+                $(document).ready(function() {
                     $("#sidebar").hide();
                     $(".container-fluid").hide();
-                })
+                    $("#form1").validate({
+                        rules: {
+                            Pass: {
+                                required: true,
+                                minlength: 6
+                            },
+                            repassword: {
+                                required: true,
+                                equalTo: "#Pass"
+                            }
+
+                        },
+                        messages: {
+                            Pass: {
+                                required: "Please Enter Your Password",
+                                minlength: "Password must be greater than 5 character"
+                            },
+                            repassword: {
+                                required: "Please Re-enter your Password",
+                                equalTo: "Password does not match"
+                }
+                        
+                        }
+                    });
+
+                });
             </script>
+            
+      
 
         </div>
 
@@ -159,7 +234,7 @@
         <!-- begin scroll to top btn -->
         <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
         <!-- end scroll to top btn -->
-    </div>
+    @*</div>*@
     <!-- end page container -->
     <!-- ================== BEGIN BASE JS ================== -->
     <!-- ================== END PAGE LEVEL JS ================== -->
@@ -175,7 +250,7 @@
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
             }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '../../../../www.google-analytics.com/analytics.js', 'ga');
 
         ga('create', 'UA-53034621-1', 'auto');
