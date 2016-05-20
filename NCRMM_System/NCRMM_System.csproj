@@ -166,8 +166,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Address_tblController.cs" />
+    <Compile Include="Controllers\CropsCatagoryController.cs" />
+    <Compile Include="Controllers\CropsController.cs" />
     <Compile Include="Controllers\DistrictController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1130,9 +1134,21 @@
     <Content Include="Views\District\Details.cshtml" />
     <Content Include="Views\District\Edit.cshtml" />
     <Content Include="Views\District\Index.cshtml" />
+    <Content Include="Views\Crops\Create.cshtml" />
+    <Content Include="Views\Crops\Delete.cshtml" />
+    <Content Include="Views\Crops\Details.cshtml" />
+    <Content Include="Views\Crops\Edit.cshtml" />
+    <Content Include="Views\Crops\Index.cshtml" />
+    <Content Include="Views\Index\IndexEmployee.cshtml" />
+    <Content Include="Views\Employee\Create.cshtml" />
+    <Content Include="Views\Employee\Delete.cshtml" />
+    <Content Include="Views\Employee\Details.cshtml" />
+    <Content Include="Views\Employee\Edit.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\CropsCatagory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

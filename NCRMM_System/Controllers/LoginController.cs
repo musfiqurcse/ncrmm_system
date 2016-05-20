@@ -30,7 +30,7 @@ namespace NCRMM_System.Controllers
         public ActionResult Login(string username="", string password="", bool remember=false)
         {
 
-            List<User_tbl> user = db.User_tbl.Where(db => db.UserName == username && password == password).ToList();
+            List<User_tbl> user = db.User_tbl.Where(ds => ds.UserName == username && password == password).ToList();
             if (user.Count > 0)
             {
                 User_tbl objUser = user.FirstOrDefault();
@@ -39,6 +39,7 @@ namespace NCRMM_System.Controllers
                 //return RedirectToAction()
             }
 
+            
             ViewBag.CustomMessage = "Error";
 
             return View();

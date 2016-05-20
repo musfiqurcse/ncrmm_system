@@ -1,0 +1,67 @@
+﻿@model NCRMM_System.Models.EmployeeRoleTable
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MainEmployeeLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EmployeeRoleTable</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeRole)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeRole)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdateBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockMasterRecordCrops_tbl.InvoiceNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockMasterRecordCrops_tbl.InvoiceNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StorageCompany_tbl.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StorageCompany_tbl.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User_tbl.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User_tbl.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

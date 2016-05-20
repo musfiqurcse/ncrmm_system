@@ -30,11 +30,11 @@ namespace NCRMM_System.Models
         public System.DateTime RecordDate { get; set; }
         public string StockRecordType { get; set; }
     
-        public virtual EmployeeRoleTable EmployeeRoleTable { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockDetailsRecord_tbl> StockDetailsRecord_tbl { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockReleaseDetails_tbl> StockReleaseDetails_tbl { get; set; }
         public virtual StorageCompany_tbl StorageCompany_tbl { get; set; }
+        public virtual EmployeeRoleTable EmployeeRoleTable { get; set; }
     }
 }

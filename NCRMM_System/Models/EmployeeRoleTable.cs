@@ -20,9 +20,10 @@ namespace NCRMM_System.Models
         public System.DateTime UpdateDate { get; set; }
         public int StorageCompanyId { get; set; }
         public int UserId { get; set; }
+        public Nullable<bool> IsApprove { get; set; }
     
-        public virtual StockMasterRecordCrops_tbl StockMasterRecordCrops_tbl { get; set; }
         public virtual StorageCompany_tbl StorageCompany_tbl { get; set; }
         public virtual User_tbl User_tbl { get; set; }
+        public virtual StockMasterRecordCrops_tbl StockMasterRecordCrops_tbl { get; set; }
     }
 }

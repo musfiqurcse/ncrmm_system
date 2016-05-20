@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="NCRMMLS_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="NCRMMLS_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address_tbl">
           <Key>
             <PropertyRef Name="AddressId" />
@@ -63,6 +63,7 @@
           <Property Name="UpdateDate" Type="date" Nullable="false" />
           <Property Name="StorageCompanyId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="IsApprove" Type="bit" />
         </EntityType>
         <EntityType Name="OrderDetailsTemp_tbl">
           <Key>
@@ -168,16 +169,6 @@
           <Property Name="Website" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="StorageCapacity" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="StorageAvailable" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="User_tbl">
           <Key>
@@ -420,7 +411,6 @@
           <EntitySet Name="StockMasterRecordCrops_tbl" EntityType="Self.StockMasterRecordCrops_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockReleaseDetails_tbl" EntityType="Self.StockReleaseDetails_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StorageCompany_tbl" EntityType="Self.StorageCompany_tbl" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_tbl" EntityType="Self.User_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserType_tbl" EntityType="Self.UserType_tbl" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Address_tbl_District_tbl" Association="Self.FK_Address_tbl_District_tbl">
@@ -552,20 +542,6 @@
           <Property Name="DivisionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="District_tbl" Relationship="Self.FK_District_tbl_Division_tbl" FromRole="Division_tbl" ToRole="District_tbl" />
         </EntityType>
-        <EntityType Name="EmployeeRoleTable">
-          <Key>
-            <PropertyRef Name="EmployeeId" />
-          </Key>
-          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
-          <Property Name="EmployeeRole" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdateBy" Type="Int32" Nullable="false" />
-          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="StorageCompanyId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="Self.FK_StockMasterRecordCrops_tbl_UserDetails_tbl" FromRole="EmployeeRoleTable" ToRole="StockMasterRecordCrops_tbl" />
-          <NavigationProperty Name="StorageCompany_tbl" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl" FromRole="EmployeeRoleTable" ToRole="StorageCompany_tbl" />
-          <NavigationProperty Name="User_tbl" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl" FromRole="EmployeeRoleTable" ToRole="User_tbl" />
-        </EntityType>
         <EntityType Name="OrderDetailsTemp_tbl">
           <Key>
             <PropertyRef Name="OrderDetailsTempId" />
@@ -662,10 +638,10 @@
           <Property Name="EntryEmployeeId" Type="Int32" Nullable="false" />
           <Property Name="RecordDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="StockRecordType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="EmployeeRoleTable" Relationship="Self.FK_StockMasterRecordCrops_tbl_UserDetails_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="EmployeeRoleTable" />
           <NavigationProperty Name="StockDetailsRecord_tbl" Relationship="Self.FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="StockDetailsRecord_tbl" />
           <NavigationProperty Name="StockReleaseDetails_tbl" Relationship="Self.FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="StockReleaseDetails_tbl" />
           <NavigationProperty Name="StorageCompany_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="StorageCompany_tbl" />
+          <NavigationProperty Name="EmployeeRoleTable" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="EmployeeRoleTable" />
         </EntityType>
         <EntityType Name="StockReleaseDetails_tbl">
           <Key>
@@ -757,18 +733,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StockMasterRecordCrops_tbl_UserDetails_tbl">
-          <End Role="EmployeeRoleTable" Type="Self.EmployeeRoleTable" Multiplicity="1" />
-          <End Role="StockMasterRecordCrops_tbl" Type="Self.StockMasterRecordCrops_tbl" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="EmployeeRoleTable">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="StockMasterRecordCrops_tbl">
-              <PropertyRef Name="StockMasterRecordId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_OrderDetalis_tbl_OrderMaster_tbl">
           <End Role="OrderMaster_tbl" Type="Self.OrderMaster_tbl" Multiplicity="1" />
           <End Role="OrderDetalis_tbl" Type="Self.OrderDetalis_tbl" Multiplicity="*" />
@@ -847,7 +811,6 @@
           <EntitySet Name="CropsCatagory_tbl" EntityType="Self.CropsCatagory_tbl" />
           <EntitySet Name="District_tbl" EntityType="Self.District_tbl" />
           <EntitySet Name="Division_tbl" EntityType="Self.Division_tbl" />
-          <EntitySet Name="EmployeeRoleTables" EntityType="Self.EmployeeRoleTable" />
           <EntitySet Name="OrderDetailsTemp_tbl" EntityType="Self.OrderDetailsTemp_tbl" />
           <EntitySet Name="OrderDetalis_tbl" EntityType="Self.OrderDetalis_tbl" />
           <EntitySet Name="OrderMaster_tbl" EntityType="Self.OrderMaster_tbl" />
@@ -878,10 +841,6 @@
             <End Role="Division_tbl" EntitySet="Division_tbl" />
             <End Role="District_tbl" EntitySet="District_tbl" />
           </AssociationSet>
-          <AssociationSet Name="FK_StockMasterRecordCrops_tbl_UserDetails_tbl" Association="Self.FK_StockMasterRecordCrops_tbl_UserDetails_tbl">
-            <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
-            <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
-          </AssociationSet>
           <AssociationSet Name="FK_OrderDetalis_tbl_OrderMaster_tbl" Association="Self.FK_OrderDetalis_tbl_OrderMaster_tbl">
             <End Role="OrderMaster_tbl" EntitySet="OrderMaster_tbl" />
             <End Role="OrderDetalis_tbl" EntitySet="OrderDetalis_tbl" />
@@ -908,14 +867,6 @@
           </AssociationSet>
           <EntitySet Name="StorageCompany_tbl" EntityType="NCRMMLS_DBModel.StorageCompany_tbl" />
           <EntitySet Name="User_tbl" EntityType="NCRMMLS_DBModel.User_tbl" />
-          <AssociationSet Name="FK_EmployeeRoleTable_StorageCompany_tbl" Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl">
-            <End Role="StorageCompany_tbl" EntitySet="StorageCompany_tbl" />
-            <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmployeeRoleTable_User_tbl" Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl">
-            <End Role="User_tbl" EntitySet="User_tbl" />
-            <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
-          </AssociationSet>
           <AssociationSet Name="FK_SecurityCheck_tbl_User_tbl" Association="NCRMMLS_DBModel.FK_SecurityCheck_tbl_User_tbl">
             <End Role="User_tbl" EntitySet="User_tbl" />
             <End Role="SecurityCheck_tbl" EntitySet="SecurityCheck_tbl" />
@@ -928,6 +879,19 @@
             <End Role="UserType_tbl" EntitySet="UserType_tbl" />
             <End Role="User_tbl" EntitySet="User_tbl" />
           </AssociationSet>
+          <EntitySet Name="EmployeeRoleTables" EntityType="NCRMMLS_DBModel.EmployeeRoleTable" />
+          <AssociationSet Name="FK_EmployeeRoleTable_StorageCompany_tbl" Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl">
+            <End Role="StorageCompany_tbl" EntitySet="StorageCompany_tbl" />
+            <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeRoleTable_User_tbl" Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl">
+            <End Role="User_tbl" EntitySet="User_tbl" />
+            <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockMasterRecordCrops_tbl_UserDetails_tbl" Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl">
+            <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
+            <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="StorageCompany_tbl">
           <Key>
@@ -938,8 +902,8 @@
           <Property Name="Website" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StorageCapacity" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="StorageAvailable" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <NavigationProperty Name="EmployeeRoleTables" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl" FromRole="StorageCompany_tbl" ToRole="EmployeeRoleTable" />
           <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" FromRole="StorageCompany_tbl" ToRole="StockMasterRecordCrops_tbl" />
+          <NavigationProperty Name="EmployeeRoleTables" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl" FromRole="StorageCompany_tbl" ToRole="EmployeeRoleTable" />
         </EntityType>
         <EntityType Name="User_tbl">
           <Key>
@@ -953,34 +917,10 @@
           <Property Name="UserTypeId" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="NIDNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="EmployeeRoleTables" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl" FromRole="User_tbl" ToRole="EmployeeRoleTable" />
           <NavigationProperty Name="SecurityCheck_tbl" Relationship="NCRMMLS_DBModel.FK_SecurityCheck_tbl_User_tbl" FromRole="User_tbl" ToRole="SecurityCheck_tbl" />
           <NavigationProperty Name="UserType_tbl" Relationship="NCRMMLS_DBModel.FK_User_tbl_UserType_tbl" FromRole="User_tbl" ToRole="UserType_tbl" />
+          <NavigationProperty Name="EmployeeRoleTables" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl" FromRole="User_tbl" ToRole="EmployeeRoleTable" />
         </EntityType>
-        <Association Name="FK_EmployeeRoleTable_StorageCompany_tbl">
-          <End Type="NCRMMLS_DBModel.StorageCompany_tbl" Role="StorageCompany_tbl" Multiplicity="1" />
-          <End Type="NCRMMLS_DBModel.EmployeeRoleTable" Role="EmployeeRoleTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StorageCompany_tbl">
-              <PropertyRef Name="StorageCompanyId" />
-            </Principal>
-            <Dependent Role="EmployeeRoleTable">
-              <PropertyRef Name="StorageCompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmployeeRoleTable_User_tbl">
-          <End Type="NCRMMLS_DBModel.User_tbl" Role="User_tbl" Multiplicity="1" />
-          <End Type="NCRMMLS_DBModel.EmployeeRoleTable" Role="EmployeeRoleTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User_tbl">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="EmployeeRoleTable">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SecurityCheck_tbl_User_tbl">
           <End Type="NCRMMLS_DBModel.User_tbl" Role="User_tbl" Multiplicity="1" />
           <End Type="NCRMMLS_DBModel.SecurityCheck_tbl" Role="SecurityCheck_tbl" Multiplicity="*" />
@@ -1014,6 +954,57 @@
             </Principal>
             <Dependent Role="User_tbl">
               <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EmployeeRoleTable">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeRole" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="StorageCompanyId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="IsApprove" Type="Boolean" />
+          <NavigationProperty Name="StorageCompany_tbl" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl" FromRole="EmployeeRoleTable" ToRole="StorageCompany_tbl" />
+          <NavigationProperty Name="User_tbl" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl" FromRole="EmployeeRoleTable" ToRole="User_tbl" />
+          <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl" FromRole="EmployeeRoleTable" ToRole="StockMasterRecordCrops_tbl" />
+        </EntityType>
+        <Association Name="FK_EmployeeRoleTable_StorageCompany_tbl">
+          <End Type="NCRMMLS_DBModel.StorageCompany_tbl" Role="StorageCompany_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.EmployeeRoleTable" Role="EmployeeRoleTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StorageCompany_tbl">
+              <PropertyRef Name="StorageCompanyId" />
+            </Principal>
+            <Dependent Role="EmployeeRoleTable">
+              <PropertyRef Name="StorageCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeRoleTable_User_tbl">
+          <End Type="NCRMMLS_DBModel.User_tbl" Role="User_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.EmployeeRoleTable" Role="EmployeeRoleTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_tbl">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="EmployeeRoleTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockMasterRecordCrops_tbl_UserDetails_tbl">
+          <End Type="NCRMMLS_DBModel.EmployeeRoleTable" Role="EmployeeRoleTable" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.StockMasterRecordCrops_tbl" Role="StockMasterRecordCrops_tbl" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeRoleTable">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="StockMasterRecordCrops_tbl">
+              <PropertyRef Name="StockMasterRecordId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1073,18 +1064,6 @@
               <MappingFragment StoreEntitySet="Division_tbl">
                 <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
                 <ScalarProperty Name="DivisionName" ColumnName="DivisionName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EmployeeRoleTables">
-            <EntityTypeMapping TypeName="NCRMMLS_DBModel.EmployeeRoleTable">
-              <MappingFragment StoreEntitySet="EmployeeRoleTable">
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="EmployeeRole" ColumnName="EmployeeRole" />
-                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="StorageCompanyId" ColumnName="StorageCompanyId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1191,17 +1170,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="NCRMMLS_DBModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserType_tbl">
             <EntityTypeMapping TypeName="NCRMMLS_DBModel.UserType_tbl">
               <MappingFragment StoreEntitySet="UserType_tbl">
@@ -1233,6 +1201,19 @@
                 <ScalarProperty Name="Pass" ColumnName="Pass" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeRoleTables">
+            <EntityTypeMapping TypeName="NCRMMLS_DBModel.EmployeeRoleTable">
+              <MappingFragment StoreEntitySet="EmployeeRoleTable">
+                <ScalarProperty Name="IsApprove" ColumnName="IsApprove" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="StorageCompanyId" ColumnName="StorageCompanyId" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="EmployeeRole" ColumnName="EmployeeRole" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

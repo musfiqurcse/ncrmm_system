@@ -30,7 +30,6 @@ namespace NCRMM_System.Models
         public virtual DbSet<CropsCatagory_tbl> CropsCatagory_tbl { get; set; }
         public virtual DbSet<District_tbl> District_tbl { get; set; }
         public virtual DbSet<Division_tbl> Division_tbl { get; set; }
-        public virtual DbSet<EmployeeRoleTable> EmployeeRoleTables { get; set; }
         public virtual DbSet<OrderDetailsTemp_tbl> OrderDetailsTemp_tbl { get; set; }
         public virtual DbSet<OrderDetalis_tbl> OrderDetalis_tbl { get; set; }
         public virtual DbSet<OrderMaster_tbl> OrderMaster_tbl { get; set; }
@@ -43,5 +42,6 @@ namespace NCRMM_System.Models
         public virtual DbSet<UserType_tbl> UserType_tbl { get; set; }
         public virtual DbSet<StorageCompany_tbl> StorageCompany_tbl { get; set; }
         public virtual DbSet<User_tbl> User_tbl { get; set; }
+        public virtual DbSet<EmployeeRoleTable> EmployeeRoleTables { get; set; }
     }
 }

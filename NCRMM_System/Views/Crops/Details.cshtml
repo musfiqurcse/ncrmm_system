@@ -1,0 +1,43 @@
+﻿@model NCRMM_System.Models.Crops_tbl
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MainEmployeeLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Crops_tbl</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CropsName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CropsName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CropsCatagory_tbl.CropsCatagoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CropsCatagory_tbl.CropsCatagoryName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CropsId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
