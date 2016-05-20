@@ -140,14 +140,14 @@
             <div class="login-content" style="background-color: rgba(68, 237, 136, 0.11);">
                 <form method="POST" class="margin-bottom-0">
                     <div class="form-group m-b-20">
-                        <input type="text" class="form-control input-lg" placeholder="Email Address" />
+                        <input type="text" class="form-control input-lg" placeholder="User Name" name="username"/>
                     </div>
                     <div class="form-group m-b-20">
-                        <input type="password" class="form-control input-lg" placeholder="Password" />
+                        <input type="password" class="form-control input-lg" placeholder="Password" name="password" />
                     </div>
                     <div class="checkbox m-b-20">
                         <label>
-                            <input type="checkbox" /> Remember Me
+                            <input type="checkbox" name="remember" value="true" /> Remember Me
                         </label>
                     </div>
                     <div class="login-buttons">
@@ -263,20 +263,29 @@
             console.log("I ama mama");
             var checkType = $('#nameClass').text();
             console.log = checkType;
-            if (checkType == "Success") {
+            if (checkType == "Error") {
               //  alert(checkType);
                 $.gritter.add({
+                    title: 'Login Failed!',
+                    text: "Wrong User Name or Password",
+                    sticky: false,
+                    // (int | optional) the time you want it to be alive for before fading out
+                    time: ''
+                });
+               // return false;
+            }
+            else if (checkType == "Success") {
+                $.gritter.add({
                     title: 'User Registration Done!',
-                    text: 'Saved User Information Succesfully',
+                    text: "Successfully user name created!",
                     sticky: false,
                     // (int | optional) the time you want it to be alive for before fading out
                     time: '1500'
                 });
-               // return false;
             }
             $('#isEmployee').on('click', function () {
 
-                alert("ratul is a mokless");
+                //alert("ratul is a mokless");
                 var url = "/Home/Index";
                 window.location.href = '@Url.Action("Create", "User")';
             });

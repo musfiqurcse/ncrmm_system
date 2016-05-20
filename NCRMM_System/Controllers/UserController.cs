@@ -37,6 +37,20 @@ namespace NCRMM_System.Controllers
         //}
 
         // GET: User/Create
+        public JsonResult TestUserName(string userName = "")
+        {
+            var userNamet = db.User_tbl.Where(d => d.UserName == userName).ToList();
+            bool check=!(userNamet.Count > 0);
+            return Json(check);
+        }
+
+        public JsonResult TestNIDNumber(string nidNumber = "")
+        {
+            var userNID = db.User_tbl.Where(d => d.NIDNumber == nidNumber).ToList();
+            bool check = !(userNID.Count > 0);
+            return Json(check);
+
+        }
         public ActionResult Create()
         {
             //ViewBag.UserTypeId = new SelectList(db.UserType_tbl, "UserTypeId", "UserType");
@@ -54,23 +68,27 @@ namespace NCRMM_System.Controllers
         {
             user_tbl.UserTypeId = 3;
             user_tbl.IsActive = true;
-            
+            var tempUser =
+                db.User_tbl.Where(d => d.UserName == user_tbl.UserName || d.NIDNumber == user_tbl.NIDNumber).ToList();
             
             if (ModelState.IsValid)
             {
-                db.User_tbl.Add(user_tbl);
-                db.SaveChanges();
-
-                
-                
+                if (tempUser.Count <= 0)
+                {
+                    db.User_tbl.Add(user_tbl);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    ViewBag.CustomMessage = "Error";
+                }
             }
             address.SourceType = "User";
             address.SourceId = user_tbl.UserId;
-
-
             ViewBag.UserTypeId = new SelectList(db.UserType_tbl, "UserTypeId", "UserType", user_tbl.UserTypeId);
             ViewBag.DivisionId = new SelectList(db.Division_tbl, "DivisionId", "DivisionName");
             ViewBag.DistrictId = new SelectList(db.District_tbl.Where(dis=>dis.DivisionId==divisionId), "DistrictId", "DistrictName");
+            Session["Registration"] = "true";
             return RedirectToAction("Login", "Login");
         }
 
