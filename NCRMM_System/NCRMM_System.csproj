@@ -173,6 +173,15 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\OrderDetailsController.cs" />
+    <Compile Include="Controllers\OrderDetailsTempController.cs" />
+    <Compile Include="Controllers\OrderMasterController.cs" />
+    <Compile Include="Controllers\ProductsListController.cs" />
+    <Compile Include="Controllers\SecurityCheckController.cs" />
+    <Compile Include="Controllers\StockDetailsRecordController.cs" />
+    <Compile Include="Controllers\StockMasterRecordCropsController.cs" />
+    <Compile Include="Controllers\StockReleaseDetailsController.cs" />
+    <Compile Include="Controllers\StorageCompanyController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -237,9 +246,6 @@
       <DependentUpon>NCRMM_System.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StorageCompany_tbl.cs">
-      <DependentUpon>NCRMM_System.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>NCRMM_System.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserType_tbl.cs">
@@ -1145,10 +1151,56 @@
     <Content Include="Views\Employee\Details.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\OrderDetailsTemp\Create.cshtml" />
+    <Content Include="Views\OrderDetailsTemp\Delete.cshtml" />
+    <Content Include="Views\OrderDetailsTemp\Details.cshtml" />
+    <Content Include="Views\OrderDetailsTemp\Edit.cshtml" />
+    <Content Include="Views\OrderDetailsTemp\Index.cshtml" />
+    <Content Include="Views\OrderDetails\Create.cshtml" />
+    <Content Include="Views\OrderDetails\Delete.cshtml" />
+    <Content Include="Views\OrderDetails\Details.cshtml" />
+    <Content Include="Views\OrderDetails\Edit.cshtml" />
+    <Content Include="Views\OrderDetails\Index.cshtml" />
+    <Content Include="Views\OrderMaster\Create.cshtml" />
+    <Content Include="Views\OrderMaster\Delete.cshtml" />
+    <Content Include="Views\OrderMaster\Details.cshtml" />
+    <Content Include="Views\OrderMaster\Edit.cshtml" />
+    <Content Include="Views\OrderMaster\Index.cshtml" />
+    <Content Include="Views\ProductsList\Create.cshtml" />
+    <Content Include="Views\ProductsList\Delete.cshtml" />
+    <Content Include="Views\ProductsList\Details.cshtml" />
+    <Content Include="Views\ProductsList\Edit.cshtml" />
+    <Content Include="Views\ProductsList\Index.cshtml" />
+    <Content Include="Views\SecurityCheck\Create.cshtml" />
+    <Content Include="Views\SecurityCheck\Delete.cshtml" />
+    <Content Include="Views\SecurityCheck\Details.cshtml" />
+    <Content Include="Views\SecurityCheck\Edit.cshtml" />
+    <Content Include="Views\SecurityCheck\Index.cshtml" />
+    <Content Include="Views\StockDetailsRecord\Create.cshtml" />
+    <Content Include="Views\StockDetailsRecord\Delete.cshtml" />
+    <Content Include="Views\StockDetailsRecord\Details.cshtml" />
+    <Content Include="Views\StockDetailsRecord\Edit.cshtml" />
+    <Content Include="Views\StockDetailsRecord\Index.cshtml" />
+    <Content Include="Views\StockMasterRecordCrops\Create.cshtml" />
+    <Content Include="Views\StockMasterRecordCrops\Delete.cshtml" />
+    <Content Include="Views\StockMasterRecordCrops\Details.cshtml" />
+    <Content Include="Views\StockMasterRecordCrops\Edit.cshtml" />
+    <Content Include="Views\StockMasterRecordCrops\Index.cshtml" />
+    <Content Include="Views\StockReleaseDetails\Create.cshtml" />
+    <Content Include="Views\StockReleaseDetails\Delete.cshtml" />
+    <Content Include="Views\StockReleaseDetails\Details.cshtml" />
+    <Content Include="Views\StockReleaseDetails\Edit.cshtml" />
+    <Content Include="Views\StockReleaseDetails\Index.cshtml" />
+    <Content Include="Views\StorageCompany\Create.cshtml" />
+    <Content Include="Views\StorageCompany\Delete.cshtml" />
+    <Content Include="Views\StorageCompany\Details.cshtml" />
+    <Content Include="Views\StorageCompany\Edit.cshtml" />
+    <Content Include="Views\StorageCompany\Index.cshtml" />
+    <Content Include="Views\CropsCatagory\Index.cshtml" />
+    <Content Include="Views\CropsCatagory\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\CropsCatagory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

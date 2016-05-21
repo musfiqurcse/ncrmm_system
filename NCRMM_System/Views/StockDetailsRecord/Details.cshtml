@@ -1,0 +1,98 @@
+﻿@model NCRMM_System.Models.StockDetailsRecord_tbl
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StockDetailsRecord_tbl</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountMainStocked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountMainStocked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailableAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsReferred)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsReferred)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountSecondStocked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountSecondStocked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CropsOwnerId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CropsOwnerId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Crops_tbl.CropsName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Crops_tbl.CropsName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockMasterRecordCrops_tbl.InvoiceNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockMasterRecordCrops_tbl.InvoiceNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockReleaseDetails_tbl.StockReleaseId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockReleaseDetails_tbl.StockReleaseId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StockDetailsRecordId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

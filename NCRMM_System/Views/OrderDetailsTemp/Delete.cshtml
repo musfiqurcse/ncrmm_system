@@ -1,0 +1,72 @@
+﻿@model NCRMM_System.Models.OrderDetailsTemp_tbl
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>OrderDetailsTemp_tbl</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CropsId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CropsId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BuyersId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BuyersId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OwnersId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OwnersId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPrice)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<NCRMM_System.Models.StockMasterRecordCrops_tbl>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AmountOfCropsStored)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SourceUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EntryEmployeeId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RecordDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockRecordType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StorageCompany_tbl.CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeRoleTable.EmployeeRole)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AmountOfCropsStored)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SourceUserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EntryEmployeeId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RecordDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockRecordType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StorageCompany_tbl.CompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeRoleTable.EmployeeRole)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.StockMasterRecordId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.StockMasterRecordId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.StockMasterRecordId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,56 @@
+﻿@model NCRMM_System.Models.StockReleaseDetails_tbl
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>StockReleaseDetails_tbl</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StockDetailsRecordId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockDetailsRecordId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountRelease)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountRelease)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockDetailsRecord_tbl.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockDetailsRecord_tbl.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockMasterRecordCrops_tbl.InvoiceNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockMasterRecordCrops_tbl.InvoiceNo)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

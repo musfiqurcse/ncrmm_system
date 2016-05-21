@@ -10,107 +10,107 @@ using NCRMM_System.Models;
 
 namespace NCRMM_System.Controllers
 {
-    public class CropsCatagoryController : Controller
+    public class StorageCompanyController : Controller
     {
         private NCRMMLS_DBEntities2 db = new NCRMMLS_DBEntities2();
 
-        // GET: /CropsCatagory/
+        // GET: /StorageCompany/
         public ActionResult Index()
         {
-            return View(db.CropsCatagory_tbl.ToList());
+            return View(db.StorageCompany_tbl.ToList());
         }
 
-        // GET: /CropsCatagory/Details/5
+        // GET: /StorageCompany/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CropsCatagory_tbl cropscatagory_tbl = db.CropsCatagory_tbl.Find(id);
-            if (cropscatagory_tbl == null)
+            StorageCompany_tbl storagecompany_tbl = db.StorageCompany_tbl.Find(id);
+            if (storagecompany_tbl == null)
             {
                 return HttpNotFound();
             }
-            return View(cropscatagory_tbl);
+            return View(storagecompany_tbl);
         }
 
-        // GET: /CropsCatagory/Create
+        // GET: /StorageCompany/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: /CropsCatagory/Create
+        // POST: /StorageCompany/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="CropsCatagoryName,Details")] CropsCatagory_tbl cropscatagory_tbl)
+        public ActionResult Create([Bind(Include="StorageCompanyId,CompanyName,Website,StorageCapacity,StorageAvailable")] StorageCompany_tbl storagecompany_tbl)
         {
             if (ModelState.IsValid)
             {
-                db.CropsCatagory_tbl.Add(cropscatagory_tbl);
+                db.StorageCompany_tbl.Add(storagecompany_tbl);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(cropscatagory_tbl);
+            return View(storagecompany_tbl);
         }
 
-        // GET: /CropsCatagory/Edit/5
+        // GET: /StorageCompany/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CropsCatagory_tbl cropscatagory_tbl = db.CropsCatagory_tbl.Find(id);
-            if (cropscatagory_tbl == null)
+            StorageCompany_tbl storagecompany_tbl = db.StorageCompany_tbl.Find(id);
+            if (storagecompany_tbl == null)
             {
                 return HttpNotFound();
             }
-            return View(cropscatagory_tbl);
+            return View(storagecompany_tbl);
         }
 
-        // POST: /CropsCatagory/Edit/5
+        // POST: /StorageCompany/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="CropsCatagoryId,CropsCatagoryName,Details")] CropsCatagory_tbl cropscatagory_tbl)
+        public ActionResult Edit([Bind(Include="StorageCompanyId,CompanyName,Website,StorageCapacity,StorageAvailable")] StorageCompany_tbl storagecompany_tbl)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cropscatagory_tbl).State = EntityState.Modified;
+                db.Entry(storagecompany_tbl).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(cropscatagory_tbl);
+            return View(storagecompany_tbl);
         }
 
-        // GET: /CropsCatagory/Delete/5
+        // GET: /StorageCompany/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CropsCatagory_tbl cropscatagory_tbl = db.CropsCatagory_tbl.Find(id);
-            if (cropscatagory_tbl == null)
+            StorageCompany_tbl storagecompany_tbl = db.StorageCompany_tbl.Find(id);
+            if (storagecompany_tbl == null)
             {
                 return HttpNotFound();
             }
-            return View(cropscatagory_tbl);
+            return View(storagecompany_tbl);
         }
 
-        // POST: /CropsCatagory/Delete/5
+        // POST: /StorageCompany/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CropsCatagory_tbl cropscatagory_tbl = db.CropsCatagory_tbl.Find(id);
-            db.CropsCatagory_tbl.Remove(cropscatagory_tbl);
+            StorageCompany_tbl storagecompany_tbl = db.StorageCompany_tbl.Find(id);
+            db.StorageCompany_tbl.Remove(storagecompany_tbl);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

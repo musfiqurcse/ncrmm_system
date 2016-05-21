@@ -1,0 +1,51 @@
+﻿@model IEnumerable<NCRMM_System.Models.StockReleaseDetails_tbl>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StockDetailsRecordId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AmountRelease)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockDetailsRecord_tbl.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockMasterRecordCrops_tbl.InvoiceNo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockDetailsRecordId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AmountRelease)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockDetailsRecord_tbl.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockMasterRecordCrops_tbl.InvoiceNo)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.StockReleaseId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.StockReleaseId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.StockReleaseId })
+        </td>
+    </tr>
+}
+
+</table>

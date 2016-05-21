@@ -1,0 +1,82 @@
+﻿@model NCRMM_System.Models.StockMasterRecordCrops_tbl
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StockMasterRecordCrops_tbl</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoiceNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InvoiceNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountOfCropsStored)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountOfCropsStored)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SourceUserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SourceUserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EntryEmployeeId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EntryEmployeeId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecordDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecordDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockRecordType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockRecordType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StorageCompany_tbl.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StorageCompany_tbl.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeRoleTable.EmployeeRole)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeRoleTable.EmployeeRole)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StockMasterRecordId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

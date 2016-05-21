@@ -1,0 +1,75 @@
+﻿@model IEnumerable<NCRMM_System.Models.OrderDetalis_tbl>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OwnersId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Unit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsApproved)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Crops_tbl.CropsName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderMaster_tbl.OrderNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductsList_tbl.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OwnersId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Unit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsApproved)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Crops_tbl.CropsName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderMaster_tbl.OrderNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductsList_tbl.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.OrderDetailsId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.OrderDetailsId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.OrderDetailsId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -654,16 +654,6 @@
           <NavigationProperty Name="StockDetailsRecord_tbl" Relationship="Self.FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl" FromRole="StockReleaseDetails_tbl" ToRole="StockDetailsRecord_tbl" />
           <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="Self.FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl" FromRole="StockReleaseDetails_tbl" ToRole="StockMasterRecordCrops_tbl" />
         </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="UserType_tbl">
           <Key>
             <PropertyRef Name="UserTypeId" />
@@ -819,7 +809,6 @@
           <EntitySet Name="StockDetailsRecord_tbl" EntityType="Self.StockDetailsRecord_tbl" />
           <EntitySet Name="StockMasterRecordCrops_tbl" EntityType="Self.StockMasterRecordCrops_tbl" />
           <EntitySet Name="StockReleaseDetails_tbl" EntityType="Self.StockReleaseDetails_tbl" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="UserType_tbl" EntityType="Self.UserType_tbl" />
           <AssociationSet Name="FK_Address_tbl_District_tbl" Association="Self.FK_Address_tbl_District_tbl">
             <End Role="District_tbl" EntitySet="District_tbl" />

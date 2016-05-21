@@ -10,107 +10,112 @@ using NCRMM_System.Models;
 
 namespace NCRMM_System.Controllers
 {
-    public class CropsCatagoryController : Controller
+    public class ProductsListController : Controller
     {
         private NCRMMLS_DBEntities2 db = new NCRMMLS_DBEntities2();
 
-        // GET: /CropsCatagory/
+        // GET: /ProductsList/
         public ActionResult Index()
         {
-            return View(db.CropsCatagory_tbl.ToList());
+            var productslist_tbl = db.ProductsList_tbl.Include(p => p.StockDetailsRecord_tbl);
+            return View(productslist_tbl.ToList());
         }
 
-        // GET: /CropsCatagory/Details/5
+        // GET: /ProductsList/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CropsCatagory_tbl cropscatagory_tbl = db.CropsCatagory_tbl.Find(id);
-            if (cropscatagory_tbl == null)
+            ProductsList_tbl productslist_tbl = db.ProductsList_tbl.Find(id);
+            if (productslist_tbl == null)
             {
                 return HttpNotFound();
             }
-            return View(cropscatagory_tbl);
+            return View(productslist_tbl);
         }
 
-        // GET: /CropsCatagory/Create
+        // GET: /ProductsList/Create
         public ActionResult Create()
         {
+            ViewBag.CropsDetailsId = new SelectList(db.StockDetailsRecord_tbl, "StockDetailsRecordId", "Description");
             return View();
         }
 
-        // POST: /CropsCatagory/Create
+        // POST: /ProductsList/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="CropsCatagoryName,Details")] CropsCatagory_tbl cropscatagory_tbl)
+        public ActionResult Create([Bind(Include="ProductId,OwnersId,CropsDetailsId,IsAvailable,LastUpdateDate,UnitPrice,Description")] ProductsList_tbl productslist_tbl)
         {
             if (ModelState.IsValid)
             {
-                db.CropsCatagory_tbl.Add(cropscatagory_tbl);
+                db.ProductsList_tbl.Add(productslist_tbl);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(cropscatagory_tbl);
+            ViewBag.CropsDetailsId = new SelectList(db.StockDetailsRecord_tbl, "StockDetailsRecordId", "Description", productslist_tbl.CropsDetailsId);
+            return View(productslist_tbl);
         }
 
-        // GET: /CropsCatagory/Edit/5
+        // GET: /ProductsList/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CropsCatagory_tbl cropscatagory_tbl = db.CropsCatagory_tbl.Find(id);
-            if (cropscatagory_tbl == null)
+            ProductsList_tbl productslist_tbl = db.ProductsList_tbl.Find(id);
+            if (productslist_tbl == null)
             {
                 return HttpNotFound();
             }
-            return View(cropscatagory_tbl);
+            ViewBag.CropsDetailsId = new SelectList(db.StockDetailsRecord_tbl, "StockDetailsRecordId", "Description", productslist_tbl.CropsDetailsId);
+            return View(productslist_tbl);
         }
 
-        // POST: /CropsCatagory/Edit/5
+        // POST: /ProductsList/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="CropsCatagoryId,CropsCatagoryName,Details")] CropsCatagory_tbl cropscatagory_tbl)
+        public ActionResult Edit([Bind(Include="ProductId,OwnersId,CropsDetailsId,IsAvailable,LastUpdateDate,UnitPrice,Description")] ProductsList_tbl productslist_tbl)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cropscatagory_tbl).State = EntityState.Modified;
+                db.Entry(productslist_tbl).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(cropscatagory_tbl);
+            ViewBag.CropsDetailsId = new SelectList(db.StockDetailsRecord_tbl, "StockDetailsRecordId", "Description", productslist_tbl.CropsDetailsId);
+            return View(productslist_tbl);
         }
 
-        // GET: /CropsCatagory/Delete/5
+        // GET: /ProductsList/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CropsCatagory_tbl cropscatagory_tbl = db.CropsCatagory_tbl.Find(id);
-            if (cropscatagory_tbl == null)
+            ProductsList_tbl productslist_tbl = db.ProductsList_tbl.Find(id);
+            if (productslist_tbl == null)
             {
                 return HttpNotFound();
             }
-            return View(cropscatagory_tbl);
+            return View(productslist_tbl);
         }
 
-        // POST: /CropsCatagory/Delete/5
+        // POST: /ProductsList/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CropsCatagory_tbl cropscatagory_tbl = db.CropsCatagory_tbl.Find(id);
-            db.CropsCatagory_tbl.Remove(cropscatagory_tbl);
+            ProductsList_tbl productslist_tbl = db.ProductsList_tbl.Find(id);
+            db.ProductsList_tbl.Remove(productslist_tbl);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

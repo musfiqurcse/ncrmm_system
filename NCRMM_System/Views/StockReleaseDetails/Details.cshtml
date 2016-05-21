@@ -1,0 +1,50 @@
+﻿@model NCRMM_System.Models.StockReleaseDetails_tbl
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StockReleaseDetails_tbl</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StockDetailsRecordId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockDetailsRecordId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountRelease)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountRelease)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockDetailsRecord_tbl.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockDetailsRecord_tbl.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockMasterRecordCrops_tbl.InvoiceNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockMasterRecordCrops_tbl.InvoiceNo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StockReleaseId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,66 @@
+﻿@model NCRMM_System.Models.OrderDetailsTemp_tbl
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OrderDetailsTemp_tbl</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CropsId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CropsId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BuyersId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BuyersId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OwnersId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OwnersId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPrice)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderDetailsTempId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

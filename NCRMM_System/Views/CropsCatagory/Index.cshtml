@@ -1,0 +1,40 @@
+﻿@model IEnumerable<NCRMM_System.Models.CropsCatagory_tbl>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainEmployeeLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CropsCatagoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Details)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CropsCatagoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Details)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CropsCatagoryId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CropsCatagoryId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CropsCatagoryId })
+        </td>
+    </tr>
+}
+
+</table>

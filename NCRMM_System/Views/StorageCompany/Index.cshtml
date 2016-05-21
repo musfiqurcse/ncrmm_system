@@ -1,0 +1,51 @@
+﻿@model IEnumerable<NCRMM_System.Models.StorageCompany_tbl>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Website)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StorageCapacity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StorageAvailable)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Website)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StorageCapacity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StorageAvailable)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.StorageCompanyId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.StorageCompanyId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.StorageCompanyId })
+        </td>
+    </tr>
+}
+
+</table>

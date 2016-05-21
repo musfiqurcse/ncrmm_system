@@ -1,0 +1,50 @@
+﻿@model NCRMM_System.Models.StorageCompany_tbl
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StorageCompany_tbl</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Website)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Website)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StorageCapacity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StorageCapacity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StorageAvailable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StorageAvailable)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StorageCompanyId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

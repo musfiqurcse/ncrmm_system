@@ -10,107 +10,112 @@ using NCRMM_System.Models;
 
 namespace NCRMM_System.Controllers
 {
-    public class CropsCatagoryController : Controller
+    public class SecurityCheckController : Controller
     {
         private NCRMMLS_DBEntities2 db = new NCRMMLS_DBEntities2();
 
-        // GET: /CropsCatagory/
+        // GET: /SecurityCheck/
         public ActionResult Index()
         {
-            return View(db.CropsCatagory_tbl.ToList());
+            var securitycheck_tbl = db.SecurityCheck_tbl.Include(s => s.User_tbl);
+            return View(securitycheck_tbl.ToList());
         }
 
-        // GET: /CropsCatagory/Details/5
+        // GET: /SecurityCheck/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CropsCatagory_tbl cropscatagory_tbl = db.CropsCatagory_tbl.Find(id);
-            if (cropscatagory_tbl == null)
+            SecurityCheck_tbl securitycheck_tbl = db.SecurityCheck_tbl.Find(id);
+            if (securitycheck_tbl == null)
             {
                 return HttpNotFound();
             }
-            return View(cropscatagory_tbl);
+            return View(securitycheck_tbl);
         }
 
-        // GET: /CropsCatagory/Create
+        // GET: /SecurityCheck/Create
         public ActionResult Create()
         {
+            ViewBag.UserId = new SelectList(db.User_tbl, "UserId", "UserName");
             return View();
         }
 
-        // POST: /CropsCatagory/Create
+        // POST: /SecurityCheck/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="CropsCatagoryName,Details")] CropsCatagory_tbl cropscatagory_tbl)
+        public ActionResult Create([Bind(Include="Id,UserId,SecurityQuestion,Answer,UpdateDate")] SecurityCheck_tbl securitycheck_tbl)
         {
             if (ModelState.IsValid)
             {
-                db.CropsCatagory_tbl.Add(cropscatagory_tbl);
+                db.SecurityCheck_tbl.Add(securitycheck_tbl);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(cropscatagory_tbl);
+            ViewBag.UserId = new SelectList(db.User_tbl, "UserId", "UserName", securitycheck_tbl.UserId);
+            return View(securitycheck_tbl);
         }
 
-        // GET: /CropsCatagory/Edit/5
+        // GET: /SecurityCheck/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CropsCatagory_tbl cropscatagory_tbl = db.CropsCatagory_tbl.Find(id);
-            if (cropscatagory_tbl == null)
+            SecurityCheck_tbl securitycheck_tbl = db.SecurityCheck_tbl.Find(id);
+            if (securitycheck_tbl == null)
             {
                 return HttpNotFound();
             }
-            return View(cropscatagory_tbl);
+            ViewBag.UserId = new SelectList(db.User_tbl, "UserId", "UserName", securitycheck_tbl.UserId);
+            return View(securitycheck_tbl);
         }
 
-        // POST: /CropsCatagory/Edit/5
+        // POST: /SecurityCheck/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="CropsCatagoryId,CropsCatagoryName,Details")] CropsCatagory_tbl cropscatagory_tbl)
+        public ActionResult Edit([Bind(Include="Id,UserId,SecurityQuestion,Answer,UpdateDate")] SecurityCheck_tbl securitycheck_tbl)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cropscatagory_tbl).State = EntityState.Modified;
+                db.Entry(securitycheck_tbl).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(cropscatagory_tbl);
+            ViewBag.UserId = new SelectList(db.User_tbl, "UserId", "UserName", securitycheck_tbl.UserId);
+            return View(securitycheck_tbl);
         }
 
-        // GET: /CropsCatagory/Delete/5
+        // GET: /SecurityCheck/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CropsCatagory_tbl cropscatagory_tbl = db.CropsCatagory_tbl.Find(id);
-            if (cropscatagory_tbl == null)
+            SecurityCheck_tbl securitycheck_tbl = db.SecurityCheck_tbl.Find(id);
+            if (securitycheck_tbl == null)
             {
                 return HttpNotFound();
             }
-            return View(cropscatagory_tbl);
+            return View(securitycheck_tbl);
         }
 
-        // POST: /CropsCatagory/Delete/5
+        // POST: /SecurityCheck/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CropsCatagory_tbl cropscatagory_tbl = db.CropsCatagory_tbl.Find(id);
-            db.CropsCatagory_tbl.Remove(cropscatagory_tbl);
+            SecurityCheck_tbl securitycheck_tbl = db.SecurityCheck_tbl.Find(id);
+            db.SecurityCheck_tbl.Remove(securitycheck_tbl);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

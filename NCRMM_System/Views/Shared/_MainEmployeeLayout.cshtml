@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    @RenderSection("head", required: false)
     <meta charset="utf-8" />
     <title>National Crops Reservation Monitoring and Market Linkage System</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
@@ -19,7 +20,7 @@
     <link href="/assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" />
     <link href="/assets/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
     <link href="/assets/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" />
-    <link href="/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet"/>
+    <link href="/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
 
 
 
@@ -51,6 +52,7 @@
     @*<script src="/assets/plugins/pace/pace.min.js"></script>*@
 </head>
 <body>
+    @RenderSection("featured", required: false)
     <!-- begin #page-loader -->
     <div id="page-loader" class="fade in"><span class="spinner"></span></div>
     <!-- end #page-loader -->
@@ -61,14 +63,15 @@
             <!-- begin container-fluid -->
             <div class="container-fluid">
                 <!-- begin mobile sidebar expand / collapse button -->
-                 <div class="navbar-header">
-                     <a href="/Index/IndexEmployee" class="navbar-brand"><span class=""><img src="~/logo.png" width="25px" height="25px" alt=""> </span>NCRMM System
-                     </a>
+                <div class="navbar-header">
+                    <a href="/Index/IndexEmployee" class="navbar-brand">
+                        <span class=""><img src="~/logo.png" width="25px" height="25px" alt=""> </span>NCRMM System
+                    </a>
                     @*<button type="button" class="navbar-toggle" data-click="sidebar-toggled">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>*@
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>*@
                 </div>
                 <!-- end mobile sidebar expand / collapse button -->
                 <!-- begin header navigation right -->
@@ -90,7 +93,9 @@
                             <li class="dropdown-header">Notifications (5)</li>
                             <li class="media">
                                 <a href="javascript:;">
-                                    <div class="media-left"><i class="fa fa-bug media-object bg-red"></i></div>
+                                    <div class="media-left">
+                                        <i class="fa fa-bug media-object bg-red"></i>
+                                    </div>
                                     <div class="media-body">
                                         <h6 class="media-heading">Server Error Reports</h6>
                                         <div class="text-muted f-s-11">3 minutes ago</div>
@@ -99,7 +104,9 @@
                             </li>
                             <li class="media">
                                 <a href="javascript:;">
-                                    <div class="media-left"><img src="assets/img/user-1.jpg" class="media-object" alt="" /></div>
+                                    <div class="media-left">
+                                        <img src="assets/img/user-1.jpg" class="media-object" alt="" />
+                                    </div>
                                     <div class="media-body">
                                         <h6 class="media-heading">John Smith</h6>
                                         <p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
@@ -109,7 +116,9 @@
                             </li>
                             <li class="media">
                                 <a href="javascript:;">
-                                    <div class="media-left"><img src="assets/img/user-2.jpg" class="media-object" alt="" /></div>
+                                    <div class="media-left">
+                                        <img src="assets/img/user-2.jpg" class="media-object" alt="" />
+                                    </div>
                                     <div class="media-body">
                                         <h6 class="media-heading">Olivia</h6>
                                         <p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
@@ -119,7 +128,9 @@
                             </li>
                             <li class="media">
                                 <a href="javascript:;">
-                                    <div class="media-left"><i class="fa fa-plus media-object bg-green"></i></div>
+                                    <div class="media-left">
+                                        <i class="fa fa-plus media-object bg-green"></i>
+                                    </div>
                                     <div class="media-body">
                                         <h6 class="media-heading"> New User Registered</h6>
                                         <div class="text-muted f-s-11">1 hour ago</div>
@@ -128,7 +139,9 @@
                             </li>
                             <li class="media">
                                 <a href="javascript:;">
-                                    <div class="media-left"><i class="fa fa-envelope media-object bg-blue"></i></div>
+                                    <div class="media-left">
+                                        <i class="fa fa-envelope media-object bg-blue"></i>
+                                    </div>
                                     <div class="media-body">
                                         <h6 class="media-heading"> New Email From John</h6>
                                         <div class="text-muted f-s-11">2 hour ago</div>
@@ -152,7 +165,7 @@
                             <li><a href="javascript:;">Calendar</a></li>
                             <li><a href="javascript:;">Setting</a></li>
                             <li class="divider"></li>
-                            <li>@Html.ActionLink("Logout", "Logout","Home")</li>
+                            <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
                         </ul>
                     </li>
                 </ul>
@@ -167,45 +180,45 @@
             <div data-scrollbar="true" data-height="100%">
                 <!-- begin sidebar user -->
                 @*<ul class="nav">
-                    <li class="nav-profile" style="background-color: rgb(27, 77, 77)">
-                        <div class="image">
-                            <a href="javascript:;"><img src="assets/img/user-13.jpg" alt="" /></a>
-                        </div>
-                        <div class="info">
-                            @ViewBag.UserName
-                            <small>@ViewBag.UserStatus</small>
-                        </div>
-                    </li>
-                </ul>*@
+                        <li class="nav-profile" style="background-color: rgb(27, 77, 77)">
+                            <div class="image">
+                                <a href="javascript:;"><img src="assets/img/user-13.jpg" alt="" /></a>
+                            </div>
+                            <div class="info">
+                                @ViewBag.UserName
+                                <small>@ViewBag.UserStatus</small>
+                            </div>
+                        </li>
+                    </ul>*@
                 <!-- end sidebar user -->
                 <!-- begin sidebar nav -->
                 <ul class="nav">
-                        <li class="nav-header" style="color:black">Navigation Menu</li>
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-users"></i>
-                                <span>Employeer</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="index.html">Approve Employee</a></li>
-                                <li><a href="index_v2.html">Employee Details</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <span class="badge pull-right">10</span>
-                                <i class="fa fa-inbox"></i>
-                                <span>Email</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="email_inbox.html">Inbox v1</a></li>
-                                <li><a href="email_inbox_v2.html">Inbox v2</a></li>
-                                <li><a href="email_compose.html">Compose</a></li>
-                                <li><a href="email_detail.html">Detail</a></li>
-                            </ul>
-                        </li>
-                       @* <li class="has-sub">
+                    <li class="nav-header" style="color: black">Navigation Menu</li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-users"></i>
+                            <span>Employeer</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="index.html">Approve Employee</a></li>
+                            <li><a href="index_v2.html">Employee Details</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <span class="badge pull-right">10</span>
+                            <i class="fa fa-inbox"></i>
+                            <span>Email</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="email_inbox.html">Inbox v1</a></li>
+                            <li><a href="email_inbox_v2.html">Inbox v2</a></li>
+                            <li><a href="email_compose.html">Compose</a></li>
+                            <li><a href="email_detail.html">Detail</a></li>
+                        </ul>
+                    </li>
+                    @* <li class="has-sub">
                             <a href="javascript:;">
                                 <b class="caret pull-right"></b>
                                 <i class="fa fa-suitcase"></i>
@@ -245,193 +258,193 @@
                                 <li><a href="form_multiple_upload.html">Multiple File Upload</a></li>
                             </ul>
                         </li>*@
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-th"></i>
-                                <span>Tables</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="table_basic.html">Basic Tables</a></li>
-                                <li class="has-sub">
-                                    <a href="javascript:;"><b class="caret pull-right"></b> Managed Tables</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="table_manage.html">Default</a></li>
-                                        <li><a href="table_manage_autofill.html">Autofill</a></li>
-                                        <li><a href="table_manage_colreorder.html">ColReorder</a></li>
-                                        <li><a href="table_manage_colvis.html">ColVis</a></li>
-                                        <li><a href="table_manage_fixed_columns.html">Fixed Column</a></li>
-                                        <li><a href="table_manage_fixed_header.html">Fixed Header</a></li>
-                                        <li><a href="table_manage_keytable.html">KeyTable</a></li>
-                                        <li><a href="table_manage_responsive.html">Responsive</a></li>
-                                        <li><a href="table_manage_scroller.html">Scroller</a></li>
-                                        <li><a href="table_manage_tabletools.html">TableTools</a></li>
-                                        <li><a href="table_manage_combine.html">Extension Combination</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-star"></i>
-                                <span>Front End</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="http://seantheme.com/color-admin-v1.7/frontend/one-page-parallax/index.html" target="_blank">One Page Parallax</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-envelope"></i>
-                                <span>Email Template</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="email_system.html">System Template</a></li>
-                                <li><a href="email_newsletter.html">Newsletter Template</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-area-chart"></i>
-                                <span>Chart</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="chart-flot.html">Flot Chart</a></li>
-                                <li><a href="chart-morris.html">Morris Chart</a></li>
-                                <li><a href="chart-js.html">Chart JS</a></li>
-                            </ul>
-                        </li>
-                       
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-map-marker"></i>
-                                <span>Map</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="map_vector.html">Vector Map</a></li>
-                                <li><a href="map_google.html">Google Map</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-camera"></i>
-                                <span>Gallery</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="gallery.html">Gallery v1</a></li>
-                                <li><a href="gallery_v2.html">Gallery v2</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-cogs"></i>
-                                <span>Page Options <span class="label label-theme m-l-5">NEW</span></span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="page_blank.html">Blank Page</a></li>
-                                <li><a href="page_with_footer.html">Page with Footer</a></li>
-                                <li><a href="page_without_sidebar.html">Page without Sidebar</a></li>
-                                <li><a href="page_with_right_sidebar.html">Page with Right Sidebar</a></li>
-                                <li><a href="page_with_minified_sidebar.html">Page with Minified Sidebar</a></li>
-                                <li><a href="page_with_two_sidebar.html">Page with Two Sidebar</a></li>
-                                <li><a href="page_with_line_icons.html">Page with Line Icons</a></li>
-                                <li><a href="page_with_ionicons.html">Page with Ionicons</a></li>
-                                <li><a href="page_full_height.html">Full Height Content</a></li>
-                                <li><a href="page_with_wide_sidebar.html">Page with Wide Sidebar <i class="fa fa-paper-plane text-theme"></i></a></li>
-                                <li><a href="page_with_light_sidebar.html">Page with Light Sidebar <i class="fa fa-paper-plane text-theme"></i></a></li>
-                                <li><a href="page_with_mega_menu.html">Page with Mega Menu <i class="fa fa-paper-plane text-theme"></i></a></li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-gift"></i>
-                                <span>Extra <span class="label label-theme m-l-5">NEW</span></span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="extra_timeline.html">Timeline</a></li>
-                                <li><a href="extra_coming_soon.html">Coming Soon Page</a></li>
-                                <li><a href="extra_search_results.html">Search Results</a></li>
-                                <li><a href="extra_invoice.html">Invoice</a></li>
-                                <li><a href="extra_404_error.html">404 Error Page</a></li>
-                                <li><a href="extra_profile.html">Profile Page <i class="fa fa-paper-plane text-theme"></i></a></li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-key"></i>
-                                <span>Login & Register <span class="label label-theme m-l-5">NEW</span></span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="login.html">Login</a></li>
-                                <li><a href="login_v2.html">Login v2</a></li>
-                                <li><a href="login_v3.html">Login v3 <i class="fa fa-paper-plane text-theme"></i></a></li>
-                                <li><a href="register_v3.html">Register v3 <i class="fa fa-paper-plane text-theme"></i></a></li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-cubes"></i>
-                                <span>Version</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="javascript:;">HTML</a></li>
-                                <li><a href="http://seantheme.com/color-admin-v1.7/admin/ajax/index.html">AJAX</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-medkit"></i>
-                                <span>Helper</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="helper_css.html">Predefined CSS Classes</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-align-left"></i>
-                                <span>Menu Level</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li class="has-sub">
-                                    <a href="javascript:;">
-                                        <b class="caret pull-right"></b>
-                                        Menu 1.1
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li class="has-sub">
-                                            <a href="javascript:;">
-                                                <b class="caret pull-right"></b>
-                                                Menu 2.1
-                                            </a>
-                                            <ul class="sub-menu">
-                                                <li><a href="javascript:;">Menu 3.1</a></li>
-                                                <li><a href="javascript:;">Menu 3.2</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="javascript:;">Menu 2.2</a></li>
-                                        <li><a href="javascript:;">Menu 2.3</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="javascript:;">Menu 1.2</a></li>
-                                <li><a href="javascript:;">Menu 1.3</a></li>
-                            </ul>
-                        </li>
-                        <!-- begin sidebar minify button -->
-                        <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
-                        <!-- end sidebar minify button -->
-                    </ul>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-th"></i>
+                            <span>Tables</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="table_basic.html">Basic Tables</a></li>
+                            <li class="has-sub">
+                                <a href="javascript:;"><b class="caret pull-right"></b> Managed Tables</a>
+                                <ul class="sub-menu">
+                                    <li><a href="table_manage.html">Default</a></li>
+                                    <li><a href="table_manage_autofill.html">Autofill</a></li>
+                                    <li><a href="table_manage_colreorder.html">ColReorder</a></li>
+                                    <li><a href="table_manage_colvis.html">ColVis</a></li>
+                                    <li><a href="table_manage_fixed_columns.html">Fixed Column</a></li>
+                                    <li><a href="table_manage_fixed_header.html">Fixed Header</a></li>
+                                    <li><a href="table_manage_keytable.html">KeyTable</a></li>
+                                    <li><a href="table_manage_responsive.html">Responsive</a></li>
+                                    <li><a href="table_manage_scroller.html">Scroller</a></li>
+                                    <li><a href="table_manage_tabletools.html">TableTools</a></li>
+                                    <li><a href="table_manage_combine.html">Extension Combination</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-star"></i>
+                            <span>Front End</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="http://seantheme.com/color-admin-v1.7/frontend/one-page-parallax/index.html" target="_blank">One Page Parallax</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-envelope"></i>
+                            <span>Email Template</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="email_system.html">System Template</a></li>
+                            <li><a href="email_newsletter.html">Newsletter Template</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-area-chart"></i>
+                            <span>Chart</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="chart-flot.html">Flot Chart</a></li>
+                            <li><a href="chart-morris.html">Morris Chart</a></li>
+                            <li><a href="chart-js.html">Chart JS</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-map-marker"></i>
+                            <span>Map</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="map_vector.html">Vector Map</a></li>
+                            <li><a href="map_google.html">Google Map</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-camera"></i>
+                            <span>Gallery</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="gallery.html">Gallery v1</a></li>
+                            <li><a href="gallery_v2.html">Gallery v2</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-cogs"></i>
+                            <span>Page Options <span class="label label-theme m-l-5">NEW</span></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="page_blank.html">Blank Page</a></li>
+                            <li><a href="page_with_footer.html">Page with Footer</a></li>
+                            <li><a href="page_without_sidebar.html">Page without Sidebar</a></li>
+                            <li><a href="page_with_right_sidebar.html">Page with Right Sidebar</a></li>
+                            <li><a href="page_with_minified_sidebar.html">Page with Minified Sidebar</a></li>
+                            <li><a href="page_with_two_sidebar.html">Page with Two Sidebar</a></li>
+                            <li><a href="page_with_line_icons.html">Page with Line Icons</a></li>
+                            <li><a href="page_with_ionicons.html">Page with Ionicons</a></li>
+                            <li><a href="page_full_height.html">Full Height Content</a></li>
+                            <li><a href="page_with_wide_sidebar.html">Page with Wide Sidebar <i class="fa fa-paper-plane text-theme"></i></a></li>
+                            <li><a href="page_with_light_sidebar.html">Page with Light Sidebar <i class="fa fa-paper-plane text-theme"></i></a></li>
+                            <li><a href="page_with_mega_menu.html">Page with Mega Menu <i class="fa fa-paper-plane text-theme"></i></a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-gift"></i>
+                            <span>Extra <span class="label label-theme m-l-5">NEW</span></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="extra_timeline.html">Timeline</a></li>
+                            <li><a href="extra_coming_soon.html">Coming Soon Page</a></li>
+                            <li><a href="extra_search_results.html">Search Results</a></li>
+                            <li><a href="extra_invoice.html">Invoice</a></li>
+                            <li><a href="extra_404_error.html">404 Error Page</a></li>
+                            <li><a href="extra_profile.html">Profile Page <i class="fa fa-paper-plane text-theme"></i></a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-key"></i>
+                            <span>Login & Register <span class="label label-theme m-l-5">NEW</span></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="login_v2.html">Login v2</a></li>
+                            <li><a href="login_v3.html">Login v3 <i class="fa fa-paper-plane text-theme"></i></a></li>
+                            <li><a href="register_v3.html">Register v3 <i class="fa fa-paper-plane text-theme"></i></a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-cubes"></i>
+                            <span>Version</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="javascript:;">HTML</a></li>
+                            <li><a href="http://seantheme.com/color-admin-v1.7/admin/ajax/index.html">AJAX</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-medkit"></i>
+                            <span>Helper</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="helper_css.html">Predefined CSS Classes</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-align-left"></i>
+                            <span>Menu Level</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="has-sub">
+                                <a href="javascript:;">
+                                    <b class="caret pull-right"></b>
+                                    Menu 1.1
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="has-sub">
+                                        <a href="javascript:;">
+                                            <b class="caret pull-right"></b>
+                                            Menu 2.1
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li><a href="javascript:;">Menu 3.1</a></li>
+                                            <li><a href="javascript:;">Menu 3.2</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="javascript:;">Menu 2.2</a></li>
+                                    <li><a href="javascript:;">Menu 2.3</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="javascript:;">Menu 1.2</a></li>
+                            <li><a href="javascript:;">Menu 1.3</a></li>
+                        </ul>
+                    </li>
+                    <!-- begin sidebar minify button -->
+                    <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
+                    <!-- end sidebar minify button -->
+                </ul>
                 <!-- end sidebar nav -->
             </div>
             <!-- end sidebar scrollbar -->
@@ -453,7 +466,6 @@
     </div>
     <!-- end page container -->
     <!-- ================== BEGIN BASE JS ================== -->
-  
     <!-- ================== END PAGE LEVEL JS ================== -->
 
     <script>
@@ -467,17 +479,23 @@
             })
         });
     </script>
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '../../../../www.google-analytics.com/analytics.js', 'ga');
+<script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '../../../../www.google-analytics.com/analytics.js', 'ga');
 
-        ga('create', 'UA-53034621-1', 'auto');
-        ga('send', 'pageview');
-    </script>
+    ga('create', 'UA-53034621-1', 'auto');
+    ga('send', 'pageview');
+</script>
+    @RenderSection("scripts", required: false)
 </body>
 
 <!-- Mirrored from seantheme.com/color-admin-v1.7/admin/html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Apr 2015 10:53:52 GMT -->

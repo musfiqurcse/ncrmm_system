@@ -1,0 +1,63 @@
+﻿@model IEnumerable<NCRMM_System.Models.OrderDetailsTemp_tbl>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CropsId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BuyersId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OwnersId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Unit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CropsId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BuyersId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OwnersId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Unit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalPrice)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.OrderDetailsTempId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.OrderDetailsTempId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.OrderDetailsTempId })
+        </td>
+    </tr>
+}
+
+</table>
