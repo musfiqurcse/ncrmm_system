@@ -14,17 +14,11 @@ namespace NCRMM_System.Models
     
     public partial class CropsCatagory_tbl
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CropsCatagory_tbl()
-        {
-            this.Crops_tbl = new HashSet<Crops_tbl>();
-        }
-    
         public int CropsCatagoryId { get; set; }
         public string CropsCatagoryName { get; set; }
         public string Details { get; set; }
+        public int CropsId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Crops_tbl> Crops_tbl { get; set; }
+        public virtual Crops_tbl Crops_tbl { get; set; }
     }
 }

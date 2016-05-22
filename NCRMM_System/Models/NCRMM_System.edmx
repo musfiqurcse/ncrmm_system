@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="NCRMMLS_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="NCRMMLS_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address_tbl">
           <Key>
             <PropertyRef Name="AddressId" />
@@ -28,7 +28,6 @@
           <Property Name="CropsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CropsName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="CropsCatagoryId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CropsCatagory_tbl">
           <Key>
@@ -37,6 +36,7 @@
           <Property Name="CropsCatagoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CropsCatagoryName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Details" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CropsId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="District_tbl">
           <Key>
@@ -203,15 +203,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Crops_tbl_CropsCatagory_tbl">
-          <End Role="CropsCatagory_tbl" Type="Self.CropsCatagory_tbl" Multiplicity="1" />
-          <End Role="Crops_tbl" Type="Self.Crops_tbl" Multiplicity="*" />
+        <Association Name="FK_CropsCatagory_tbl_Crops_tbl">
+          <End Role="Crops_tbl" Type="Self.Crops_tbl" Multiplicity="1" />
+          <End Role="CropsCatagory_tbl" Type="Self.CropsCatagory_tbl" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CropsCatagory_tbl">
-              <PropertyRef Name="CropsCatagoryId" />
+            <Principal Role="Crops_tbl">
+              <PropertyRef Name="CropsId" />
             </Principal>
-            <Dependent Role="Crops_tbl">
-              <PropertyRef Name="CropsCatagoryId" />
+            <Dependent Role="CropsCatagory_tbl">
+              <PropertyRef Name="CropsId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -417,9 +417,9 @@
             <End Role="District_tbl" EntitySet="District_tbl" />
             <End Role="Address_tbl" EntitySet="Address_tbl" />
           </AssociationSet>
-          <AssociationSet Name="FK_Crops_tbl_CropsCatagory_tbl" Association="Self.FK_Crops_tbl_CropsCatagory_tbl">
-            <End Role="CropsCatagory_tbl" EntitySet="CropsCatagory_tbl" />
+          <AssociationSet Name="FK_CropsCatagory_tbl_Crops_tbl" Association="Self.FK_CropsCatagory_tbl_Crops_tbl">
             <End Role="Crops_tbl" EntitySet="Crops_tbl" />
+            <End Role="CropsCatagory_tbl" EntitySet="CropsCatagory_tbl" />
           </AssociationSet>
           <AssociationSet Name="FK_District_tbl_Division_tbl" Association="Self.FK_District_tbl_Division_tbl">
             <End Role="Division_tbl" EntitySet="Division_tbl" />
@@ -503,27 +503,6 @@
           <Property Name="SourceType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="District_tbl" Relationship="Self.FK_Address_tbl_District_tbl" FromRole="Address_tbl" ToRole="District_tbl" />
         </EntityType>
-        <EntityType Name="Crops_tbl">
-          <Key>
-            <PropertyRef Name="CropsId" />
-          </Key>
-          <Property Name="CropsId" Type="Int32" Nullable="false" />
-          <Property Name="CropsName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CropsCatagoryId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CropsCatagory_tbl" Relationship="Self.FK_Crops_tbl_CropsCatagory_tbl" FromRole="Crops_tbl" ToRole="CropsCatagory_tbl" />
-          <NavigationProperty Name="OrderDetalis_tbl" Relationship="Self.FK_OrderDetalis_tbl_Crops_tbl" FromRole="Crops_tbl" ToRole="OrderDetalis_tbl" />
-          <NavigationProperty Name="StockDetailsRecord_tbl" Relationship="Self.FK_StockDetailsRecord_tbl_Crops_tbl" FromRole="Crops_tbl" ToRole="StockDetailsRecord_tbl" />
-        </EntityType>
-        <EntityType Name="CropsCatagory_tbl">
-          <Key>
-            <PropertyRef Name="CropsCatagoryId" />
-          </Key>
-          <Property Name="CropsCatagoryId" Type="Int32" Nullable="false" />
-          <Property Name="CropsCatagoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Details" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Crops_tbl" Relationship="Self.FK_Crops_tbl_CropsCatagory_tbl" FromRole="CropsCatagory_tbl" ToRole="Crops_tbl" />
-        </EntityType>
         <EntityType Name="District_tbl">
           <Key>
             <PropertyRef Name="DistrictId" />
@@ -567,9 +546,9 @@
           <Property Name="OrderMasterId" Type="Int32" Nullable="false" />
           <Property Name="CropsId" Type="Int32" Nullable="false" />
           <Property Name="IsStatus" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Crops_tbl" Relationship="Self.FK_OrderDetalis_tbl_Crops_tbl" FromRole="OrderDetalis_tbl" ToRole="Crops_tbl" />
           <NavigationProperty Name="OrderMaster_tbl" Relationship="Self.FK_OrderDetalis_tbl_OrderMaster_tbl" FromRole="OrderDetalis_tbl" ToRole="OrderMaster_tbl" />
           <NavigationProperty Name="ProductsList_tbl" Relationship="Self.FK_OrderDetalis_tbl_ProductsList_tbl" FromRole="OrderDetalis_tbl" ToRole="ProductsList_tbl" />
+          <NavigationProperty Name="Crops_tbl" Relationship="NCRMMLS_DBModel.FK_OrderDetalis_tbl_Crops_tbl" FromRole="OrderDetalis_tbl" ToRole="Crops_tbl" />
         </EntityType>
         <EntityType Name="OrderMaster_tbl">
           <Key>
@@ -621,10 +600,10 @@
           <Property Name="IsReferred" Type="Boolean" />
           <Property Name="AmountSecondStocked" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="CropsOwnerId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Crops_tbl" Relationship="Self.FK_StockDetailsRecord_tbl_Crops_tbl" FromRole="StockDetailsRecord_tbl" ToRole="Crops_tbl" />
           <NavigationProperty Name="ProductsList_tbl" Relationship="Self.FK_ProductsList_tbl_StockDetailsRecord_tbl" FromRole="StockDetailsRecord_tbl" ToRole="ProductsList_tbl" />
           <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="Self.FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl" FromRole="StockDetailsRecord_tbl" ToRole="StockMasterRecordCrops_tbl" />
           <NavigationProperty Name="StockReleaseDetails_tbl" Relationship="Self.FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl" FromRole="StockDetailsRecord_tbl" ToRole="StockReleaseDetails_tbl" />
+          <NavigationProperty Name="Crops_tbl" Relationship="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_Crops_tbl" FromRole="StockDetailsRecord_tbl" ToRole="Crops_tbl" />
         </EntityType>
         <EntityType Name="StockMasterRecordCrops_tbl">
           <Key>
@@ -672,42 +651,6 @@
             </Principal>
             <Dependent Role="Address_tbl">
               <PropertyRef Name="DistrictId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Crops_tbl_CropsCatagory_tbl">
-          <End Role="CropsCatagory_tbl" Type="Self.CropsCatagory_tbl" Multiplicity="1" />
-          <End Role="Crops_tbl" Type="Self.Crops_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CropsCatagory_tbl">
-              <PropertyRef Name="CropsCatagoryId" />
-            </Principal>
-            <Dependent Role="Crops_tbl">
-              <PropertyRef Name="CropsCatagoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetalis_tbl_Crops_tbl">
-          <End Role="Crops_tbl" Type="Self.Crops_tbl" Multiplicity="1" />
-          <End Role="OrderDetalis_tbl" Type="Self.OrderDetalis_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Crops_tbl">
-              <PropertyRef Name="CropsId" />
-            </Principal>
-            <Dependent Role="OrderDetalis_tbl">
-              <PropertyRef Name="CropsId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StockDetailsRecord_tbl_Crops_tbl">
-          <End Role="Crops_tbl" Type="Self.Crops_tbl" Multiplicity="1" />
-          <End Role="StockDetailsRecord_tbl" Type="Self.StockDetailsRecord_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Crops_tbl">
-              <PropertyRef Name="CropsId" />
-            </Principal>
-            <Dependent Role="StockDetailsRecord_tbl">
-              <PropertyRef Name="CropsId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -797,8 +740,6 @@
         </Association>
         <EntityContainer Name="NCRMMLS_DBEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Address_tbl" EntityType="Self.Address_tbl" />
-          <EntitySet Name="Crops_tbl" EntityType="Self.Crops_tbl" />
-          <EntitySet Name="CropsCatagory_tbl" EntityType="Self.CropsCatagory_tbl" />
           <EntitySet Name="District_tbl" EntityType="Self.District_tbl" />
           <EntitySet Name="Division_tbl" EntityType="Self.Division_tbl" />
           <EntitySet Name="OrderDetailsTemp_tbl" EntityType="Self.OrderDetailsTemp_tbl" />
@@ -813,18 +754,6 @@
           <AssociationSet Name="FK_Address_tbl_District_tbl" Association="Self.FK_Address_tbl_District_tbl">
             <End Role="District_tbl" EntitySet="District_tbl" />
             <End Role="Address_tbl" EntitySet="Address_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Crops_tbl_CropsCatagory_tbl" Association="Self.FK_Crops_tbl_CropsCatagory_tbl">
-            <End Role="CropsCatagory_tbl" EntitySet="CropsCatagory_tbl" />
-            <End Role="Crops_tbl" EntitySet="Crops_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetalis_tbl_Crops_tbl" Association="Self.FK_OrderDetalis_tbl_Crops_tbl">
-            <End Role="Crops_tbl" EntitySet="Crops_tbl" />
-            <End Role="OrderDetalis_tbl" EntitySet="OrderDetalis_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StockDetailsRecord_tbl_Crops_tbl" Association="Self.FK_StockDetailsRecord_tbl_Crops_tbl">
-            <End Role="Crops_tbl" EntitySet="Crops_tbl" />
-            <End Role="StockDetailsRecord_tbl" EntitySet="StockDetailsRecord_tbl" />
           </AssociationSet>
           <AssociationSet Name="FK_District_tbl_Division_tbl" Association="Self.FK_District_tbl_Division_tbl">
             <End Role="Division_tbl" EntitySet="Division_tbl" />
@@ -880,6 +809,20 @@
           <AssociationSet Name="FK_StockMasterRecordCrops_tbl_UserDetails_tbl" Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl">
             <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
             <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
+          </AssociationSet>
+          <EntitySet Name="Crops_tbl" EntityType="NCRMMLS_DBModel.Crops_tbl" />
+          <EntitySet Name="CropsCatagory_tbl" EntityType="NCRMMLS_DBModel.CropsCatagory_tbl" />
+          <AssociationSet Name="FK_CropsCatagory_tbl_Crops_tbl" Association="NCRMMLS_DBModel.FK_CropsCatagory_tbl_Crops_tbl">
+            <End Role="Crops_tbl" EntitySet="Crops_tbl" />
+            <End Role="CropsCatagory_tbl" EntitySet="CropsCatagory_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetalis_tbl_Crops_tbl" Association="NCRMMLS_DBModel.FK_OrderDetalis_tbl_Crops_tbl">
+            <End Role="Crops_tbl" EntitySet="Crops_tbl" />
+            <End Role="OrderDetalis_tbl" EntitySet="OrderDetalis_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockDetailsRecord_tbl_Crops_tbl" Association="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_Crops_tbl">
+            <End Role="Crops_tbl" EntitySet="Crops_tbl" />
+            <End Role="StockDetailsRecord_tbl" EntitySet="StockDetailsRecord_tbl" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="StorageCompany_tbl">
@@ -997,6 +940,63 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Crops_tbl">
+          <Key>
+            <PropertyRef Name="CropsId" />
+          </Key>
+          <Property Name="CropsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CropsName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CropsCatagory_tbl" Relationship="NCRMMLS_DBModel.FK_CropsCatagory_tbl_Crops_tbl" FromRole="Crops_tbl" ToRole="CropsCatagory_tbl" />
+          <NavigationProperty Name="OrderDetalis_tbl" Relationship="NCRMMLS_DBModel.FK_OrderDetalis_tbl_Crops_tbl" FromRole="Crops_tbl" ToRole="OrderDetalis_tbl" />
+          <NavigationProperty Name="StockDetailsRecord_tbl" Relationship="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_Crops_tbl" FromRole="Crops_tbl" ToRole="StockDetailsRecord_tbl" />
+        </EntityType>
+        <EntityType Name="CropsCatagory_tbl">
+          <Key>
+            <PropertyRef Name="CropsCatagoryId" />
+          </Key>
+          <Property Name="CropsCatagoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CropsCatagoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Details" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CropsId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Crops_tbl" Relationship="NCRMMLS_DBModel.FK_CropsCatagory_tbl_Crops_tbl" FromRole="CropsCatagory_tbl" ToRole="Crops_tbl" />
+        </EntityType>
+        <Association Name="FK_CropsCatagory_tbl_Crops_tbl">
+          <End Type="NCRMMLS_DBModel.Crops_tbl" Role="Crops_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.CropsCatagory_tbl" Role="CropsCatagory_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Crops_tbl">
+              <PropertyRef Name="CropsId" />
+            </Principal>
+            <Dependent Role="CropsCatagory_tbl">
+              <PropertyRef Name="CropsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetalis_tbl_Crops_tbl">
+          <End Type="NCRMMLS_DBModel.Crops_tbl" Role="Crops_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.OrderDetalis_tbl" Role="OrderDetalis_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Crops_tbl">
+              <PropertyRef Name="CropsId" />
+            </Principal>
+            <Dependent Role="OrderDetalis_tbl">
+              <PropertyRef Name="CropsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockDetailsRecord_tbl_Crops_tbl">
+          <End Type="NCRMMLS_DBModel.Crops_tbl" Role="Crops_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.StockDetailsRecord_tbl" Role="StockDetailsRecord_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Crops_tbl">
+              <PropertyRef Name="CropsId" />
+            </Principal>
+            <Dependent Role="StockDetailsRecord_tbl">
+              <PropertyRef Name="CropsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1017,25 +1017,6 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="SourceId" ColumnName="SourceId" />
                 <ScalarProperty Name="SourceType" ColumnName="SourceType" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Crops_tbl">
-            <EntityTypeMapping TypeName="NCRMMLS_DBModel.Crops_tbl">
-              <MappingFragment StoreEntitySet="Crops_tbl">
-                <ScalarProperty Name="CropsId" ColumnName="CropsId" />
-                <ScalarProperty Name="CropsName" ColumnName="CropsName" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CropsCatagoryId" ColumnName="CropsCatagoryId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CropsCatagory_tbl">
-            <EntityTypeMapping TypeName="NCRMMLS_DBModel.CropsCatagory_tbl">
-              <MappingFragment StoreEntitySet="CropsCatagory_tbl">
-                <ScalarProperty Name="CropsCatagoryId" ColumnName="CropsCatagoryId" />
-                <ScalarProperty Name="CropsCatagoryName" ColumnName="CropsCatagoryName" />
-                <ScalarProperty Name="Details" ColumnName="Details" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1203,6 +1184,25 @@
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="EmployeeRole" ColumnName="EmployeeRole" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Crops_tbl">
+            <EntityTypeMapping TypeName="NCRMMLS_DBModel.Crops_tbl">
+              <MappingFragment StoreEntitySet="Crops_tbl">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CropsName" ColumnName="CropsName" />
+                <ScalarProperty Name="CropsId" ColumnName="CropsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CropsCatagory_tbl">
+            <EntityTypeMapping TypeName="NCRMMLS_DBModel.CropsCatagory_tbl">
+              <MappingFragment StoreEntitySet="CropsCatagory_tbl">
+                <ScalarProperty Name="CropsId" ColumnName="CropsId" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="CropsCatagoryName" ColumnName="CropsCatagoryName" />
+                <ScalarProperty Name="CropsCatagoryId" ColumnName="CropsCatagoryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

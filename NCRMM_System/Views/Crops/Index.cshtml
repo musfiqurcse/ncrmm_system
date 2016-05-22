@@ -18,10 +18,10 @@
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.CropsCatagory_tbl.CropsCatagoryName)
-        </th>
-        <th></th>
+        </th>*@
+        <th>Action</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -32,9 +32,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.CropsCatagory_tbl.CropsCatagoryName)
-        </td>
+        </td>*@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.CropsId }) |
             @Html.ActionLink("Details", "Details", new { id=item.CropsId }) |

@@ -39,7 +39,7 @@ namespace NCRMM_System.Controllers
         // GET: /Crops/Create
         public ActionResult Create()
         {
-            ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName");
+          //  ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName");
             return View();
         }
 
@@ -48,7 +48,7 @@ namespace NCRMM_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="CropsId,CropsName,Description,CropsCatagoryId")] Crops_tbl crops_tbl)
+        public ActionResult Create([Bind(Include="CropsName,Description")] Crops_tbl crops_tbl)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace NCRMM_System.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName", crops_tbl.CropsCatagoryId);
+           // ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName", crops_tbl.CropsCatagoryId);
             return View(crops_tbl);
         }
 
@@ -73,7 +73,7 @@ namespace NCRMM_System.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName", crops_tbl.CropsCatagoryId);
+           // ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName", crops_tbl.CropsCatagoryId);
             return View(crops_tbl);
         }
 
@@ -82,7 +82,7 @@ namespace NCRMM_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="CropsId,CropsName,Description,CropsCatagoryId")] Crops_tbl crops_tbl)
+        public ActionResult Edit([Bind(Include="CropsName,Description")] Crops_tbl crops_tbl)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace NCRMM_System.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName", crops_tbl.CropsCatagoryId);
+          //  ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName", crops_tbl.CropsCatagoryId);
             return View(crops_tbl);
         }
 

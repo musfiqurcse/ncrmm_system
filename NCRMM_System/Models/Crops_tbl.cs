@@ -17,6 +17,7 @@ namespace NCRMM_System.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Crops_tbl()
         {
+            this.CropsCatagory_tbl = new HashSet<CropsCatagory_tbl>();
             this.OrderDetalis_tbl = new HashSet<OrderDetalis_tbl>();
             this.StockDetailsRecord_tbl = new HashSet<StockDetailsRecord_tbl>();
         }
@@ -24,9 +25,9 @@ namespace NCRMM_System.Models
         public int CropsId { get; set; }
         public string CropsName { get; set; }
         public string Description { get; set; }
-        public int CropsCatagoryId { get; set; }
     
-        public virtual CropsCatagory_tbl CropsCatagory_tbl { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CropsCatagory_tbl> CropsCatagory_tbl { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetalis_tbl> OrderDetalis_tbl { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

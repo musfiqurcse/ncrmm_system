@@ -24,8 +24,8 @@ namespace NCRMM_System.Models
         public int CropsId { get; set; }
         public bool IsStatus { get; set; }
     
-        public virtual Crops_tbl Crops_tbl { get; set; }
         public virtual OrderMaster_tbl OrderMaster_tbl { get; set; }
         public virtual ProductsList_tbl ProductsList_tbl { get; set; }
+        public virtual Crops_tbl Crops_tbl { get; set; }
     }
 }
