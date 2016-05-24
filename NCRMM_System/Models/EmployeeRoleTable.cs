@@ -23,7 +23,7 @@ namespace NCRMM_System.Models
         public Nullable<bool> IsApprove { get; set; }
     
         public virtual StorageCompany_tbl StorageCompany_tbl { get; set; }
-        public virtual User_tbl User_tbl { get; set; }
         public virtual StockMasterRecordCrops_tbl StockMasterRecordCrops_tbl { get; set; }
+        public virtual User_tbl User_tbl { get; set; }
     }
 }

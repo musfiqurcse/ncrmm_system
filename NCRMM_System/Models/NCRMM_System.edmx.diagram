@@ -26,19 +26,19 @@
         <AssociationConnector Association="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl" ManuallyRouted="false" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl" ManuallyRouted="false" />
         <EntityTypeShape EntityType="NCRMMLS_DBModel.StorageCompany_tbl" Width="1.5" PointX="7.5" PointY="4.75" />
-        <EntityTypeShape EntityType="NCRMMLS_DBModel.User_tbl" Width="1.5" PointX="7.5" PointY="8.25" />
-        <AssociationConnector Association="NCRMMLS_DBModel.FK_SecurityCheck_tbl_User_tbl" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" />
-        <AssociationConnector Association="NCRMMLS_DBModel.FK_User_tbl_UserType_tbl" />
         <EntityTypeShape EntityType="NCRMMLS_DBModel.EmployeeRoleTable" Width="1.5" PointX="9.75" PointY="6.625" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl" />
-        <AssociationConnector Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl" />
         <EntityTypeShape EntityType="NCRMMLS_DBModel.Crops_tbl" Width="1.5" PointX="12" PointY="0.875" />
         <EntityTypeShape EntityType="NCRMMLS_DBModel.CropsCatagory_tbl" Width="1.5" PointX="14.25" PointY="1" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_CropsCatagory_tbl_Crops_tbl" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_OrderDetalis_tbl_Crops_tbl" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_Crops_tbl" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.User_tbl" Width="1.5" PointX="7.5" PointY="10.375" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_SecurityCheck_tbl_User_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_User_tbl_UserType_tbl" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

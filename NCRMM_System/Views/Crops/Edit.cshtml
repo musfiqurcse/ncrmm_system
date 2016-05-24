@@ -8,47 +8,58 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Crops_tbl</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.CropsId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CropsName, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CropsName)
-                @Html.ValidationMessageFor(model => model.CropsName)
+<form method="POST" >
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <strong>Crops Information Editing</strong>
             </div>
+
         </div>
+        <div class="panel-body">
+            @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description)
-                @Html.ValidationMessageFor(model => model.Description)
-            </div>
-        </div>
+            <div class="form-horizontal">
+                <h4></h4>
+                <hr />
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.CropsId)
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.CropsCatagoryId, "CropsCatagoryId", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CropsCatagoryId", String.Empty)
-                @Html.ValidationMessageFor(model => model.CropsCatagoryId)
-            </div>
-        </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CropsName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.CropsName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CropsName)
+                    </div>
+                </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Description)
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                @Html.LabelFor(model => model.CropsCatagoryId, "CropsCatagoryId", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("CropsCatagoryId", String.Empty)
+                    @Html.ValidationMessageFor(model => model.CropsCatagoryId)
+                </div>
+            </div>*@
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-}
+</form>
+  
+
 
 <div>
     @Html.ActionLink("Back to List", "Index")

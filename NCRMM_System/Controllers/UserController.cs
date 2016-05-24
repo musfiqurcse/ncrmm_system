@@ -64,7 +64,7 @@ namespace NCRMM_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,UserName,Pass,FullName,DateOfBirth,NIDNumber")] User_tbl user_tbl,Address_tbl address,int divisionId=0)
+        public ActionResult Create([Bind(Include = "UserName,Pass,FullName,DateOfBirth,NIDNumber")] User_tbl user_tbl,Address_tbl address,int divisionId=0)
         {
             user_tbl.UserTypeId = 3;
             user_tbl.IsActive = true;

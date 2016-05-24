@@ -39,7 +39,9 @@ namespace NCRMM_System.Controllers
         // GET: /Employee/Create
         public ActionResult Create()
         {
-            ViewBag.EmployeeId = new SelectList(db.StockMasterRecordCrops_tbl, "StockMasterRecordId", "InvoiceNo");
+            ViewBag.DivisionId = new SelectList(db.Division_tbl, "DivisionId", "DivisionName");
+            ViewBag.DistrictId = new SelectList(new List<District_tbl>(), "DistrictId", "DistrictName");
+           ViewBag.EmployeeId = new SelectList(db.StockMasterRecordCrops_tbl, "StockMasterRecordId", "InvoiceNo");
             ViewBag.StorageCompanyId = new SelectList(db.StorageCompany_tbl, "StorageCompanyId", "CompanyName");
             ViewBag.UserId = new SelectList(db.User_tbl, "UserId", "UserName");
             return View();

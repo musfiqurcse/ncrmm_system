@@ -97,7 +97,7 @@
                                 <button id="isUser" class="form-group btn btn-bitbucket" style="background-color: #008001; color: yellow; height: 150px; width: 200px">@Html.ActionLink("Are you a User?", "Index", "Home",null,new {@class="custom"})</button>
                             </div>
                             <div class="col-md-6" style="text-align: center">
-                                <button id="isEmployee" class="form-group btn btn-bitbucket" style="background-color: #008001; height: 150px; width:200px">@Html.ActionLink("I am an Employee", "Index", "Home",null,new {@class="custom"})</button>
+                                <button id="isEmployee" class="form-group btn btn-bitbucket" style="background-color: #008001; height: 150px; width:200px">@Html.ActionLink("I am an Employee", "Create", "Employee",null,new {@class="custom"})</button>
                             </div>
                         </div>
 
@@ -287,7 +287,7 @@
 
                 //alert("ratul is a mokless");
                 var url = "/Home/Index";
-                window.location.href = '@Url.Action("Create", "User")';
+                window.location.href = '@Url.Action("Create", "Employee")';
             });
             $('#isUser').on('click', function () {
 

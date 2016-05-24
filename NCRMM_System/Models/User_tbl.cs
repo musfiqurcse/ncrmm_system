@@ -17,23 +17,23 @@ namespace NCRMM_System.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User_tbl()
         {
-            this.SecurityCheck_tbl = new HashSet<SecurityCheck_tbl>();
             this.EmployeeRoleTables = new HashSet<EmployeeRoleTable>();
+            this.SecurityCheck_tbl = new HashSet<SecurityCheck_tbl>();
         }
     
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string Pass { get; set; }
         public string FullName { get; set; }
-        public string DateOfBirth { get; set; }
+        public System.DateTime DateOfBirth { get; set; }
         public int UserTypeId { get; set; }
         public bool IsActive { get; set; }
         public string NIDNumber { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeRoleTable> EmployeeRoleTables { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SecurityCheck_tbl> SecurityCheck_tbl { get; set; }
         public virtual UserType_tbl UserType_tbl { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmployeeRoleTable> EmployeeRoleTables { get; set; }
     }
 }

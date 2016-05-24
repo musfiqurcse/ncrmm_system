@@ -38,9 +38,9 @@ namespace NCRMM_System.Models
         public virtual DbSet<StockReleaseDetails_tbl> StockReleaseDetails_tbl { get; set; }
         public virtual DbSet<UserType_tbl> UserType_tbl { get; set; }
         public virtual DbSet<StorageCompany_tbl> StorageCompany_tbl { get; set; }
-        public virtual DbSet<User_tbl> User_tbl { get; set; }
         public virtual DbSet<EmployeeRoleTable> EmployeeRoleTables { get; set; }
         public virtual DbSet<Crops_tbl> Crops_tbl { get; set; }
         public virtual DbSet<CropsCatagory_tbl> CropsCatagory_tbl { get; set; }
+        public virtual DbSet<User_tbl> User_tbl { get; set; }
     }
 }

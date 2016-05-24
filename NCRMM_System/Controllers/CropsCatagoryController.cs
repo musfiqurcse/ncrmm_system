@@ -38,6 +38,7 @@ namespace NCRMM_System.Controllers
         // GET: /CropsCatagory/Create
         public ActionResult Create()
         {
+            ViewBag.Crops_tbl = new SelectList(db.Crops_tbl, "CropsId", "CropsName");
             return View();
         }
 
@@ -46,7 +47,7 @@ namespace NCRMM_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="CropsCatagoryName,Details")] CropsCatagory_tbl cropscatagory_tbl)
+        public ActionResult Create([Bind(Include="CropsCatagoryName,Details,CropsId")] CropsCatagory_tbl cropscatagory_tbl)
         {
             if (ModelState.IsValid)
             {

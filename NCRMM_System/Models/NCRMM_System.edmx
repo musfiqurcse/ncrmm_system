@@ -164,7 +164,7 @@
           <Key>
             <PropertyRef Name="StorageCompanyId" />
           </Key>
-          <Property Name="StorageCompanyId" Type="int" Nullable="false" />
+          <Property Name="StorageCompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Website" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="StorageCapacity" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -178,7 +178,7 @@
           <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Pass" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="FullName" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="DateOfBirth" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
           <Property Name="UserTypeId" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="NIDNumber" Type="varchar" MaxLength="500" />
@@ -784,26 +784,13 @@
             <End Role="StockReleaseDetails_tbl" EntitySet="StockReleaseDetails_tbl" />
           </AssociationSet>
           <EntitySet Name="StorageCompany_tbl" EntityType="NCRMMLS_DBModel.StorageCompany_tbl" />
-          <EntitySet Name="User_tbl" EntityType="NCRMMLS_DBModel.User_tbl" />
-          <AssociationSet Name="FK_SecurityCheck_tbl_User_tbl" Association="NCRMMLS_DBModel.FK_SecurityCheck_tbl_User_tbl">
-            <End Role="User_tbl" EntitySet="User_tbl" />
-            <End Role="SecurityCheck_tbl" EntitySet="SecurityCheck_tbl" />
-          </AssociationSet>
           <AssociationSet Name="FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl">
             <End Role="StorageCompany_tbl" EntitySet="StorageCompany_tbl" />
             <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
           </AssociationSet>
-          <AssociationSet Name="FK_User_tbl_UserType_tbl" Association="NCRMMLS_DBModel.FK_User_tbl_UserType_tbl">
-            <End Role="UserType_tbl" EntitySet="UserType_tbl" />
-            <End Role="User_tbl" EntitySet="User_tbl" />
-          </AssociationSet>
           <EntitySet Name="EmployeeRoleTables" EntityType="NCRMMLS_DBModel.EmployeeRoleTable" />
           <AssociationSet Name="FK_EmployeeRoleTable_StorageCompany_tbl" Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl">
             <End Role="StorageCompany_tbl" EntitySet="StorageCompany_tbl" />
-            <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmployeeRoleTable_User_tbl" Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl">
-            <End Role="User_tbl" EntitySet="User_tbl" />
             <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
           </AssociationSet>
           <AssociationSet Name="FK_StockMasterRecordCrops_tbl_UserDetails_tbl" Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl">
@@ -824,6 +811,19 @@
             <End Role="Crops_tbl" EntitySet="Crops_tbl" />
             <End Role="StockDetailsRecord_tbl" EntitySet="StockDetailsRecord_tbl" />
           </AssociationSet>
+          <EntitySet Name="User_tbl" EntityType="NCRMMLS_DBModel.User_tbl" />
+          <AssociationSet Name="FK_EmployeeRoleTable_User_tbl" Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl">
+            <End Role="User_tbl" EntitySet="User_tbl" />
+            <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SecurityCheck_tbl_User_tbl" Association="NCRMMLS_DBModel.FK_SecurityCheck_tbl_User_tbl">
+            <End Role="User_tbl" EntitySet="User_tbl" />
+            <End Role="SecurityCheck_tbl" EntitySet="SecurityCheck_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_tbl_UserType_tbl" Association="NCRMMLS_DBModel.FK_User_tbl_UserType_tbl">
+            <End Role="UserType_tbl" EntitySet="UserType_tbl" />
+            <End Role="User_tbl" EntitySet="User_tbl" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="StorageCompany_tbl">
           <Key>
@@ -837,34 +837,6 @@
           <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" FromRole="StorageCompany_tbl" ToRole="StockMasterRecordCrops_tbl" />
           <NavigationProperty Name="EmployeeRoleTables" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl" FromRole="StorageCompany_tbl" ToRole="EmployeeRoleTable" />
         </EntityType>
-        <EntityType Name="User_tbl">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Pass" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="FullName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="DateOfBirth" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="UserTypeId" Type="Int32" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="NIDNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="SecurityCheck_tbl" Relationship="NCRMMLS_DBModel.FK_SecurityCheck_tbl_User_tbl" FromRole="User_tbl" ToRole="SecurityCheck_tbl" />
-          <NavigationProperty Name="UserType_tbl" Relationship="NCRMMLS_DBModel.FK_User_tbl_UserType_tbl" FromRole="User_tbl" ToRole="UserType_tbl" />
-          <NavigationProperty Name="EmployeeRoleTables" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl" FromRole="User_tbl" ToRole="EmployeeRoleTable" />
-        </EntityType>
-        <Association Name="FK_SecurityCheck_tbl_User_tbl">
-          <End Type="NCRMMLS_DBModel.User_tbl" Role="User_tbl" Multiplicity="1" />
-          <End Type="NCRMMLS_DBModel.SecurityCheck_tbl" Role="SecurityCheck_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User_tbl">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="SecurityCheck_tbl">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_StockMasterRecordCrops_tbl_StorageCompany_tbl">
           <End Type="NCRMMLS_DBModel.StorageCompany_tbl" Role="StorageCompany_tbl" Multiplicity="1" />
           <End Type="NCRMMLS_DBModel.StockMasterRecordCrops_tbl" Role="StockMasterRecordCrops_tbl" Multiplicity="*" />
@@ -874,18 +846,6 @@
             </Principal>
             <Dependent Role="StockMasterRecordCrops_tbl">
               <PropertyRef Name="StorageCompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_User_tbl_UserType_tbl">
-          <End Type="NCRMMLS_DBModel.UserType_tbl" Role="UserType_tbl" Multiplicity="1" />
-          <End Type="NCRMMLS_DBModel.User_tbl" Role="User_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserType_tbl">
-              <PropertyRef Name="UserTypeId" />
-            </Principal>
-            <Dependent Role="User_tbl">
-              <PropertyRef Name="UserTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -901,8 +861,8 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="IsApprove" Type="Boolean" />
           <NavigationProperty Name="StorageCompany_tbl" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl" FromRole="EmployeeRoleTable" ToRole="StorageCompany_tbl" />
-          <NavigationProperty Name="User_tbl" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl" FromRole="EmployeeRoleTable" ToRole="User_tbl" />
           <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl" FromRole="EmployeeRoleTable" ToRole="StockMasterRecordCrops_tbl" />
+          <NavigationProperty Name="User_tbl" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl" FromRole="EmployeeRoleTable" ToRole="User_tbl" />
         </EntityType>
         <Association Name="FK_EmployeeRoleTable_StorageCompany_tbl">
           <End Type="NCRMMLS_DBModel.StorageCompany_tbl" Role="StorageCompany_tbl" Multiplicity="1" />
@@ -913,18 +873,6 @@
             </Principal>
             <Dependent Role="EmployeeRoleTable">
               <PropertyRef Name="StorageCompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmployeeRoleTable_User_tbl">
-          <End Type="NCRMMLS_DBModel.User_tbl" Role="User_tbl" Multiplicity="1" />
-          <End Type="NCRMMLS_DBModel.EmployeeRoleTable" Role="EmployeeRoleTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User_tbl">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="EmployeeRoleTable">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -994,6 +942,58 @@
             </Principal>
             <Dependent Role="StockDetailsRecord_tbl">
               <PropertyRef Name="CropsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User_tbl">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Pass" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UserTypeId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="NIDNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeRoleTables" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl" FromRole="User_tbl" ToRole="EmployeeRoleTable" />
+          <NavigationProperty Name="SecurityCheck_tbl" Relationship="NCRMMLS_DBModel.FK_SecurityCheck_tbl_User_tbl" FromRole="User_tbl" ToRole="SecurityCheck_tbl" />
+          <NavigationProperty Name="UserType_tbl" Relationship="NCRMMLS_DBModel.FK_User_tbl_UserType_tbl" FromRole="User_tbl" ToRole="UserType_tbl" />
+        </EntityType>
+        <Association Name="FK_EmployeeRoleTable_User_tbl">
+          <End Type="NCRMMLS_DBModel.User_tbl" Role="User_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.EmployeeRoleTable" Role="EmployeeRoleTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_tbl">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="EmployeeRoleTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SecurityCheck_tbl_User_tbl">
+          <End Type="NCRMMLS_DBModel.User_tbl" Role="User_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.SecurityCheck_tbl" Role="SecurityCheck_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_tbl">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="SecurityCheck_tbl">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_tbl_UserType_tbl">
+          <End Type="NCRMMLS_DBModel.UserType_tbl" Role="UserType_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.User_tbl" Role="User_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType_tbl">
+              <PropertyRef Name="UserTypeId" />
+            </Principal>
+            <Dependent Role="User_tbl">
+              <PropertyRef Name="UserTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1160,20 +1160,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="User_tbl">
-            <EntityTypeMapping TypeName="NCRMMLS_DBModel.User_tbl">
-              <MappingFragment StoreEntitySet="User_tbl">
-                <ScalarProperty Name="NIDNumber" ColumnName="NIDNumber" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Pass" ColumnName="Pass" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EmployeeRoleTables">
             <EntityTypeMapping TypeName="NCRMMLS_DBModel.EmployeeRoleTable">
               <MappingFragment StoreEntitySet="EmployeeRoleTable">
@@ -1203,6 +1189,20 @@
                 <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="CropsCatagoryName" ColumnName="CropsCatagoryName" />
                 <ScalarProperty Name="CropsCatagoryId" ColumnName="CropsCatagoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_tbl">
+            <EntityTypeMapping TypeName="NCRMMLS_DBModel.User_tbl">
+              <MappingFragment StoreEntitySet="User_tbl">
+                <ScalarProperty Name="NIDNumber" ColumnName="NIDNumber" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

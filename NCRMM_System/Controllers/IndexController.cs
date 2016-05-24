@@ -12,8 +12,11 @@ namespace NCRMM_System.Controllers
         // GET: /Index/
         public ActionResult IndexEmployee()
         {
+            return View();
+        }
 
-
+        public ActionResult IndexUser()
+        {
             return View();
         }
 	}
