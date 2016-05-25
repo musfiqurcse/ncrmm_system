@@ -66,7 +66,7 @@ namespace NCRMM_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserName,Pass,FullName,DateOfBirth,NIDNumber")] User_tbl user_tbl,Address_tbl address,int divisionId=0)
         {
-            user_tbl.UserTypeId = 3;
+            user_tbl.UserTypeId = 2;
             user_tbl.IsActive = true;
             var tempUser =
                 db.User_tbl.Where(d => d.UserName == user_tbl.UserName || d.NIDNumber == user_tbl.NIDNumber).ToList();
@@ -85,6 +85,8 @@ namespace NCRMM_System.Controllers
             }
             address.SourceType = "User";
             address.SourceId = user_tbl.UserId;
+            db.Address_tbl.Add(address);
+            db.SaveChanges();
             ViewBag.UserTypeId = new SelectList(db.UserType_tbl, "UserTypeId", "UserType", user_tbl.UserTypeId);
             ViewBag.DivisionId = new SelectList(db.Division_tbl, "DivisionId", "DivisionName");
             ViewBag.DistrictId = new SelectList(db.District_tbl.Where(dis=>dis.DivisionId==divisionId), "DistrictId", "DistrictName");

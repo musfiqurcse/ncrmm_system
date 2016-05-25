@@ -38,6 +38,16 @@ namespace NCRMM_System.Controllers
         // GET: /CropsCatagory/Create
         public ActionResult Create()
         {
+            if (Session["User"] != null)
+            {
+                User_tbl objUser = (User_tbl)Session["User"];
+                ViewBag.UserName = objUser.FullName;
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
             ViewBag.Crops_tbl = new SelectList(db.Crops_tbl, "CropsId", "CropsName");
             return View();
         }
@@ -49,11 +59,21 @@ namespace NCRMM_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="CropsCatagoryName,Details,CropsId")] CropsCatagory_tbl cropscatagory_tbl)
         {
+            if (Session["User"] != null)
+            {
+                User_tbl objUser = (User_tbl)Session["User"];
+                ViewBag.UserName = objUser.FullName;
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
             if (ModelState.IsValid)
             {
                 db.CropsCatagory_tbl.Add(cropscatagory_tbl);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
             return View(cropscatagory_tbl);
@@ -62,6 +82,16 @@ namespace NCRMM_System.Controllers
         // GET: /CropsCatagory/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["User"] != null)
+            {
+                User_tbl objUser = (User_tbl)Session["User"];
+                ViewBag.UserName = objUser.FullName;
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -81,6 +111,16 @@ namespace NCRMM_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include="CropsCatagoryId,CropsCatagoryName,Details")] CropsCatagory_tbl cropscatagory_tbl)
         {
+            if (Session["User"] != null)
+            {
+                User_tbl objUser = (User_tbl)Session["User"];
+                ViewBag.UserName = objUser.FullName;
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(cropscatagory_tbl).State = EntityState.Modified;

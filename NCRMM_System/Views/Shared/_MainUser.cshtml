@@ -49,7 +49,7 @@
     <script src="/assets/js/dashboard.min.js"></script>
     <script src="/assets/js/apps.min.js"></script>
 
-    <script src="/assets/plugins/pace/pace.min.js"></script>
+    @*<script src="/assets/plugins/pace/pace.min.js"></script>*@
 </head>
 <body>
     @RenderSection("featured", required: false)
@@ -175,7 +175,8 @@
         </div>
         <!-- end #header -->
         <!-- begin #sidebar -->
-        <div id="sidebar" class="sidebar" style="background-color: rgba(47, 108, 116, 0.9);">
+    <div id="sidebar" class="sidebar" style="background-color: rgba(113, 70, 39, 0.9);"
+         >
             <!-- begin sidebar scrollbar -->
             <div data-scrollbar="true" data-height="100%">
                 <!-- begin sidebar user -->
@@ -194,40 +195,28 @@
                 <!-- begin sidebar nav -->
                 <ul class="nav">
                     <li class="nav-header" style="color: black">Navigation Menu</li>
-                <li class="has-sub">
-                    <a href="javascript:;">
-                        <b class="caret pull-right"></b>
-                        <i class="fa fa-users"></i>
-                        <span>Employeer</span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li><a href='@Url.Action("Index", "Employee")'>Approve Employee</a></li>
-                        <li><a href='@Url.Action("Index", "Employee")'>Employee Details</a></li>
-                    </ul>
-                </li>
                     <li class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
-                            <i class="fa fa-leaf"></i>
-                            <span>Crops</span>
+                            <i class="fa fa-users"></i>
+                            <span>Employeer</span>
                         </a>
                         <ul class="sub-menu">
-                            <li><a href='@Url.Action("Create","Crops")'>Crops Name Insert</a></li>
-                            <li><a href='@Url.Action("Create","CropsCatagory")'>Create Crops Catagory</a></li>
-                            
+                            <li><a href="index.html">Approve Employee</a></li>
+                            <li><a href="index_v2.html">Employee Details</a></li>
                         </ul>
                     </li>
                     <li class="has-sub">
                         <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <i class="fa fa-tree"></i>
-                            <span>Crops Store</span>
+                            <span class="badge pull-right">10</span>
+                            <i class="fa fa-inbox"></i>
+                            <span>Email</span>
                         </a>
                         <ul class="sub-menu">
-                            <li><a href="email_inbox.html">New Crops Store</a></li>
-                            <li><a href="email_inbox_v2.html">Crops Store Info Detail</a></li>
-                            <li><a href="email_compose.html">Modify Store Crops</a></li>
-                            <li><a href="email_detail.html">Owner's Crops Store Info</a></li>
+                            <li><a href="email_inbox.html">Inbox v1</a></li>
+                            <li><a href="email_inbox_v2.html">Inbox v2</a></li>
+                            <li><a href="email_compose.html">Compose</a></li>
+                            <li><a href="email_detail.html">Detail</a></li>
                         </ul>
                     </li>
                     @* <li class="has-sub">
@@ -270,34 +259,33 @@
                                 <li><a href="form_multiple_upload.html">Multiple File Upload</a></li>
                             </ul>
                         </li>*@
-                <li class="has-sub">
-                    <a href="javascript:;">
-                        <b class="caret pull-right"></b>
-                        <i class="fa fa-paper-plane"></i>
-                        <span>Release Crops</span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li><a href="email_inbox.html">Release Crops</a></li>
-                        <li><a href="email_inbox_v2.html">Crops Release Info</a></li>
-                        <li><a href="email_compose.html">Modify Release Crops</a></li>
-                        <li><a href="email_detail.html">Owner's Crops Release Info</a></li>
-                    </ul>
-                </li>
-                <li class="has-sub">
-                    <a href="javascript:;">
-                        <b class="caret pull-right"></b>
-                        <i class="fa fa-file-text"></i>
-                        <span>Report</span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li><a href="email_inbox.html">Monthly Store Report</a></li>
-                        <li><a href="email_inbox_v2.html">Monthly Release Report</a></li>
-                        @*<li><a href="email_compose.html">Crops Store </a></li>
-                        <li><a href="email_detail.html">Owner's Crops Release Info</a></li>*@
-                    </ul>
-                </li>
-                   
-                    @*<li class="has-sub">
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-th"></i>
+                            <span>Tables</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="table_basic.html">Basic Tables</a></li>
+                            <li class="has-sub">
+                                <a href="javascript:;"><b class="caret pull-right"></b> Managed Tables</a>
+                                <ul class="sub-menu">
+                                    <li><a href="table_manage.html">Default</a></li>
+                                    <li><a href="table_manage_autofill.html">Autofill</a></li>
+                                    <li><a href="table_manage_colreorder.html">ColReorder</a></li>
+                                    <li><a href="table_manage_colvis.html">ColVis</a></li>
+                                    <li><a href="table_manage_fixed_columns.html">Fixed Column</a></li>
+                                    <li><a href="table_manage_fixed_header.html">Fixed Header</a></li>
+                                    <li><a href="table_manage_keytable.html">KeyTable</a></li>
+                                    <li><a href="table_manage_responsive.html">Responsive</a></li>
+                                    <li><a href="table_manage_scroller.html">Scroller</a></li>
+                                    <li><a href="table_manage_tabletools.html">TableTools</a></li>
+                                    <li><a href="table_manage_combine.html">Extension Combination</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <i class="fa fa-star"></i>
@@ -453,9 +441,8 @@
                             <li><a href="javascript:;">Menu 1.2</a></li>
                             <li><a href="javascript:;">Menu 1.3</a></li>
                         </ul>
-                    </li>*@
-                <!-- begin sidebar minify button -->
-              
+                    </li>
+                    <!-- begin sidebar minify button -->
                     <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
                     <!-- end sidebar minify button -->
                 </ul>
@@ -493,7 +480,7 @@
             })
         });
     </script>
-<script>
+    <script>
     (function(i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function() {
@@ -508,7 +495,7 @@
 
     ga('create', 'UA-53034621-1', 'auto');
     ga('send', 'pageview');
-</script>
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 

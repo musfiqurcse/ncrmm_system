@@ -30,12 +30,25 @@ namespace NCRMM_System.Controllers
         public ActionResult Login(string username="", string password="", bool remember=false)
         {
 
-            List<User_tbl> user = db.User_tbl.Where(ds => ds.UserName == username && password == password).ToList();
+            List<User_tbl> user = db.User_tbl.Where(ds => ds.UserName == username && ds.Pass == password).ToList();
             if (user.Count > 0)
             {
                 User_tbl objUser = user.FirstOrDefault();
                 Session["user"] = objUser;
-                return RedirectToAction("Index", "User");
+                if (objUser.UserType_tbl.UserTypeId == 2)
+                {
+                    return RedirectToAction("IndexUser","Index");
+                }
+                else if (objUser.UserType_tbl.UserTypeId == 3)
+                {
+                    return RedirectToAction("IndexEmployee", "Index");
+
+                }
+                else
+                {
+                    return RedirectToAction("Login","Login");
+                }
+            //    return RedirectToAction("Index", "User");
                 //return RedirectToAction()
             }
 

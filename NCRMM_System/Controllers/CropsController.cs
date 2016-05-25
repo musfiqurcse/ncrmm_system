@@ -17,8 +17,15 @@ namespace NCRMM_System.Controllers
         // GET: /Crops/
         public ActionResult Index()
         {
-            var crops_tbl = db.Crops_tbl.Include(c => c.CropsCatagory_tbl);
-            return View(crops_tbl.ToList());
+            if (Session["User"] != null)
+            {
+                User_tbl objUser = (User_tbl)Session["User"];
+                ViewBag.UserName = objUser.UserName;
+                var crops_tbl = db.Crops_tbl.Include(c => c.CropsCatagory_tbl);
+                return View(crops_tbl.ToList());
+            }
+            return RedirectToAction("Login", "Login");
+
         }
 
         // GET: /Crops/Details/5
@@ -39,7 +46,13 @@ namespace NCRMM_System.Controllers
         // GET: /Crops/Create
         public ActionResult Create()
         {
-          //  ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName");
+            if (Session["User"] != null)
+            {
+                User_tbl objUser = (User_tbl)Session["User"];
+                ViewBag.UserName = objUser.UserName;
+                
+            }
+            //  ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName");
             return View();
         }
 
@@ -48,33 +61,48 @@ namespace NCRMM_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="CropsName,Description")] Crops_tbl crops_tbl)
+        public ActionResult Create([Bind(Include = "CropsName,Description")] Crops_tbl crops_tbl)
         {
             if (ModelState.IsValid)
             {
+                if (Session["User"] != null)
+                {
+                    User_tbl objUser = (User_tbl)Session["User"];
+                    ViewBag.UserName = objUser.FullName;
+
+                }
                 db.Crops_tbl.Add(crops_tbl);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-           // ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName", crops_tbl.CropsCatagoryId);
+            // ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName", crops_tbl.CropsCatagoryId);
             return View(crops_tbl);
         }
 
         // GET: /Crops/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                User_tbl objUser = (User_tbl)Session["User"];
+                ViewBag.UserName = objUser.FullName;
+
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Crops_tbl crops_tbl = db.Crops_tbl.Find(id);
+                if (crops_tbl == null)
+                {
+                    return HttpNotFound();
+                }
+                // ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName", crops_tbl.CropsCatagoryId);
+                return View(crops_tbl);
             }
-            Crops_tbl crops_tbl = db.Crops_tbl.Find(id);
-            if (crops_tbl == null)
-            {
-                return HttpNotFound();
-            }
-           // ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName", crops_tbl.CropsCatagoryId);
-            return View(crops_tbl);
+            return RedirectToAction("Login", "Login");
+
         }
 
         // POST: /Crops/Edit/5
@@ -82,31 +110,48 @@ namespace NCRMM_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="CropsName,Description")] Crops_tbl crops_tbl)
+        public ActionResult Edit([Bind(Include = "CropsName,Description")] Crops_tbl crops_tbl)
         {
+            if (Session["User"] != null)
+            {
+                User_tbl objUser = (User_tbl) Session["User"];
+                ViewBag.UserName = objUser.FullName;
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(crops_tbl).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-          //  ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName", crops_tbl.CropsCatagoryId);
+            //  ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName", crops_tbl.CropsCatagoryId);
             return View(crops_tbl);
         }
 
         // GET: /Crops/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                User_tbl objUser = (User_tbl)Session["User"];
+                ViewBag.UserName = objUser.FullName;
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Crops_tbl crops_tbl = db.Crops_tbl.Find(id);
+                if (crops_tbl == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(crops_tbl);
             }
-            Crops_tbl crops_tbl = db.Crops_tbl.Find(id);
-            if (crops_tbl == null)
-            {
-                return HttpNotFound();
-            }
-            return View(crops_tbl);
+           return RedirectToAction("Login", "Login");
+
         }
 
         // POST: /Crops/Delete/5

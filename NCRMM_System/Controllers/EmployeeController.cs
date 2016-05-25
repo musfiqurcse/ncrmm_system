@@ -52,19 +52,46 @@ namespace NCRMM_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="EmployeeId,EmployeeRole,UpdateBy,UpdateDate,StorageCompanyId,UserId")] EmployeeRoleTable employeeroletable)
+        public ActionResult Create([Bind(Include = "UserName,Pass,FullName,DateOfBirth,NIDNumber")] User_tbl user_tbl, Address_tbl address, EmployeeRoleTable employeeroletable, int divisionId = 0)
         {
+
+
+            user_tbl.UserTypeId = 3;
+            user_tbl.IsActive = true;
+            var tempUser =
+                db.User_tbl.Where(d => d.UserName == user_tbl.UserName || d.NIDNumber == user_tbl.NIDNumber).ToList();
+
             if (ModelState.IsValid)
             {
+                if (tempUser.Count <= 0)
+                {
+                    db.User_tbl.Add(user_tbl);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    ViewBag.CustomMessage = "Error";
+                }
+            }
+            address.SourceType = "User";
+            address.SourceId = user_tbl.UserId;
+            db.Address_tbl.Add(address);
+            db.SaveChanges();
+            employeeroletable.UpdateBy = 0;
+            employeeroletable.UpdateDate=DateTime.Now;
+            employeeroletable.UserId = user_tbl.UserId;
+            employeeroletable.IsApprove = false;
                 db.EmployeeRoleTables.Add(employeeroletable);
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                
+            
 
             ViewBag.EmployeeId = new SelectList(db.StockMasterRecordCrops_tbl, "StockMasterRecordId", "InvoiceNo", employeeroletable.EmployeeId);
             ViewBag.StorageCompanyId = new SelectList(db.StorageCompany_tbl, "StorageCompanyId", "CompanyName", employeeroletable.StorageCompanyId);
             ViewBag.UserId = new SelectList(db.User_tbl, "UserId", "UserName", employeeroletable.UserId);
-            return View(employeeroletable);
+
+            Session["Registration"] = "true";
+            return RedirectToAction("Login", "Login");
         }
 
         // GET: /Employee/Edit/5

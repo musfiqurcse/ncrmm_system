@@ -29,7 +29,7 @@ namespace NCRMM_System.Controllers
         public ActionResult Logout()
         {
             ViewBag.Message = "Logout Successfully";
-            return View();
+            return RedirectToAction("Login","Login");
         }
     }
 }
