@@ -42,13 +42,14 @@ namespace NCRMM_System.Controllers
             {
                 User_tbl objUser = (User_tbl)Session["User"];
                 ViewBag.UserName = objUser.FullName;
+                ViewBag.CropsId = new SelectList(db.Crops_tbl, "CropsId", "CropsName");
 
             }
             else
             {
                 return RedirectToAction("Login", "Login");
             }
-            ViewBag.Crops_tbl = new SelectList(db.Crops_tbl, "CropsId", "CropsName");
+           
             return View();
         }
 

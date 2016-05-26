@@ -49,7 +49,7 @@
     <script src="/assets/js/dashboard.min.js"></script>
     <script src="/assets/js/apps.min.js"></script>
 
-    <script src="/assets/plugins/pace/pace.min.js"></script>
+    @*<script src="/assets/plugins/pace/pace.min.js"></script>*@
 </head>
 <body>
     @RenderSection("featured", required: false)
@@ -201,7 +201,7 @@
                         <span>Employeer</span>
                     </a>
                     <ul class="sub-menu">
-                        <li><a href='@Url.Action("Index", "Employee")'>Approve Employee</a></li>
+                        <li><a href='@Url.Action("ApproveEmployee", "Employee")'>Approve Employee</a></li>
                         <li><a href='@Url.Action("Index", "Employee")'>Employee Details</a></li>
                     </ul>
                 </li>

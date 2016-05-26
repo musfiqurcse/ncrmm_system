@@ -1,0 +1,66 @@
+﻿@model IEnumerable<NCRMM_System.Models.EmployeeRoleTable>
+
+@{
+    ViewBag.Title = "ApproveEmployee";
+    Layout = "~/Views/Shared/_MainEmployeeLayout.cshtml";
+}
+
+<form method="POST">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <strong>Approve Employee</strong>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table class="table table-responsive table-bordered">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.User_tbl.FullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.User_tbl.UserName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EmployeeRole)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsApprove)
+                    </th>
+
+
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User_tbl.FullName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User_tbl.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmployeeRole)
+                        </td>
+
+                        <td>
+                           @* @Html.CheckBoxFor(modelItem=>item.IsApprove)*@
+                        </td>
+
+
+
+                    </tr>
+                }
+
+            </table>
+            <input type="submit" class="btn btn-success" value="Approve" />
+        </div>
+
+    </div>
+</form>
+
+   
+
+

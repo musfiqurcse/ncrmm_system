@@ -21,6 +21,43 @@ namespace NCRMM_System.Controllers
             return View(employeeroletables.ToList());
         }
 
+        public ActionResult ApproveEmployee()
+        {
+            if (Session["User"] != null)
+            {
+                User_tbl objUser = (User_tbl) Session["User"];
+                EmployeeRoleTable empInfo = (EmployeeRoleTable) Session["EmployeeInfo"];
+                ViewBag.UserName = objUser.UserName;
+                var employeeList = db.EmployeeRoleTables.Where(e => e.StorageCompanyId == empInfo.StorageCompanyId&&e.EmployeeId!=empInfo.EmployeeId).ToList();
+                return View(employeeList);
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+
+            }
+        }
+        [HttpPost]
+        public ActionResult ApproveEmployee(List<EmployeeRoleTable> EmployeeRoleTableList)
+        {
+            var item = EmployeeRoleTableList;
+            if (Session["User"] != null)
+            {
+                User_tbl objUser = (User_tbl)Session["User"];
+                EmployeeRoleTable empInfo = (EmployeeRoleTable)Session["EmployeeInfo"];
+                ViewBag.UserName = objUser.UserName;
+                var employeeList = db.EmployeeRoleTables.Where(e => e.StorageCompanyId == empInfo.StorageCompanyId && e.EmployeeId != empInfo.EmployeeId).ToList();
+                return View(employeeList);
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+
+            }
+        }
+
         // GET: /Employee/Details/5
         public ActionResult Details(int? id)
         {

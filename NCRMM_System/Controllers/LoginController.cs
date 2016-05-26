@@ -37,10 +37,14 @@ namespace NCRMM_System.Controllers
                 Session["user"] = objUser;
                 if (objUser.UserType_tbl.UserTypeId == 2)
                 {
+                    
                     return RedirectToAction("IndexUser","Index");
                 }
                 else if (objUser.UserType_tbl.UserTypeId == 3)
                 {
+
+                    Session["EmployeeInfo"] =
+                        db.EmployeeRoleTables.Where(d => d.UserId == objUser.UserId).ToList().First();
                     return RedirectToAction("IndexEmployee", "Index");
 
                 }

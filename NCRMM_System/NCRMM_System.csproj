@@ -1201,6 +1201,7 @@
     <Content Include="Views\Shared\_EmployeeCreate.cshtml" />
     <Content Include="Views\Shared\_MainUser.cshtml" />
     <Content Include="Views\Index\IndexUser.cshtml" />
+    <Content Include="Views\Employee\ApproveEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
