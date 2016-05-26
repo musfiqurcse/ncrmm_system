@@ -28,7 +28,7 @@ namespace NCRMM_System.Controllers
                 User_tbl objUser = (User_tbl) Session["User"];
                 EmployeeRoleTable empInfo = (EmployeeRoleTable) Session["EmployeeInfo"];
                 ViewBag.UserName = objUser.UserName;
-                var employeeList = db.EmployeeRoleTables.Where(e => e.StorageCompanyId == empInfo.StorageCompanyId&&e.EmployeeId!=empInfo.EmployeeId).ToList();
+                var employeeList = db.EmployeeRoleTables.Where(e => e.StorageCompanyId == empInfo.StorageCompanyId && e.EmployeeId != empInfo.EmployeeId).ToList();
                 return View(employeeList);
 
             }
@@ -39,15 +39,52 @@ namespace NCRMM_System.Controllers
             }
         }
         [HttpPost]
-        public ActionResult ApproveEmployee(List<EmployeeRoleTable> EmployeeRoleTableList)
+        public ActionResult ApproveEmployee(List<int> approveList)
         {
-            var item = EmployeeRoleTableList;
+           
+            
             if (Session["User"] != null)
             {
+                
                 User_tbl objUser = (User_tbl)Session["User"];
                 EmployeeRoleTable empInfo = (EmployeeRoleTable)Session["EmployeeInfo"];
                 ViewBag.UserName = objUser.UserName;
                 var employeeList = db.EmployeeRoleTables.Where(e => e.StorageCompanyId == empInfo.StorageCompanyId && e.EmployeeId != empInfo.EmployeeId).ToList();
+                foreach (EmployeeRoleTable emp in employeeList)
+                {
+                    if (approveList != null)
+                    {
+
+
+                        if (approveList.Contains(emp.EmployeeId))
+                        {
+                            if (emp.IsApprove == false)
+                            {
+                                var item = db.EmployeeRoleTables.FirstOrDefault(d => d.EmployeeId == emp.EmployeeId);
+                                item.IsApprove = true;
+                                db.Entry(item).State = EntityState.Modified;
+                                db.SaveChanges();
+                            }
+
+
+
+                        }
+                        else
+                        {
+                            var item = db.EmployeeRoleTables.FirstOrDefault(d => d.EmployeeId == emp.EmployeeId);
+                            item.IsApprove = false;
+                            db.Entry(item).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        var item = db.EmployeeRoleTables.FirstOrDefault(d => d.EmployeeId == emp.EmployeeId);
+                        item.IsApprove = false;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
                 return View(employeeList);
 
             }

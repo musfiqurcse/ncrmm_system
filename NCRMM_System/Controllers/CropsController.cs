@@ -116,18 +116,18 @@ namespace NCRMM_System.Controllers
             {
                 User_tbl objUser = (User_tbl) Session["User"];
                 ViewBag.UserName = objUser.FullName;
-
+                if (ModelState.IsValid)
+                {
+                    db.Entry(crops_tbl).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return View(crops_tbl);
+                }
             }
             else
             {
                 return RedirectToAction("Login", "Login");
             }
-            if (ModelState.IsValid)
-            {
-                db.Entry(crops_tbl).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+
             //  ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName", crops_tbl.CropsCatagoryId);
             return View(crops_tbl);
         }
