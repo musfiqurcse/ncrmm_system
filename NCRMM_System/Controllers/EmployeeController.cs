@@ -17,8 +17,22 @@ namespace NCRMM_System.Controllers
         // GET: /Employee/
         public ActionResult Index()
         {
-            var employeeroletables = db.EmployeeRoleTables.Include(e => e.StockMasterRecordCrops_tbl).Include(e => e.StorageCompany_tbl).Include(e => e.User_tbl);
-            return View(employeeroletables.ToList());
+
+            if (Session["User"] != null)
+            {
+                User_tbl objUser = (User_tbl)Session["User"];
+                EmployeeRoleTable empInfo = (EmployeeRoleTable)Session["EmployeeInfo"];
+                ViewBag.UserName = objUser.UserName;
+                var employeeList = db.EmployeeRoleTables.Where(e => e.StorageCompanyId == empInfo.StorageCompanyId).ToList();
+                return View(employeeList);
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+
+            }
+           
         }
 
         public ActionResult ApproveEmployee()
