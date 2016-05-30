@@ -12,15 +12,17 @@ namespace NCRMM_System.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class StockReleaseDetails_tbl
+    public partial class StockMasterMainList_tbl
     {
-        public int StockReleaseId { get; set; }
-        public decimal AmountRelease { get; set; }
-        public int StockMasterRecordCropsId { get; set; }
-        public int CropsCatagoryId { get; set; }
-        public string Description { get; set; }
+        public int MasterInfoId { get; set; }
+        public int StockMasterId { get; set; }
+        public int CompanyId { get; set; }
+        public decimal StorageAmount { get; set; }
+        public decimal ReleaseAmount { get; set; }
+        public decimal AvailableStorageAmount { get; set; }
+        public bool IsApprove { get; set; }
     
-        public virtual StockDetailsRecord_tbl StockDetailsRecord_tbl { get; set; }
+        public virtual StorageCompany_tbl StorageCompany_tbl { get; set; }
         public virtual StockMasterRecordCrops_tbl StockMasterRecordCrops_tbl { get; set; }
     }
 }

@@ -21,6 +21,22 @@ namespace NCRMM_System.Controllers
             return View(stockmasterrecordcrops_tbl.ToList());
         }
 
+
+        public ActionResult StockCropsDetails()
+        {
+            if (Session["EmployeeInfo"] != null)
+            {
+                EmployeeRoleTable objEmployee = (EmployeeRoleTable)Session["EmployeeInfo"];
+                ViewBag.UserName = objEmployee.User_tbl.FullName;
+                ViewBag.StorageCompanyId = new SelectList(db.StorageCompany_tbl, "StorageCompanyId", "CompanyName");
+                ViewBag.StockMasterRecordId = new SelectList(db.EmployeeRoleTables, "EmployeeId", "EmployeeRole");
+                var stockTempRecordTableInfo =
+                    new SelectList(db.StockTempRecords.Where(emp => emp.EmployeerId == objEmployee.EmployeeId));
+                return View();
+            }
+            return RedirectToAction("Login", "Login");
+        }
+
         // GET: /StockMasterRecordCrops/Details/5
         public ActionResult Details(int? id)
         {
@@ -39,9 +55,18 @@ namespace NCRMM_System.Controllers
         // GET: /StockMasterRecordCrops/Create
         public ActionResult Create()
         {
-            ViewBag.StorageCompanyId = new SelectList(db.StorageCompany_tbl, "StorageCompanyId", "CompanyName");
-            ViewBag.StockMasterRecordId = new SelectList(db.EmployeeRoleTables, "EmployeeId", "EmployeeRole");
-            return View();
+
+            if (Session["EmployeeInfo"] != null)
+            {
+                EmployeeRoleTable objEmployee = (EmployeeRoleTable)Session["EmployeeInfo"];
+                ViewBag.UserName = objEmployee.User_tbl.FullName;
+                ViewBag.StorageCompanyId = new SelectList(db.StorageCompany_tbl, "StorageCompanyId", "CompanyName");
+                ViewBag.StockMasterRecordId = new SelectList(db.EmployeeRoleTables, "EmployeeId", "EmployeeRole");
+                //var stockTempRecordTableInfo()
+                return View();
+            }
+            return RedirectToAction("Login", "Login");
+
         }
 
         // POST: /StockMasterRecordCrops/Create

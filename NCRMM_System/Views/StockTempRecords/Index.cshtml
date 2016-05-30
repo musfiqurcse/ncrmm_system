@@ -1,0 +1,40 @@
+﻿@model IEnumerable<NCRMM_System.Models.StockTempRecord>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainEmployeeLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StockAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CropsCatagory_tbl.CropsCatagoryName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CropsCatagory_tbl.CropsCatagoryName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.tmpStockDetailId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.tmpStockDetailId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.tmpStockDetailId })
+        </td>
+    </tr>
+}
+
+</table>

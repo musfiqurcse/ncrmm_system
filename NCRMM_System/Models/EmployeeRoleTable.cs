@@ -14,6 +14,12 @@ namespace NCRMM_System.Models
     
     public partial class EmployeeRoleTable
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public EmployeeRoleTable()
+        {
+            this.StockTempRecords = new HashSet<StockTempRecord>();
+        }
+    
         public int EmployeeId { get; set; }
         public string EmployeeRole { get; set; }
         public int UpdateBy { get; set; }
@@ -23,7 +29,9 @@ namespace NCRMM_System.Models
         public Nullable<bool> IsApprove { get; set; }
     
         public virtual StorageCompany_tbl StorageCompany_tbl { get; set; }
-        public virtual StockMasterRecordCrops_tbl StockMasterRecordCrops_tbl { get; set; }
         public virtual User_tbl User_tbl { get; set; }
+        public virtual StockMasterRecordCrops_tbl StockMasterRecordCrops_tbl { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockTempRecord> StockTempRecords { get; set; }
     }
 }

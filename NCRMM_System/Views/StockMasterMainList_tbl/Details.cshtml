@@ -1,0 +1,67 @@
+﻿@model NCRMM_System.Models.StockMasterMainList_tbl
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MainEmployeeLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StockMasterMainList_tbl</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StorageAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StorageAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReleaseAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReleaseAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableStorageAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailableStorageAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsApprove)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsApprove)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StorageCompany_tbl.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StorageCompany_tbl.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockMasterRecordCrops_tbl.InvoiceNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockMasterRecordCrops_tbl.InvoiceNo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MasterInfoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

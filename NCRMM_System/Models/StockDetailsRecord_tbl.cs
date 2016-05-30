@@ -21,7 +21,7 @@ namespace NCRMM_System.Models
         }
     
         public int StockDetailsRecordId { get; set; }
-        public int CropsId { get; set; }
+        public int CropsCatagoryId { get; set; }
         public Nullable<decimal> AmountMainStocked { get; set; }
         public string Description { get; set; }
         public int StockMasterRecordId { get; set; }
@@ -31,10 +31,10 @@ namespace NCRMM_System.Models
         public Nullable<decimal> AmountSecondStocked { get; set; }
         public int CropsOwnerId { get; set; }
     
+        public virtual Crops_tbl Crops_tbl { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductsList_tbl> ProductsList_tbl { get; set; }
         public virtual StockMasterRecordCrops_tbl StockMasterRecordCrops_tbl { get; set; }
         public virtual StockReleaseDetails_tbl StockReleaseDetails_tbl { get; set; }
-        public virtual Crops_tbl Crops_tbl { get; set; }
     }
 }

@@ -128,9 +128,9 @@
             <PropertyRef Name="StockDetailsRecordId" />
           </Key>
           <Property Name="StockDetailsRecordId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CropsId" Type="int" Nullable="false" />
+          <Property Name="CropsCatagoryId" Type="int" Nullable="false" />
           <Property Name="AmountMainStocked" Type="numeric" Precision="18" Scale="2" />
-          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="StockMasterRecordId" Type="int" Nullable="false" />
           <Property Name="AvailableAmount" Type="numeric" Precision="18" Scale="0" />
           <Property Name="UpdateDate" Type="date" Nullable="false" />
@@ -138,13 +138,25 @@
           <Property Name="AmountSecondStocked" Type="numeric" Precision="18" Scale="0" />
           <Property Name="CropsOwnerId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="StockMasterMainList_tbl">
+          <Key>
+            <PropertyRef Name="MasterInfoId" />
+          </Key>
+          <Property Name="MasterInfoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StockMasterId" Type="int" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="StorageAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ReleaseAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="AvailableStorageAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsApprove" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="StockMasterRecordCrops_tbl">
           <Key>
             <PropertyRef Name="StockMasterRecordId" />
           </Key>
           <Property Name="StockMasterRecordId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="InvoiceNo" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="AmountOfCropsStored" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CropsAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="StorageCompanyId" Type="int" Nullable="false" />
           <Property Name="SourceUserId" Type="int" Nullable="false" />
           <Property Name="EntryEmployeeId" Type="int" Nullable="false" />
@@ -156,9 +168,20 @@
             <PropertyRef Name="StockReleaseId" />
           </Key>
           <Property Name="StockReleaseId" Type="int" Nullable="false" />
-          <Property Name="StockDetailsRecordId" Type="int" Nullable="false" />
           <Property Name="AmountRelease" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="StockMasterRecordCropsId" Type="int" Nullable="false" />
+          <Property Name="CropsCatagoryId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="StockTempRecord">
+          <Key>
+            <PropertyRef Name="tmpStockDetailId" />
+          </Key>
+          <Property Name="tmpStockDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CropsCatagoryId" Type="int" Nullable="false" />
+          <Property Name="StockAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="EmployeerId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="StorageCompany_tbl">
           <Key>
@@ -319,7 +342,7 @@
               <PropertyRef Name="CropsId" />
             </Principal>
             <Dependent Role="StockDetailsRecord_tbl">
-              <PropertyRef Name="CropsId" />
+              <PropertyRef Name="CropsCatagoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -332,6 +355,30 @@
             </Principal>
             <Dependent Role="StockDetailsRecord_tbl">
               <PropertyRef Name="StockMasterRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockMasterMainList_tbl_StockMasterRecordCrops_tbl">
+          <End Role="StockMasterRecordCrops_tbl" Type="Self.StockMasterRecordCrops_tbl" Multiplicity="1" />
+          <End Role="StockMasterMainList_tbl" Type="Self.StockMasterMainList_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockMasterRecordCrops_tbl">
+              <PropertyRef Name="StockMasterRecordId" />
+            </Principal>
+            <Dependent Role="StockMasterMainList_tbl">
+              <PropertyRef Name="StockMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockMasterMainList_tbl_StorageCompany_tbl">
+          <End Role="StorageCompany_tbl" Type="Self.StorageCompany_tbl" Multiplicity="1" />
+          <End Role="StockMasterMainList_tbl" Type="Self.StockMasterMainList_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StorageCompany_tbl">
+              <PropertyRef Name="StorageCompanyId" />
+            </Principal>
+            <Dependent Role="StockMasterMainList_tbl">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -383,6 +430,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StockTempRecord_CropsCatagory_tbl">
+          <End Role="CropsCatagory_tbl" Type="Self.CropsCatagory_tbl" Multiplicity="1" />
+          <End Role="StockTempRecord" Type="Self.StockTempRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CropsCatagory_tbl">
+              <PropertyRef Name="CropsCatagoryId" />
+            </Principal>
+            <Dependent Role="StockTempRecord">
+              <PropertyRef Name="CropsCatagoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockTempRecord_EmployeeRoleTable">
+          <End Role="EmployeeRoleTable" Type="Self.EmployeeRoleTable" Multiplicity="1" />
+          <End Role="StockTempRecord" Type="Self.StockTempRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeRoleTable">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="StockTempRecord">
+              <PropertyRef Name="EmployeerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_tbl_UserType_tbl">
           <End Role="UserType_tbl" Type="Self.UserType_tbl" Multiplicity="1" />
           <End Role="User_tbl" Type="Self.User_tbl" Multiplicity="*" />
@@ -408,8 +479,10 @@
           <EntitySet Name="ProductsList_tbl" EntityType="Self.ProductsList_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SecurityCheck_tbl" EntityType="Self.SecurityCheck_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockDetailsRecord_tbl" EntityType="Self.StockDetailsRecord_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockMasterMainList_tbl" EntityType="Self.StockMasterMainList_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockMasterRecordCrops_tbl" EntityType="Self.StockMasterRecordCrops_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockReleaseDetails_tbl" EntityType="Self.StockReleaseDetails_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockTempRecord" EntityType="Self.StockTempRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StorageCompany_tbl" EntityType="Self.StorageCompany_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_tbl" EntityType="Self.User_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserType_tbl" EntityType="Self.UserType_tbl" Schema="dbo" store:Type="Tables" />
@@ -461,6 +534,14 @@
             <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
             <End Role="StockDetailsRecord_tbl" EntitySet="StockDetailsRecord_tbl" />
           </AssociationSet>
+          <AssociationSet Name="FK_StockMasterMainList_tbl_StockMasterRecordCrops_tbl" Association="Self.FK_StockMasterMainList_tbl_StockMasterRecordCrops_tbl">
+            <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
+            <End Role="StockMasterMainList_tbl" EntitySet="StockMasterMainList_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockMasterMainList_tbl_StorageCompany_tbl" Association="Self.FK_StockMasterMainList_tbl_StorageCompany_tbl">
+            <End Role="StorageCompany_tbl" EntitySet="StorageCompany_tbl" />
+            <End Role="StockMasterMainList_tbl" EntitySet="StockMasterMainList_tbl" />
+          </AssociationSet>
           <AssociationSet Name="FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" Association="Self.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl">
             <End Role="StorageCompany_tbl" EntitySet="StorageCompany_tbl" />
             <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
@@ -476,6 +557,14 @@
           <AssociationSet Name="FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl" Association="Self.FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl">
             <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
             <End Role="StockReleaseDetails_tbl" EntitySet="StockReleaseDetails_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockTempRecord_CropsCatagory_tbl" Association="Self.FK_StockTempRecord_CropsCatagory_tbl">
+            <End Role="CropsCatagory_tbl" EntitySet="CropsCatagory_tbl" />
+            <End Role="StockTempRecord" EntitySet="StockTempRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockTempRecord_EmployeeRoleTable" Association="Self.FK_StockTempRecord_EmployeeRoleTable">
+            <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTable" />
+            <End Role="StockTempRecord" EntitySet="StockTempRecord" />
           </AssociationSet>
           <AssociationSet Name="FK_User_tbl_UserType_tbl" Association="Self.FK_User_tbl_UserType_tbl">
             <End Role="UserType_tbl" EntitySet="UserType_tbl" />
@@ -573,7 +662,7 @@
           <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="OrderDetalis_tbl" Relationship="Self.FK_OrderDetalis_tbl_ProductsList_tbl" FromRole="ProductsList_tbl" ToRole="OrderDetalis_tbl" />
-          <NavigationProperty Name="StockDetailsRecord_tbl" Relationship="Self.FK_ProductsList_tbl_StockDetailsRecord_tbl" FromRole="ProductsList_tbl" ToRole="StockDetailsRecord_tbl" />
+          <NavigationProperty Name="StockDetailsRecord_tbl" Relationship="NCRMMLS_DBModel.FK_ProductsList_tbl_StockDetailsRecord_tbl" FromRole="ProductsList_tbl" ToRole="StockDetailsRecord_tbl" />
         </EntityType>
         <EntityType Name="SecurityCheck_tbl">
           <Key>
@@ -585,53 +674,6 @@
           <Property Name="Answer" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="User_tbl" Relationship="NCRMMLS_DBModel.FK_SecurityCheck_tbl_User_tbl" FromRole="SecurityCheck_tbl" ToRole="User_tbl" />
-        </EntityType>
-        <EntityType Name="StockDetailsRecord_tbl">
-          <Key>
-            <PropertyRef Name="StockDetailsRecordId" />
-          </Key>
-          <Property Name="StockDetailsRecordId" Type="Int32" Nullable="false" />
-          <Property Name="CropsId" Type="Int32" Nullable="false" />
-          <Property Name="AmountMainStocked" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StockMasterRecordId" Type="Int32" Nullable="false" />
-          <Property Name="AvailableAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="IsReferred" Type="Boolean" />
-          <Property Name="AmountSecondStocked" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="CropsOwnerId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ProductsList_tbl" Relationship="Self.FK_ProductsList_tbl_StockDetailsRecord_tbl" FromRole="StockDetailsRecord_tbl" ToRole="ProductsList_tbl" />
-          <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="Self.FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl" FromRole="StockDetailsRecord_tbl" ToRole="StockMasterRecordCrops_tbl" />
-          <NavigationProperty Name="StockReleaseDetails_tbl" Relationship="Self.FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl" FromRole="StockDetailsRecord_tbl" ToRole="StockReleaseDetails_tbl" />
-          <NavigationProperty Name="Crops_tbl" Relationship="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_Crops_tbl" FromRole="StockDetailsRecord_tbl" ToRole="Crops_tbl" />
-        </EntityType>
-        <EntityType Name="StockMasterRecordCrops_tbl">
-          <Key>
-            <PropertyRef Name="StockMasterRecordId" />
-          </Key>
-          <Property Name="StockMasterRecordId" Type="Int32" Nullable="false" />
-          <Property Name="InvoiceNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="AmountOfCropsStored" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="StorageCompanyId" Type="Int32" Nullable="false" />
-          <Property Name="SourceUserId" Type="Int32" Nullable="false" />
-          <Property Name="EntryEmployeeId" Type="Int32" Nullable="false" />
-          <Property Name="RecordDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="StockRecordType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="StockDetailsRecord_tbl" Relationship="Self.FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="StockDetailsRecord_tbl" />
-          <NavigationProperty Name="StockReleaseDetails_tbl" Relationship="Self.FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="StockReleaseDetails_tbl" />
-          <NavigationProperty Name="StorageCompany_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="StorageCompany_tbl" />
-          <NavigationProperty Name="EmployeeRoleTable" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="EmployeeRoleTable" />
-        </EntityType>
-        <EntityType Name="StockReleaseDetails_tbl">
-          <Key>
-            <PropertyRef Name="StockReleaseId" />
-          </Key>
-          <Property Name="StockReleaseId" Type="Int32" Nullable="false" />
-          <Property Name="StockDetailsRecordId" Type="Int32" Nullable="false" />
-          <Property Name="AmountRelease" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="StockMasterRecordCropsId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="StockDetailsRecord_tbl" Relationship="Self.FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl" FromRole="StockReleaseDetails_tbl" ToRole="StockDetailsRecord_tbl" />
-          <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="Self.FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl" FromRole="StockReleaseDetails_tbl" ToRole="StockMasterRecordCrops_tbl" />
         </EntityType>
         <EntityType Name="UserType_tbl">
           <Key>
@@ -690,54 +732,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProductsList_tbl_StockDetailsRecord_tbl">
-          <End Role="StockDetailsRecord_tbl" Type="Self.StockDetailsRecord_tbl" Multiplicity="1" />
-          <End Role="ProductsList_tbl" Type="Self.ProductsList_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StockDetailsRecord_tbl">
-              <PropertyRef Name="StockDetailsRecordId" />
-            </Principal>
-            <Dependent Role="ProductsList_tbl">
-              <PropertyRef Name="CropsDetailsId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl">
-          <End Role="StockMasterRecordCrops_tbl" Type="Self.StockMasterRecordCrops_tbl" Multiplicity="1" />
-          <End Role="StockDetailsRecord_tbl" Type="Self.StockDetailsRecord_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StockMasterRecordCrops_tbl">
-              <PropertyRef Name="StockMasterRecordId" />
-            </Principal>
-            <Dependent Role="StockDetailsRecord_tbl">
-              <PropertyRef Name="StockMasterRecordId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl">
-          <End Role="StockDetailsRecord_tbl" Type="Self.StockDetailsRecord_tbl" Multiplicity="1" />
-          <End Role="StockReleaseDetails_tbl" Type="Self.StockReleaseDetails_tbl" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="StockDetailsRecord_tbl">
-              <PropertyRef Name="StockDetailsRecordId" />
-            </Principal>
-            <Dependent Role="StockReleaseDetails_tbl">
-              <PropertyRef Name="StockReleaseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl">
-          <End Role="StockMasterRecordCrops_tbl" Type="Self.StockMasterRecordCrops_tbl" Multiplicity="1" />
-          <End Role="StockReleaseDetails_tbl" Type="Self.StockReleaseDetails_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StockMasterRecordCrops_tbl">
-              <PropertyRef Name="StockMasterRecordId" />
-            </Principal>
-            <Dependent Role="StockReleaseDetails_tbl">
-              <PropertyRef Name="StockMasterRecordCropsId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="NCRMMLS_DBEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Address_tbl" EntityType="Self.Address_tbl" />
           <EntitySet Name="District_tbl" EntityType="Self.District_tbl" />
@@ -747,9 +741,6 @@
           <EntitySet Name="OrderMaster_tbl" EntityType="Self.OrderMaster_tbl" />
           <EntitySet Name="ProductsList_tbl" EntityType="Self.ProductsList_tbl" />
           <EntitySet Name="SecurityCheck_tbl" EntityType="Self.SecurityCheck_tbl" />
-          <EntitySet Name="StockDetailsRecord_tbl" EntityType="Self.StockDetailsRecord_tbl" />
-          <EntitySet Name="StockMasterRecordCrops_tbl" EntityType="Self.StockMasterRecordCrops_tbl" />
-          <EntitySet Name="StockReleaseDetails_tbl" EntityType="Self.StockReleaseDetails_tbl" />
           <EntitySet Name="UserType_tbl" EntityType="Self.UserType_tbl" />
           <AssociationSet Name="FK_Address_tbl_District_tbl" Association="Self.FK_Address_tbl_District_tbl">
             <End Role="District_tbl" EntitySet="District_tbl" />
@@ -767,50 +758,13 @@
             <End Role="ProductsList_tbl" EntitySet="ProductsList_tbl" />
             <End Role="OrderDetalis_tbl" EntitySet="OrderDetalis_tbl" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProductsList_tbl_StockDetailsRecord_tbl" Association="Self.FK_ProductsList_tbl_StockDetailsRecord_tbl">
-            <End Role="StockDetailsRecord_tbl" EntitySet="StockDetailsRecord_tbl" />
-            <End Role="ProductsList_tbl" EntitySet="ProductsList_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl" Association="Self.FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl">
-            <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
-            <End Role="StockDetailsRecord_tbl" EntitySet="StockDetailsRecord_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl" Association="Self.FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl">
-            <End Role="StockDetailsRecord_tbl" EntitySet="StockDetailsRecord_tbl" />
-            <End Role="StockReleaseDetails_tbl" EntitySet="StockReleaseDetails_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl" Association="Self.FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl">
-            <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
-            <End Role="StockReleaseDetails_tbl" EntitySet="StockReleaseDetails_tbl" />
-          </AssociationSet>
           <EntitySet Name="StorageCompany_tbl" EntityType="NCRMMLS_DBModel.StorageCompany_tbl" />
-          <AssociationSet Name="FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl">
-            <End Role="StorageCompany_tbl" EntitySet="StorageCompany_tbl" />
-            <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
-          </AssociationSet>
           <EntitySet Name="EmployeeRoleTables" EntityType="NCRMMLS_DBModel.EmployeeRoleTable" />
           <AssociationSet Name="FK_EmployeeRoleTable_StorageCompany_tbl" Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl">
             <End Role="StorageCompany_tbl" EntitySet="StorageCompany_tbl" />
             <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
           </AssociationSet>
-          <AssociationSet Name="FK_StockMasterRecordCrops_tbl_UserDetails_tbl" Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl">
-            <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
-            <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
-          </AssociationSet>
-          <EntitySet Name="Crops_tbl" EntityType="NCRMMLS_DBModel.Crops_tbl" />
           <EntitySet Name="CropsCatagory_tbl" EntityType="NCRMMLS_DBModel.CropsCatagory_tbl" />
-          <AssociationSet Name="FK_CropsCatagory_tbl_Crops_tbl" Association="NCRMMLS_DBModel.FK_CropsCatagory_tbl_Crops_tbl">
-            <End Role="Crops_tbl" EntitySet="Crops_tbl" />
-            <End Role="CropsCatagory_tbl" EntitySet="CropsCatagory_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetalis_tbl_Crops_tbl" Association="NCRMMLS_DBModel.FK_OrderDetalis_tbl_Crops_tbl">
-            <End Role="Crops_tbl" EntitySet="Crops_tbl" />
-            <End Role="OrderDetalis_tbl" EntitySet="OrderDetalis_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StockDetailsRecord_tbl_Crops_tbl" Association="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_Crops_tbl">
-            <End Role="Crops_tbl" EntitySet="Crops_tbl" />
-            <End Role="StockDetailsRecord_tbl" EntitySet="StockDetailsRecord_tbl" />
-          </AssociationSet>
           <EntitySet Name="User_tbl" EntityType="NCRMMLS_DBModel.User_tbl" />
           <AssociationSet Name="FK_EmployeeRoleTable_User_tbl" Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl">
             <End Role="User_tbl" EntitySet="User_tbl" />
@@ -824,7 +778,65 @@
             <End Role="UserType_tbl" EntitySet="UserType_tbl" />
             <End Role="User_tbl" EntitySet="User_tbl" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="StockMasterMainList_tbl" EntityType="NCRMMLS_DBModel.StockMasterMainList_tbl" />
+          <AssociationSet Name="FK_StockMasterMainList_tbl_StorageCompany_tbl" Association="NCRMMLS_DBModel.FK_StockMasterMainList_tbl_StorageCompany_tbl">
+            <End Role="StorageCompany_tbl" EntitySet="StorageCompany_tbl" />
+            <End Role="StockMasterMainList_tbl" EntitySet="StockMasterMainList_tbl" />
+          </AssociationSet>
+          <EntitySet Name="StockMasterRecordCrops_tbl" EntityType="NCRMMLS_DBModel.StockMasterRecordCrops_tbl" />
+          <AssociationSet Name="FK_StockMasterRecordCrops_tbl_UserDetails_tbl" Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl">
+            <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
+            <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockMasterMainList_tbl_StockMasterRecordCrops_tbl" Association="NCRMMLS_DBModel.FK_StockMasterMainList_tbl_StockMasterRecordCrops_tbl">
+            <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
+            <End Role="StockMasterMainList_tbl" EntitySet="StockMasterMainList_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl">
+            <End Role="StorageCompany_tbl" EntitySet="StorageCompany_tbl" />
+            <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
+          </AssociationSet>
+          <EntitySet Name="Crops_tbl" EntityType="NCRMMLS_DBModel.Crops_tbl" />
+          <AssociationSet Name="FK_CropsCatagory_tbl_Crops_tbl" Association="NCRMMLS_DBModel.FK_CropsCatagory_tbl_Crops_tbl">
+            <End Role="Crops_tbl" EntitySet="Crops_tbl" />
+            <End Role="CropsCatagory_tbl" EntitySet="CropsCatagory_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetalis_tbl_Crops_tbl" Association="NCRMMLS_DBModel.FK_OrderDetalis_tbl_Crops_tbl">
+            <End Role="Crops_tbl" EntitySet="Crops_tbl" />
+            <End Role="OrderDetalis_tbl" EntitySet="OrderDetalis_tbl" />
+          </AssociationSet>
+          <EntitySet Name="StockDetailsRecord_tbl" EntityType="NCRMMLS_DBModel.StockDetailsRecord_tbl" />
+          <EntitySet Name="StockReleaseDetails_tbl" EntityType="NCRMMLS_DBModel.StockReleaseDetails_tbl" />
+          <EntitySet Name="StockTempRecords" EntityType="NCRMMLS_DBModel.StockTempRecord" />
+          <AssociationSet Name="FK_StockDetailsRecord_tbl_Crops_tbl" Association="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_Crops_tbl">
+            <End Role="Crops_tbl" EntitySet="Crops_tbl" />
+            <End Role="StockDetailsRecord_tbl" EntitySet="StockDetailsRecord_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockTempRecord_CropsCatagory_tbl" Association="NCRMMLS_DBModel.FK_StockTempRecord_CropsCatagory_tbl">
+            <End Role="CropsCatagory_tbl" EntitySet="CropsCatagory_tbl" />
+            <End Role="StockTempRecord" EntitySet="StockTempRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockTempRecord_EmployeeRoleTable" Association="NCRMMLS_DBModel.FK_StockTempRecord_EmployeeRoleTable">
+            <End Role="EmployeeRoleTable" EntitySet="EmployeeRoleTables" />
+            <End Role="StockTempRecord" EntitySet="StockTempRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductsList_tbl_StockDetailsRecord_tbl" Association="NCRMMLS_DBModel.FK_ProductsList_tbl_StockDetailsRecord_tbl">
+            <End Role="StockDetailsRecord_tbl" EntitySet="StockDetailsRecord_tbl" />
+            <End Role="ProductsList_tbl" EntitySet="ProductsList_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl" Association="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl">
+            <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
+            <End Role="StockDetailsRecord_tbl" EntitySet="StockDetailsRecord_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl" Association="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl">
+            <End Role="StockDetailsRecord_tbl" EntitySet="StockDetailsRecord_tbl" />
+            <End Role="StockReleaseDetails_tbl" EntitySet="StockReleaseDetails_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl" Association="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl">
+            <End Role="StockMasterRecordCrops_tbl" EntitySet="StockMasterRecordCrops_tbl" />
+            <End Role="StockReleaseDetails_tbl" EntitySet="StockReleaseDetails_tbl" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="StorageCompany_tbl">
           <Key>
             <PropertyRef Name="StorageCompanyId" />
@@ -834,21 +846,10 @@
           <Property Name="Website" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StorageCapacity" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="StorageAvailable" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" FromRole="StorageCompany_tbl" ToRole="StockMasterRecordCrops_tbl" />
           <NavigationProperty Name="EmployeeRoleTables" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl" FromRole="StorageCompany_tbl" ToRole="EmployeeRoleTable" />
+          <NavigationProperty Name="StockMasterMainList_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterMainList_tbl_StorageCompany_tbl" FromRole="StorageCompany_tbl" ToRole="StockMasterMainList_tbl" />
+          <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" FromRole="StorageCompany_tbl" ToRole="StockMasterRecordCrops_tbl" />
         </EntityType>
-        <Association Name="FK_StockMasterRecordCrops_tbl_StorageCompany_tbl">
-          <End Type="NCRMMLS_DBModel.StorageCompany_tbl" Role="StorageCompany_tbl" Multiplicity="1" />
-          <End Type="NCRMMLS_DBModel.StockMasterRecordCrops_tbl" Role="StockMasterRecordCrops_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StorageCompany_tbl">
-              <PropertyRef Name="StorageCompanyId" />
-            </Principal>
-            <Dependent Role="StockMasterRecordCrops_tbl">
-              <PropertyRef Name="StorageCompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="EmployeeRoleTable">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -861,8 +862,9 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="IsApprove" Type="Boolean" />
           <NavigationProperty Name="StorageCompany_tbl" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl" FromRole="EmployeeRoleTable" ToRole="StorageCompany_tbl" />
-          <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl" FromRole="EmployeeRoleTable" ToRole="StockMasterRecordCrops_tbl" />
           <NavigationProperty Name="User_tbl" Relationship="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl" FromRole="EmployeeRoleTable" ToRole="User_tbl" />
+          <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl" FromRole="EmployeeRoleTable" ToRole="StockMasterRecordCrops_tbl" />
+          <NavigationProperty Name="StockTempRecords" Relationship="NCRMMLS_DBModel.FK_StockTempRecord_EmployeeRoleTable" FromRole="EmployeeRoleTable" ToRole="StockTempRecord" />
         </EntityType>
         <Association Name="FK_EmployeeRoleTable_StorageCompany_tbl">
           <End Type="NCRMMLS_DBModel.StorageCompany_tbl" Role="StorageCompany_tbl" Multiplicity="1" />
@@ -876,29 +878,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StockMasterRecordCrops_tbl_UserDetails_tbl">
-          <End Type="NCRMMLS_DBModel.EmployeeRoleTable" Role="EmployeeRoleTable" Multiplicity="1" />
-          <End Type="NCRMMLS_DBModel.StockMasterRecordCrops_tbl" Role="StockMasterRecordCrops_tbl" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="EmployeeRoleTable">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="StockMasterRecordCrops_tbl">
-              <PropertyRef Name="StockMasterRecordId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Crops_tbl">
-          <Key>
-            <PropertyRef Name="CropsId" />
-          </Key>
-          <Property Name="CropsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CropsName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CropsCatagory_tbl" Relationship="NCRMMLS_DBModel.FK_CropsCatagory_tbl_Crops_tbl" FromRole="Crops_tbl" ToRole="CropsCatagory_tbl" />
-          <NavigationProperty Name="OrderDetalis_tbl" Relationship="NCRMMLS_DBModel.FK_OrderDetalis_tbl_Crops_tbl" FromRole="Crops_tbl" ToRole="OrderDetalis_tbl" />
-          <NavigationProperty Name="StockDetailsRecord_tbl" Relationship="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_Crops_tbl" FromRole="Crops_tbl" ToRole="StockDetailsRecord_tbl" />
-        </EntityType>
         <EntityType Name="CropsCatagory_tbl">
           <Key>
             <PropertyRef Name="CropsCatagoryId" />
@@ -908,43 +887,8 @@
           <Property Name="Details" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CropsId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Crops_tbl" Relationship="NCRMMLS_DBModel.FK_CropsCatagory_tbl_Crops_tbl" FromRole="CropsCatagory_tbl" ToRole="Crops_tbl" />
+          <NavigationProperty Name="StockTempRecords" Relationship="NCRMMLS_DBModel.FK_StockTempRecord_CropsCatagory_tbl" FromRole="CropsCatagory_tbl" ToRole="StockTempRecord" />
         </EntityType>
-        <Association Name="FK_CropsCatagory_tbl_Crops_tbl">
-          <End Type="NCRMMLS_DBModel.Crops_tbl" Role="Crops_tbl" Multiplicity="1" />
-          <End Type="NCRMMLS_DBModel.CropsCatagory_tbl" Role="CropsCatagory_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Crops_tbl">
-              <PropertyRef Name="CropsId" />
-            </Principal>
-            <Dependent Role="CropsCatagory_tbl">
-              <PropertyRef Name="CropsId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetalis_tbl_Crops_tbl">
-          <End Type="NCRMMLS_DBModel.Crops_tbl" Role="Crops_tbl" Multiplicity="1" />
-          <End Type="NCRMMLS_DBModel.OrderDetalis_tbl" Role="OrderDetalis_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Crops_tbl">
-              <PropertyRef Name="CropsId" />
-            </Principal>
-            <Dependent Role="OrderDetalis_tbl">
-              <PropertyRef Name="CropsId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StockDetailsRecord_tbl_Crops_tbl">
-          <End Type="NCRMMLS_DBModel.Crops_tbl" Role="Crops_tbl" Multiplicity="1" />
-          <End Type="NCRMMLS_DBModel.StockDetailsRecord_tbl" Role="StockDetailsRecord_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Crops_tbl">
-              <PropertyRef Name="CropsId" />
-            </Principal>
-            <Dependent Role="StockDetailsRecord_tbl">
-              <PropertyRef Name="CropsId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="User_tbl">
           <Key>
             <PropertyRef Name="UserId" />
@@ -997,7 +941,249 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="StockMasterMainList_tbl">
+          <Key>
+            <PropertyRef Name="MasterInfoId" />
+          </Key>
+          <Property Name="MasterInfoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockMasterId" Type="Int32" Nullable="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="StorageAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ReleaseAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="AvailableStorageAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IsApprove" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="StorageCompany_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterMainList_tbl_StorageCompany_tbl" FromRole="StockMasterMainList_tbl" ToRole="StorageCompany_tbl" />
+          <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterMainList_tbl_StockMasterRecordCrops_tbl" FromRole="StockMasterMainList_tbl" ToRole="StockMasterRecordCrops_tbl" />
+        </EntityType>
+        <Association Name="FK_StockMasterMainList_tbl_StorageCompany_tbl">
+          <End Type="NCRMMLS_DBModel.StorageCompany_tbl" Role="StorageCompany_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.StockMasterMainList_tbl" Role="StockMasterMainList_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StorageCompany_tbl">
+              <PropertyRef Name="StorageCompanyId" />
+            </Principal>
+            <Dependent Role="StockMasterMainList_tbl">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StockMasterRecordCrops_tbl">
+          <Key>
+            <PropertyRef Name="StockMasterRecordId" />
+          </Key>
+          <Property Name="StockMasterRecordId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CropsAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="StorageCompanyId" Type="Int32" Nullable="false" />
+          <Property Name="SourceUserId" Type="Int32" Nullable="false" />
+          <Property Name="EntryEmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="RecordDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="StockRecordType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeRoleTable" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="EmployeeRoleTable" />
+          <NavigationProperty Name="StockMasterMainList_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterMainList_tbl_StockMasterRecordCrops_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="StockMasterMainList_tbl" />
+          <NavigationProperty Name="StorageCompany_tbl" Relationship="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="StorageCompany_tbl" />
+          <NavigationProperty Name="StockDetailsRecord_tbl" Relationship="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="StockDetailsRecord_tbl" />
+          <NavigationProperty Name="StockReleaseDetails_tbl" Relationship="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl" FromRole="StockMasterRecordCrops_tbl" ToRole="StockReleaseDetails_tbl" />
+        </EntityType>
+        <Association Name="FK_StockMasterRecordCrops_tbl_UserDetails_tbl">
+          <End Type="NCRMMLS_DBModel.EmployeeRoleTable" Role="EmployeeRoleTable" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.StockMasterRecordCrops_tbl" Role="StockMasterRecordCrops_tbl" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeRoleTable">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="StockMasterRecordCrops_tbl">
+              <PropertyRef Name="StockMasterRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockMasterMainList_tbl_StockMasterRecordCrops_tbl">
+          <End Type="NCRMMLS_DBModel.StockMasterRecordCrops_tbl" Role="StockMasterRecordCrops_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.StockMasterMainList_tbl" Role="StockMasterMainList_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockMasterRecordCrops_tbl">
+              <PropertyRef Name="StockMasterRecordId" />
+            </Principal>
+            <Dependent Role="StockMasterMainList_tbl">
+              <PropertyRef Name="StockMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockMasterRecordCrops_tbl_StorageCompany_tbl">
+          <End Type="NCRMMLS_DBModel.StorageCompany_tbl" Role="StorageCompany_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.StockMasterRecordCrops_tbl" Role="StockMasterRecordCrops_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StorageCompany_tbl">
+              <PropertyRef Name="StorageCompanyId" />
+            </Principal>
+            <Dependent Role="StockMasterRecordCrops_tbl">
+              <PropertyRef Name="StorageCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Crops_tbl">
+          <Key>
+            <PropertyRef Name="CropsId" />
+          </Key>
+          <Property Name="CropsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CropsName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CropsCatagory_tbl" Relationship="NCRMMLS_DBModel.FK_CropsCatagory_tbl_Crops_tbl" FromRole="Crops_tbl" ToRole="CropsCatagory_tbl" />
+          <NavigationProperty Name="OrderDetalis_tbl" Relationship="NCRMMLS_DBModel.FK_OrderDetalis_tbl_Crops_tbl" FromRole="Crops_tbl" ToRole="OrderDetalis_tbl" />
+          <NavigationProperty Name="StockDetailsRecord_tbl" Relationship="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_Crops_tbl" FromRole="Crops_tbl" ToRole="StockDetailsRecord_tbl" />
+        </EntityType>
+        <Association Name="FK_CropsCatagory_tbl_Crops_tbl">
+          <End Type="NCRMMLS_DBModel.Crops_tbl" Role="Crops_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.CropsCatagory_tbl" Role="CropsCatagory_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Crops_tbl">
+              <PropertyRef Name="CropsId" />
+            </Principal>
+            <Dependent Role="CropsCatagory_tbl">
+              <PropertyRef Name="CropsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetalis_tbl_Crops_tbl">
+          <End Type="NCRMMLS_DBModel.Crops_tbl" Role="Crops_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.OrderDetalis_tbl" Role="OrderDetalis_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Crops_tbl">
+              <PropertyRef Name="CropsId" />
+            </Principal>
+            <Dependent Role="OrderDetalis_tbl">
+              <PropertyRef Name="CropsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StockDetailsRecord_tbl">
+          <Key>
+            <PropertyRef Name="StockDetailsRecordId" />
+          </Key>
+          <Property Name="StockDetailsRecordId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CropsCatagoryId" Type="Int32" Nullable="false" />
+          <Property Name="AmountMainStocked" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="StockMasterRecordId" Type="Int32" Nullable="false" />
+          <Property Name="AvailableAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsReferred" Type="Boolean" />
+          <Property Name="AmountSecondStocked" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CropsOwnerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Crops_tbl" Relationship="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_Crops_tbl" FromRole="StockDetailsRecord_tbl" ToRole="Crops_tbl" />
+          <NavigationProperty Name="ProductsList_tbl" Relationship="NCRMMLS_DBModel.FK_ProductsList_tbl_StockDetailsRecord_tbl" FromRole="StockDetailsRecord_tbl" ToRole="ProductsList_tbl" />
+          <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl" FromRole="StockDetailsRecord_tbl" ToRole="StockMasterRecordCrops_tbl" />
+          <NavigationProperty Name="StockReleaseDetails_tbl" Relationship="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl" FromRole="StockDetailsRecord_tbl" ToRole="StockReleaseDetails_tbl" />
+        </EntityType>
+        <EntityType Name="StockReleaseDetails_tbl">
+          <Key>
+            <PropertyRef Name="StockReleaseId" />
+          </Key>
+          <Property Name="StockReleaseId" Type="Int32" Nullable="false" />
+          <Property Name="AmountRelease" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="StockMasterRecordCropsId" Type="Int32" Nullable="false" />
+          <Property Name="CropsCatagoryId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StockDetailsRecord_tbl" Relationship="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl" FromRole="StockReleaseDetails_tbl" ToRole="StockDetailsRecord_tbl" />
+          <NavigationProperty Name="StockMasterRecordCrops_tbl" Relationship="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl" FromRole="StockReleaseDetails_tbl" ToRole="StockMasterRecordCrops_tbl" />
+        </EntityType>
+        <EntityType Name="StockTempRecord">
+          <Key>
+            <PropertyRef Name="tmpStockDetailId" />
+          </Key>
+          <Property Name="tmpStockDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CropsCatagoryId" Type="Int32" Nullable="false" />
+          <Property Name="StockAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="EmployeerId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CropsCatagory_tbl" Relationship="NCRMMLS_DBModel.FK_StockTempRecord_CropsCatagory_tbl" FromRole="StockTempRecord" ToRole="CropsCatagory_tbl" />
+          <NavigationProperty Name="EmployeeRoleTable" Relationship="NCRMMLS_DBModel.FK_StockTempRecord_EmployeeRoleTable" FromRole="StockTempRecord" ToRole="EmployeeRoleTable" />
+        </EntityType>
+        <Association Name="FK_StockDetailsRecord_tbl_Crops_tbl">
+          <End Type="NCRMMLS_DBModel.Crops_tbl" Role="Crops_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.StockDetailsRecord_tbl" Role="StockDetailsRecord_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Crops_tbl">
+              <PropertyRef Name="CropsId" />
+            </Principal>
+            <Dependent Role="StockDetailsRecord_tbl">
+              <PropertyRef Name="CropsCatagoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockTempRecord_CropsCatagory_tbl">
+          <End Type="NCRMMLS_DBModel.CropsCatagory_tbl" Role="CropsCatagory_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.StockTempRecord" Role="StockTempRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CropsCatagory_tbl">
+              <PropertyRef Name="CropsCatagoryId" />
+            </Principal>
+            <Dependent Role="StockTempRecord">
+              <PropertyRef Name="CropsCatagoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockTempRecord_EmployeeRoleTable">
+          <End Type="NCRMMLS_DBModel.EmployeeRoleTable" Role="EmployeeRoleTable" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.StockTempRecord" Role="StockTempRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeRoleTable">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="StockTempRecord">
+              <PropertyRef Name="EmployeerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductsList_tbl_StockDetailsRecord_tbl">
+          <End Type="NCRMMLS_DBModel.StockDetailsRecord_tbl" Role="StockDetailsRecord_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.ProductsList_tbl" Role="ProductsList_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockDetailsRecord_tbl">
+              <PropertyRef Name="StockDetailsRecordId" />
+            </Principal>
+            <Dependent Role="ProductsList_tbl">
+              <PropertyRef Name="CropsDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl">
+          <End Type="NCRMMLS_DBModel.StockMasterRecordCrops_tbl" Role="StockMasterRecordCrops_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.StockDetailsRecord_tbl" Role="StockDetailsRecord_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockMasterRecordCrops_tbl">
+              <PropertyRef Name="StockMasterRecordId" />
+            </Principal>
+            <Dependent Role="StockDetailsRecord_tbl">
+              <PropertyRef Name="StockMasterRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl">
+          <End Type="NCRMMLS_DBModel.StockDetailsRecord_tbl" Role="StockDetailsRecord_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.StockReleaseDetails_tbl" Role="StockReleaseDetails_tbl" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="StockDetailsRecord_tbl">
+              <PropertyRef Name="StockDetailsRecordId" />
+            </Principal>
+            <Dependent Role="StockReleaseDetails_tbl">
+              <PropertyRef Name="StockReleaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl">
+          <End Type="NCRMMLS_DBModel.StockMasterRecordCrops_tbl" Role="StockMasterRecordCrops_tbl" Multiplicity="1" />
+          <End Type="NCRMMLS_DBModel.StockReleaseDetails_tbl" Role="StockReleaseDetails_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockMasterRecordCrops_tbl">
+              <PropertyRef Name="StockMasterRecordId" />
+            </Principal>
+            <Dependent Role="StockReleaseDetails_tbl">
+              <PropertyRef Name="StockMasterRecordCropsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1100,46 +1286,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="StockDetailsRecord_tbl">
-            <EntityTypeMapping TypeName="NCRMMLS_DBModel.StockDetailsRecord_tbl">
-              <MappingFragment StoreEntitySet="StockDetailsRecord_tbl">
-                <ScalarProperty Name="StockDetailsRecordId" ColumnName="StockDetailsRecordId" />
-                <ScalarProperty Name="CropsId" ColumnName="CropsId" />
-                <ScalarProperty Name="AmountMainStocked" ColumnName="AmountMainStocked" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="StockMasterRecordId" ColumnName="StockMasterRecordId" />
-                <ScalarProperty Name="AvailableAmount" ColumnName="AvailableAmount" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="IsReferred" ColumnName="IsReferred" />
-                <ScalarProperty Name="AmountSecondStocked" ColumnName="AmountSecondStocked" />
-                <ScalarProperty Name="CropsOwnerId" ColumnName="CropsOwnerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StockMasterRecordCrops_tbl">
-            <EntityTypeMapping TypeName="NCRMMLS_DBModel.StockMasterRecordCrops_tbl">
-              <MappingFragment StoreEntitySet="StockMasterRecordCrops_tbl">
-                <ScalarProperty Name="StockMasterRecordId" ColumnName="StockMasterRecordId" />
-                <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
-                <ScalarProperty Name="AmountOfCropsStored" ColumnName="AmountOfCropsStored" />
-                <ScalarProperty Name="StorageCompanyId" ColumnName="StorageCompanyId" />
-                <ScalarProperty Name="SourceUserId" ColumnName="SourceUserId" />
-                <ScalarProperty Name="EntryEmployeeId" ColumnName="EntryEmployeeId" />
-                <ScalarProperty Name="RecordDate" ColumnName="RecordDate" />
-                <ScalarProperty Name="StockRecordType" ColumnName="StockRecordType" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StockReleaseDetails_tbl">
-            <EntityTypeMapping TypeName="NCRMMLS_DBModel.StockReleaseDetails_tbl">
-              <MappingFragment StoreEntitySet="StockReleaseDetails_tbl">
-                <ScalarProperty Name="StockReleaseId" ColumnName="StockReleaseId" />
-                <ScalarProperty Name="StockDetailsRecordId" ColumnName="StockDetailsRecordId" />
-                <ScalarProperty Name="AmountRelease" ColumnName="AmountRelease" />
-                <ScalarProperty Name="StockMasterRecordCropsId" ColumnName="StockMasterRecordCropsId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserType_tbl">
             <EntityTypeMapping TypeName="NCRMMLS_DBModel.UserType_tbl">
               <MappingFragment StoreEntitySet="UserType_tbl">
@@ -1173,15 +1319,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Crops_tbl">
-            <EntityTypeMapping TypeName="NCRMMLS_DBModel.Crops_tbl">
-              <MappingFragment StoreEntitySet="Crops_tbl">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CropsName" ColumnName="CropsName" />
-                <ScalarProperty Name="CropsId" ColumnName="CropsId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CropsCatagory_tbl">
             <EntityTypeMapping TypeName="NCRMMLS_DBModel.CropsCatagory_tbl">
               <MappingFragment StoreEntitySet="CropsCatagory_tbl">
@@ -1203,6 +1340,80 @@
                 <ScalarProperty Name="Pass" ColumnName="Pass" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockMasterMainList_tbl">
+            <EntityTypeMapping TypeName="NCRMMLS_DBModel.StockMasterMainList_tbl">
+              <MappingFragment StoreEntitySet="StockMasterMainList_tbl">
+                <ScalarProperty Name="IsApprove" ColumnName="IsApprove" />
+                <ScalarProperty Name="AvailableStorageAmount" ColumnName="AvailableStorageAmount" />
+                <ScalarProperty Name="ReleaseAmount" ColumnName="ReleaseAmount" />
+                <ScalarProperty Name="StorageAmount" ColumnName="StorageAmount" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="StockMasterId" ColumnName="StockMasterId" />
+                <ScalarProperty Name="MasterInfoId" ColumnName="MasterInfoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockMasterRecordCrops_tbl">
+            <EntityTypeMapping TypeName="NCRMMLS_DBModel.StockMasterRecordCrops_tbl">
+              <MappingFragment StoreEntitySet="StockMasterRecordCrops_tbl">
+                <ScalarProperty Name="StockRecordType" ColumnName="StockRecordType" />
+                <ScalarProperty Name="RecordDate" ColumnName="RecordDate" />
+                <ScalarProperty Name="EntryEmployeeId" ColumnName="EntryEmployeeId" />
+                <ScalarProperty Name="SourceUserId" ColumnName="SourceUserId" />
+                <ScalarProperty Name="StorageCompanyId" ColumnName="StorageCompanyId" />
+                <ScalarProperty Name="CropsAmount" ColumnName="CropsAmount" />
+                <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
+                <ScalarProperty Name="StockMasterRecordId" ColumnName="StockMasterRecordId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Crops_tbl">
+            <EntityTypeMapping TypeName="NCRMMLS_DBModel.Crops_tbl">
+              <MappingFragment StoreEntitySet="Crops_tbl">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CropsName" ColumnName="CropsName" />
+                <ScalarProperty Name="CropsId" ColumnName="CropsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockDetailsRecord_tbl">
+            <EntityTypeMapping TypeName="NCRMMLS_DBModel.StockDetailsRecord_tbl">
+              <MappingFragment StoreEntitySet="StockDetailsRecord_tbl">
+                <ScalarProperty Name="CropsOwnerId" ColumnName="CropsOwnerId" />
+                <ScalarProperty Name="AmountSecondStocked" ColumnName="AmountSecondStocked" />
+                <ScalarProperty Name="IsReferred" ColumnName="IsReferred" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="AvailableAmount" ColumnName="AvailableAmount" />
+                <ScalarProperty Name="StockMasterRecordId" ColumnName="StockMasterRecordId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AmountMainStocked" ColumnName="AmountMainStocked" />
+                <ScalarProperty Name="CropsCatagoryId" ColumnName="CropsCatagoryId" />
+                <ScalarProperty Name="StockDetailsRecordId" ColumnName="StockDetailsRecordId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockReleaseDetails_tbl">
+            <EntityTypeMapping TypeName="NCRMMLS_DBModel.StockReleaseDetails_tbl">
+              <MappingFragment StoreEntitySet="StockReleaseDetails_tbl">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CropsCatagoryId" ColumnName="CropsCatagoryId" />
+                <ScalarProperty Name="StockMasterRecordCropsId" ColumnName="StockMasterRecordCropsId" />
+                <ScalarProperty Name="AmountRelease" ColumnName="AmountRelease" />
+                <ScalarProperty Name="StockReleaseId" ColumnName="StockReleaseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockTempRecords">
+            <EntityTypeMapping TypeName="NCRMMLS_DBModel.StockTempRecord">
+              <MappingFragment StoreEntitySet="StockTempRecord">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="EmployeerId" ColumnName="EmployeerId" />
+                <ScalarProperty Name="StockAmount" ColumnName="StockAmount" />
+                <ScalarProperty Name="CropsCatagoryId" ColumnName="CropsCatagoryId" />
+                <ScalarProperty Name="tmpStockDetailId" ColumnName="tmpStockDetailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

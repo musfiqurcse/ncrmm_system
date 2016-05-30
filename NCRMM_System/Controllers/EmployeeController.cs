@@ -24,6 +24,7 @@ namespace NCRMM_System.Controllers
                 EmployeeRoleTable empInfo = (EmployeeRoleTable)Session["EmployeeInfo"];
                 ViewBag.UserName = objUser.UserName;
                 var employeeList = db.EmployeeRoleTables.Where(e => e.StorageCompanyId == empInfo.StorageCompanyId).ToList();
+               
                 return View(employeeList);
 
             }
@@ -76,7 +77,7 @@ namespace NCRMM_System.Controllers
                             {
                                 var item = db.EmployeeRoleTables.FirstOrDefault(d => d.EmployeeId == emp.EmployeeId);
                                 item.IsApprove = true;
-                                db.Entry(item).State = EntityState.Modified;
+                                //db.Entry(item).State = EntityState.Modified;
                                 db.SaveChanges();
                             }
 

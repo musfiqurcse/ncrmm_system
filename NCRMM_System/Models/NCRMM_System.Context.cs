@@ -33,14 +33,16 @@ namespace NCRMM_System.Models
         public virtual DbSet<OrderMaster_tbl> OrderMaster_tbl { get; set; }
         public virtual DbSet<ProductsList_tbl> ProductsList_tbl { get; set; }
         public virtual DbSet<SecurityCheck_tbl> SecurityCheck_tbl { get; set; }
-        public virtual DbSet<StockDetailsRecord_tbl> StockDetailsRecord_tbl { get; set; }
-        public virtual DbSet<StockMasterRecordCrops_tbl> StockMasterRecordCrops_tbl { get; set; }
-        public virtual DbSet<StockReleaseDetails_tbl> StockReleaseDetails_tbl { get; set; }
         public virtual DbSet<UserType_tbl> UserType_tbl { get; set; }
         public virtual DbSet<StorageCompany_tbl> StorageCompany_tbl { get; set; }
         public virtual DbSet<EmployeeRoleTable> EmployeeRoleTables { get; set; }
-        public virtual DbSet<Crops_tbl> Crops_tbl { get; set; }
         public virtual DbSet<CropsCatagory_tbl> CropsCatagory_tbl { get; set; }
         public virtual DbSet<User_tbl> User_tbl { get; set; }
+        public virtual DbSet<StockMasterMainList_tbl> StockMasterMainList_tbl { get; set; }
+        public virtual DbSet<StockMasterRecordCrops_tbl> StockMasterRecordCrops_tbl { get; set; }
+        public virtual DbSet<Crops_tbl> Crops_tbl { get; set; }
+        public virtual DbSet<StockDetailsRecord_tbl> StockDetailsRecord_tbl { get; set; }
+        public virtual DbSet<StockReleaseDetails_tbl> StockReleaseDetails_tbl { get; set; }
+        public virtual DbSet<StockTempRecord> StockTempRecords { get; set; }
     }
 }

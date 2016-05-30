@@ -110,7 +110,7 @@ namespace NCRMM_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CropsName,Description")] Crops_tbl crops_tbl)
+        public ActionResult Edit([Bind(Include = "CropsId,CropsName,Description")] Crops_tbl crops_tbl)
         {
             if (Session["User"] != null)
             {

@@ -49,7 +49,7 @@ namespace NCRMM_System.Controllers
             var userNID = db.User_tbl.Where(d => d.NIDNumber == nidNumber).ToList();
             bool check = !(userNID.Count > 0);
             return Json(check);
-
+            
         }
         public ActionResult Create()
         {

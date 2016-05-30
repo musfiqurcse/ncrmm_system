@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="102abfca1d144dbdb8a5090cd08b52a9" Name="Diagram1">
+      <Diagram DiagramId="102abfca1d144dbdb8a5090cd08b52a9" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="NCRMMLS_DBModel.Address_tbl" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="NCRMMLS_DBModel.District_tbl" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="NCRMMLS_DBModel.Division_tbl" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
@@ -13,32 +13,38 @@
         <EntityTypeShape EntityType="NCRMMLS_DBModel.OrderMaster_tbl" Width="1.5" PointX="16.5" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="NCRMMLS_DBModel.ProductsList_tbl" Width="1.5" PointX="16.5" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="NCRMMLS_DBModel.SecurityCheck_tbl" Width="1.5" PointX="9.75" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="NCRMMLS_DBModel.StockDetailsRecord_tbl" Width="1.5" PointX="14.25" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="NCRMMLS_DBModel.StockMasterRecordCrops_tbl" Width="1.5" PointX="12" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="NCRMMLS_DBModel.StockReleaseDetails_tbl" Width="1.5" PointX="16.5" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="NCRMMLS_DBModel.UserType_tbl" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_Address_tbl_District_tbl" ManuallyRouted="false" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_District_tbl_Division_tbl" ManuallyRouted="false" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_OrderDetalis_tbl_OrderMaster_tbl" ManuallyRouted="false" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_OrderDetalis_tbl_ProductsList_tbl" ManuallyRouted="false" />
-        <AssociationConnector Association="NCRMMLS_DBModel.FK_ProductsList_tbl_StockDetailsRecord_tbl" ManuallyRouted="false" />
-        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl" ManuallyRouted="false" />
-        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl" ManuallyRouted="false" />
-        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl" ManuallyRouted="false" />
         <EntityTypeShape EntityType="NCRMMLS_DBModel.StorageCompany_tbl" Width="1.5" PointX="7.5" PointY="4.75" />
-        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" />
         <EntityTypeShape EntityType="NCRMMLS_DBModel.EmployeeRoleTable" Width="1.5" PointX="9.75" PointY="6.625" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_StorageCompany_tbl" />
-        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl" />
-        <EntityTypeShape EntityType="NCRMMLS_DBModel.Crops_tbl" Width="1.5" PointX="12" PointY="0.875" />
         <EntityTypeShape EntityType="NCRMMLS_DBModel.CropsCatagory_tbl" Width="1.5" PointX="14.25" PointY="1" />
-        <AssociationConnector Association="NCRMMLS_DBModel.FK_CropsCatagory_tbl_Crops_tbl" />
-        <AssociationConnector Association="NCRMMLS_DBModel.FK_OrderDetalis_tbl_Crops_tbl" />
-        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_Crops_tbl" />
         <EntityTypeShape EntityType="NCRMMLS_DBModel.User_tbl" Width="1.5" PointX="7.5" PointY="10.375" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_EmployeeRoleTable_User_tbl" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_SecurityCheck_tbl_User_tbl" />
         <AssociationConnector Association="NCRMMLS_DBModel.FK_User_tbl_UserType_tbl" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.StockMasterMainList_tbl" Width="1.875" PointX="14.125" PointY="8.5" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockMasterMainList_tbl_StorageCompany_tbl" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.StockMasterRecordCrops_tbl" Width="1.5" PointX="17" PointY="0.75" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_UserDetails_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockMasterMainList_tbl_StockMasterRecordCrops_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockMasterRecordCrops_tbl_StorageCompany_tbl" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.Crops_tbl" Width="1.5" PointX="12" PointY="3.375" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_CropsCatagory_tbl_Crops_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_OrderDetalis_tbl_Crops_tbl" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.StockDetailsRecord_tbl" Width="1.5" PointX="19.25" PointY="0.75" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.StockReleaseDetails_tbl" Width="1.5" PointX="21.5" PointY="2" />
+        <EntityTypeShape EntityType="NCRMMLS_DBModel.StockTempRecord" Width="1.5" PointX="19.5" PointY="10.625" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_Crops_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockTempRecord_CropsCatagory_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockTempRecord_EmployeeRoleTable" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_ProductsList_tbl_StockDetailsRecord_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockDetailsRecord_tbl_StockMasterRecordCrops_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockDetailsRecord_tbl" />
+        <AssociationConnector Association="NCRMMLS_DBModel.FK_StockReleaseDetails_tbl_StockReleaseDetails_tbl" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

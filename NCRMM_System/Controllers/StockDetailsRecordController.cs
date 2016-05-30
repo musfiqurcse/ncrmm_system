@@ -59,7 +59,7 @@ namespace NCRMM_System.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CropsId = new SelectList(db.Crops_tbl, "CropsId", "CropsName", stockdetailsrecord_tbl.CropsId);
+            //ViewBag.CropsId = new SelectList(db.Crops_tbl, "CropsId", "CropsName", stockdetailsrecord_tbl);
             ViewBag.StockMasterRecordId = new SelectList(db.StockMasterRecordCrops_tbl, "StockMasterRecordId", "InvoiceNo", stockdetailsrecord_tbl.StockMasterRecordId);
             ViewBag.StockDetailsRecordId = new SelectList(db.StockReleaseDetails_tbl, "StockReleaseId", "StockReleaseId", stockdetailsrecord_tbl.StockDetailsRecordId);
             return View(stockdetailsrecord_tbl);
@@ -77,7 +77,7 @@ namespace NCRMM_System.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CropsId = new SelectList(db.Crops_tbl, "CropsId", "CropsName", stockdetailsrecord_tbl.CropsId);
+           // ViewBag.CropsId = new SelectList(db.Crops_tbl, "CropsId", "CropsName", stockdetailsrecord_tbl.CropsId);
             ViewBag.StockMasterRecordId = new SelectList(db.StockMasterRecordCrops_tbl, "StockMasterRecordId", "InvoiceNo", stockdetailsrecord_tbl.StockMasterRecordId);
             ViewBag.StockDetailsRecordId = new SelectList(db.StockReleaseDetails_tbl, "StockReleaseId", "StockReleaseId", stockdetailsrecord_tbl.StockDetailsRecordId);
             return View(stockdetailsrecord_tbl);
@@ -96,7 +96,7 @@ namespace NCRMM_System.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CropsId = new SelectList(db.Crops_tbl, "CropsId", "CropsName", stockdetailsrecord_tbl.CropsId);
+           // ViewBag.CropsId = new SelectList(db.Crops_tbl, "CropsId", "CropsName", stockdetailsrecord_tbl.CropsId);
             ViewBag.StockMasterRecordId = new SelectList(db.StockMasterRecordCrops_tbl, "StockMasterRecordId", "InvoiceNo", stockdetailsrecord_tbl.StockMasterRecordId);
             ViewBag.StockDetailsRecordId = new SelectList(db.StockReleaseDetails_tbl, "StockReleaseId", "StockReleaseId", stockdetailsrecord_tbl.StockDetailsRecordId);
             return View(stockdetailsrecord_tbl);

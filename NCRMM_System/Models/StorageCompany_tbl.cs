@@ -17,8 +17,9 @@ namespace NCRMM_System.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public StorageCompany_tbl()
         {
-            this.StockMasterRecordCrops_tbl = new HashSet<StockMasterRecordCrops_tbl>();
             this.EmployeeRoleTables = new HashSet<EmployeeRoleTable>();
+            this.StockMasterMainList_tbl = new HashSet<StockMasterMainList_tbl>();
+            this.StockMasterRecordCrops_tbl = new HashSet<StockMasterRecordCrops_tbl>();
         }
     
         public int StorageCompanyId { get; set; }
@@ -28,8 +29,10 @@ namespace NCRMM_System.Models
         public decimal StorageAvailable { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StockMasterRecordCrops_tbl> StockMasterRecordCrops_tbl { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmployeeRoleTable> EmployeeRoleTables { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockMasterMainList_tbl> StockMasterMainList_tbl { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockMasterRecordCrops_tbl> StockMasterRecordCrops_tbl { get; set; }
     }
 }

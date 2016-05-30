@@ -179,8 +179,10 @@
     <Compile Include="Controllers\ProductsListController.cs" />
     <Compile Include="Controllers\SecurityCheckController.cs" />
     <Compile Include="Controllers\StockDetailsRecordController.cs" />
+    <Compile Include="Controllers\StockMasterMainList_tblController.cs" />
     <Compile Include="Controllers\StockMasterRecordCropsController.cs" />
     <Compile Include="Controllers\StockReleaseDetailsController.cs" />
+    <Compile Include="Controllers\StockTempRecordsController.cs" />
     <Compile Include="Controllers\StorageCompanyController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -239,10 +241,16 @@
     <Compile Include="Models\StockDetailsRecord_tbl.cs">
       <DependentUpon>NCRMM_System.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StockMasterMainList_tbl.cs">
+      <DependentUpon>NCRMM_System.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\StockMasterRecordCrops_tbl.cs">
       <DependentUpon>NCRMM_System.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StockReleaseDetails_tbl.cs">
+      <DependentUpon>NCRMM_System.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StockTempRecord.cs">
       <DependentUpon>NCRMM_System.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StorageCompany_tbl.cs">
@@ -1202,6 +1210,18 @@
     <Content Include="Views\Shared\_MainUser.cshtml" />
     <Content Include="Views\Index\IndexUser.cshtml" />
     <Content Include="Views\Employee\ApproveEmployee.cshtml" />
+    <Content Include="Views\StockMasterMainList_tbl\Create.cshtml" />
+    <Content Include="Views\StockMasterMainList_tbl\Delete.cshtml" />
+    <Content Include="Views\StockMasterMainList_tbl\Details.cshtml" />
+    <Content Include="Views\StockMasterMainList_tbl\Edit.cshtml" />
+    <Content Include="Views\StockMasterMainList_tbl\Index.cshtml" />
+    <Content Include="Views\StockMasterRecordCrops\StockCropsDetails.cshtml" />
+    <Content Include="Views\StockTempRecords\Create.cshtml" />
+    <Content Include="Views\StockTempRecords\Delete.cshtml" />
+    <Content Include="Views\StockTempRecords\Details.cshtml" />
+    <Content Include="Views\StockTempRecords\Edit.cshtml" />
+    <Content Include="Views\StockTempRecords\Index.cshtml" />
+    <Content Include="Views\Shared\_CropsRecordDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
