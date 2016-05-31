@@ -21,6 +21,24 @@ namespace NCRMM_System.Controllers
             return View(stockmasterrecordcrops_tbl.ToList());
         }
 
+        public ActionResult GetTempStoreCrops()
+        {
+            if (Session["EmployeeInfo"] != null)
+            {
+                EmployeeRoleTable objEmployee = (EmployeeRoleTable) Session["EmployeeInfo"];
+                ViewBag.UserName = objEmployee.User_tbl.FullName;
+                ViewBag.StorageCompanyId = new SelectList(db.StorageCompany_tbl, "StorageCompanyId", "CompanyName");
+                ViewBag.CropsId = new SelectList(db.Crops_tbl, "CropsId", "CropsName");
+                ViewBag.StockMasterRecordId = new SelectList(db.EmployeeRoleTables, "EmployeeId", "EmployeeRole");
+                ViewBag.CropsCatagoryId = new SelectList(new List<CropsCatagory_tbl>(), "CropsCatagoryId",
+                    "CropsCatagoryName");
+                List<StockTempRecord> stockTempRecordTableInfo =
+                    db.StockTempRecords.Where(emp => emp.EmployeerId == objEmployee.EmployeeId).ToList();
+                return Json(new SelectList(stockTempRecordTableInfo));
+            }
+            return Json(new SelectList(new List<StockTempRecord>()));
+        }
+
 
         public ActionResult StockCropsDetails()
         {
