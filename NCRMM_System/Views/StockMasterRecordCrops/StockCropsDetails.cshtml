@@ -101,7 +101,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label"> Date : </label>
                     <div class="col-lg-8">
-                        <input type="text" value="" class="form-control" name="stockDate" />
+                        <input type="text" value="" class="form-control" name="StockDate" />
                     </div>
                 </div>
             </div>
@@ -115,7 +115,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label"> NID : </label>
                     <div class="col-lg-8">
-                        <input type="text" value="" class="form-control" name="nidNumber"/>
+                        <input type="text" value="" class="form-control" name="NidNumber"/>
                     </div>
                 </div>
 
@@ -124,12 +124,12 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label"> Owner's Full Name : </label>
                     <div class="col-lg-8">
-                        <input type="text" value="" class="form-control" name="fullName"/>
+                        <input type="text" value="" class="form-control" name="FullName"/>
                     </div>
                 </div>
 
             </div>
-       
+            @Html.Partial("_CropsRecordDetails", ViewData["CropsTempItem"])
 
         </form>
     </div>

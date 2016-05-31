@@ -36,6 +36,8 @@ namespace NCRMM_System.Controllers
             return View(stockdetailsrecord_tbl);
         }
 
+       
+
         // GET: /StockDetailsRecord/Create
         public ActionResult Create()
         {

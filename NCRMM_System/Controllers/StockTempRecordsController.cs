@@ -36,6 +36,59 @@ namespace NCRMM_System.Controllers
             return View(stockTempRecord);
         }
 
+    
+        public ActionResult EditCropsInfo(int CropsCatagoryId, string cropsDescription, string CropsAmount)
+        {
+
+            if (Session["EmployeeInfo"] != null)
+            {
+                EmployeeRoleTable tmpEmp = (EmployeeRoleTable)Session["EmployeeInfo"];
+
+                StockTempRecord tmpObj = new StockTempRecord();
+                tmpObj.CropsCatagoryId = CropsCatagoryId;
+                tmpObj.Description = cropsDescription;
+                tmpObj.StockAmount = Convert.ToDecimal(CropsAmount);
+                tmpObj.EmployeerId = tmpEmp.EmployeeId;
+                db.StockTempRecords.Add(tmpObj);
+                db.SaveChanges();
+                return RedirectToAction("StockCropsDetails", "StockMasterRecordCrops");
+            }
+            return RedirectToAction("Login", "Login");
+        }
+
+
+
+        public ActionResult GetTempCatagories()
+        {
+            if (Session["EmployeeInfo"] != null)
+            {
+                EmployeeRoleTable objEmployee = (EmployeeRoleTable) Session["EmployeeInfo"];
+                var stockTempRecordTableInfo =
+                    new SelectList(db.StockTempRecords.Where(emp => emp.EmployeerId == objEmployee.EmployeeId));
+                return PartialView(@"~/Views/Shared/_CropsRecordDetails.cshtml", stockTempRecordTableInfo);
+            }
+            return RedirectToAction("Login", "Login");
+        }
+       
+        public ActionResult DeleteCropsInfo(int CropsCatagoryId, string cropsDescription, string CropsAmount)
+        {
+
+            if (Session["EmployeeInfo"] != null)
+            {
+                EmployeeRoleTable tmpEmp = (EmployeeRoleTable)Session["EmployeeInfo"];
+
+                StockTempRecord tmpObj = new StockTempRecord();
+                tmpObj.CropsCatagoryId = CropsCatagoryId;
+                tmpObj.Description = cropsDescription;
+                tmpObj.StockAmount = Convert.ToDecimal(CropsAmount);
+                tmpObj.EmployeerId = tmpEmp.EmployeeId;
+                db.StockTempRecords.Add(tmpObj);
+                db.SaveChanges();
+                return RedirectToAction("StockCropsDetails", "StockMasterRecordCrops");
+            }
+            return RedirectToAction("Login", "Login");
+        }
+
         // GET: StockTempRecords/Create
         public ActionResult Create()
         {

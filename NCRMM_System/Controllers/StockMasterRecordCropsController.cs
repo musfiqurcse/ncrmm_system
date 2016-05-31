@@ -29,10 +29,50 @@ namespace NCRMM_System.Controllers
                 EmployeeRoleTable objEmployee = (EmployeeRoleTable)Session["EmployeeInfo"];
                 ViewBag.UserName = objEmployee.User_tbl.FullName;
                 ViewBag.StorageCompanyId = new SelectList(db.StorageCompany_tbl, "StorageCompanyId", "CompanyName");
+                ViewBag.CropsId = new SelectList(db.Crops_tbl, "CropsId", "CropsName");
                 ViewBag.StockMasterRecordId = new SelectList(db.EmployeeRoleTables, "EmployeeId", "EmployeeRole");
+            ViewBag.CropsCatagoryId = new SelectList(new List<CropsCatagory_tbl>(), "CropsCatagoryId", "CropsCatagoryName");
                 var stockTempRecordTableInfo =
-                    new SelectList(db.StockTempRecords.Where(emp => emp.EmployeerId == objEmployee.EmployeeId));
+                    db.StockTempRecords.Where(emp => emp.EmployeerId == objEmployee.EmployeeId).ToList();
+                ViewData["CropsTempItem"] = stockTempRecordTableInfo;
                 return View();
+            }
+            return RedirectToAction("Login", "Login");
+        }
+        [HttpPost]
+        public ActionResult StockCropsDetails([Bind(Include="StockMasterRecordId,InvoiceNo,AmountOfCropsStored,StorageCompanyId,SourceUserId,EntryEmployeeId,RecordDate,StockRecordType")] StockMasterRecordCrops_tbl stockmasterrecordcrops_tbl,string StockDate, string NidNumber,string FullName)
+        {
+            if (Session["EmployeeInfo"] != null)
+            {
+                EmployeeRoleTable objEmployee = (EmployeeRoleTable)Session["EmployeeInfo"];
+                ViewBag.UserName = objEmployee.User_tbl.FullName;
+                ViewBag.StorageCompanyId = new SelectList(db.StorageCompany_tbl, "StorageCompanyId", "CompanyName");
+                ViewBag.CropsId = new SelectList(db.Crops_tbl, "CropsId", "CropsName");
+                ViewBag.StockMasterRecordId = new SelectList(db.EmployeeRoleTables, "EmployeeId", "EmployeeRole");
+               // ViewBag.CropsCatagoryId = new SelectList(db.CropsCatagory_tbl, "CropsCatagoryId", "CropsCatagoryName");
+                var stockTempRecordTableInfo =
+                    db.StockTempRecords.Where(emp => emp.EmployeerId == objEmployee.EmployeeId).ToList();
+                ViewData["CropsTempItem"] = stockTempRecordTableInfo;
+                return View();
+            }
+            return RedirectToAction("Login", "Login");
+        }
+
+        public ActionResult DeleteCropsInfo(int CropsCatagoryId, string cropsDescription, string CropsAmount)
+        {
+
+            if (Session["EmployeeInfo"] != null)
+            {
+                EmployeeRoleTable tmpEmp = (EmployeeRoleTable)Session["EmployeeInfo"];
+
+                StockTempRecord tmpObj = new StockTempRecord();
+                tmpObj.CropsCatagoryId = CropsCatagoryId;
+                tmpObj.Description = cropsDescription;
+                tmpObj.StockAmount = Convert.ToDecimal(CropsAmount);
+                tmpObj.EmployeerId = tmpEmp.EmployeeId;
+                db.StockTempRecords.Add(tmpObj);
+                db.SaveChanges();
+                return RedirectToAction("StockCropsDetails", "StockMasterRecordCrops");
             }
             return RedirectToAction("Login", "Login");
         }

@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<NCRMM_System.Models.StockTempRecord>
 
+
 <fieldset class="col-md-12 scheduler-border">
     <legend class="scheduler-border">
         Crops Details
@@ -9,8 +10,8 @@
 
             <label class="control-label col-md-2">Crops Name</label>
             <div class="col-md-10">
-                @Html.DropDownList("CropsId", null, String.Empty, htmlAttributes: new { @class = "form-control" })
-              @*//  @Html.ValidationMessageFor(model => model.Crops_tbl)*@
+                @Html.DropDownList("CropsId", null, String.Empty, htmlAttributes: new {@class = "form-control"})
+                @*//  @Html.ValidationMessageFor(model => model.Crops_tbl)*@
             </div>
         </div>
 
@@ -20,7 +21,7 @@
 
             <label class="control-label col-md-2">Crops Catagory</label>
             <div class="col-md-10">
-                @Html.DropDownList("CropsCatagoryId", null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("CropsCatagoryId", null, String.Empty, htmlAttributes: new {@class = "form-control"})
                 @*@Html.ValidationMessageFor(model => model.CropsCatagoryName)*@
             </div>
         </div>
@@ -30,7 +31,7 @@
         <div class="form-group">
             <label class="col-sm-4 control-label"> Description : </label>
             <div class="col-lg-8">
-                <textarea name="description" class="form-control" cols="" rows="5"></textarea>
+                <textarea name="Description" class="form-control" cols="" rows="5"></textarea>
             </div>
         </div>
 
@@ -39,19 +40,19 @@
         <div class="form-group">
             <label class="col-sm-4 control-label"> Amount : </label>
             <div class="col-lg-8">
-                <textarea name="amount" class="form-control" cols="" rows="5"></textarea>
+                <input name="Amount" class="form-control"  />
             </div>
         </div>
 
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" style="background-color:red" />
+            <input type="submit" value="Create" class="btn btn-default" style="background-color: red" />
         </div>
     </div>
 
     <div class="col-md-12">
-        <table>
+        <table class="table table-responsive table-bordered">
             <tr>
                 <th>
                     Crops Name
@@ -69,31 +70,58 @@
                     Action
                 </th>
             </tr>
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CropsCatagory_tbl.Crops_tbl.CropsName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CropsCatagory_tbl.CropsCatagoryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StockAmount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CropsCatagory_tbl.Crops_tbl.CropsName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "EditCropsInfo",new {@class="label label-primary", @id = item.tmpStockDetailId }) |
-            @Html.ActionLink("Delete", "DeleteCropsInfo", new { @class="label label-danger",@id = item.tmpStockDetailId })
-        </td>
-    </tr>
-}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CropsCatagory_tbl.Crops_tbl.CropsName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CropsCatagory_tbl.CropsCatagoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StockAmount)
+                    </td>
+                    
+                    <td>
+                        @Html.ActionLink("Edit", "EditCropsInfo", new { id = item.tmpStockDetailId },new {@class="label label-primary"}) |
+                        @Html.ActionLink("Delete", "DeleteCropsInfo", new {  id = item.tmpStockDetailId },new {@class="label label-danger"})
+                    </td>
+                </tr>
+            }
         </table>
+
     </div>
 </fieldset>
+<script>
+    $(document).ready(function() {
+          $("#CropsId").change(function () {
+                        $("#CropsCatagoryId").empty();
+                        $("#CropsCatagoryId").append('<option value="0">Select One</option>');
+                        console.log($('#CropsId').val());
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("GetCropsCatagory", "CropsCatagory")',
+                            dataType: 'json',
+                            data: { cropsId: $("#CropsId").val() },
+                            success: function (states) {
+                                //alert(states);
+                                $.each(states, function (i, state) {
+                                    $("#CropsCatagoryId").append('<option value="' + state.Value + '">' +
+                                        state.Text + '</option>');
+                                });
+                            },
+                            error: function (ex) {
+                                alert('Failed to retrieve states.' + ex);
+                            }
+                        });
+                        return false;
+                    });
+                });
+   
+</script>
+
 

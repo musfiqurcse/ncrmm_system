@@ -53,6 +53,13 @@ namespace NCRMM_System.Controllers
             return View();
         }
 
+        public JsonResult GetCropsCatagory(int cropsId = 0)
+        {
+            //var list = db.CropsCatagory_tbl.Where(dis => dis.CropsId == cropsId).ToList();
+            //ViewBag.JList = list;
+            return Json(new SelectList(db.CropsCatagory_tbl.Where(dis => dis.CropsId == cropsId), "CropsCatagoryId", "CropsCatagoryName"));
+        }
+
         // POST: /CropsCatagory/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
