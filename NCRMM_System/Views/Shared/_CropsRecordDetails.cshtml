@@ -71,10 +71,10 @@
                     Action
                 </th>
             </tr>
-            <tbody>
+            <tbody id="contentpart">
             
             </tbody>
-            @foreach (var item in Model)
+            @*@foreach (var item in Model)
             {
                 <tr>
 
@@ -96,27 +96,52 @@
                         @Html.ActionLink("Delete", "DeleteCropsInfo", new {id = item.tmpStockDetailId}, new {@class = "btn btn-danger"})
                     </td>
                 </tr>
-            }
+            }*@
         </table>
 
     </div>
 </fieldset>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         function getCropsDetails() {
 
             $.ajax({
-                url:'@Url.Action("","");
-            });
+                type: 'GET',
+                url: '@Url.Action("GetTempStoreCrops", "StockMasterRecordCrops")',
+                datatype: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(cropsRecord) {
+                    var html = '';
+                    var check = '';
+                    console.log(cropsRecord);
+                    $.each(cropsRecord, function (i, item) {
+                        check += item.CropsName + " - " + item.CropsCatagoryName+" - "+item.StockAmount;
+                        html += '<tr>';
+                        html += '<td>' + item.CropsName + '</td>';
+                        html += '<td>' + item.CropsCatagoryName + '</td>';
+                        html += '<td>' + item.Description + '</td>';
+                        html += '<td>' + item.StockAmount + '</td>';
+                        //html += '<td><a href="#" onclick="return _getById(' + item.StudentId + ')">Edit</a> | <a href="#" onclick="return _delete(' + item.StudentId + ')">Delete</a></td>';
+                        html += '</tr>';
+                    });
+                    console.log(check);
+                    $("#contentpart").html(html);
 
+                },
+                error: function(error) {
+                    alert(error);
+                }
+            });
         }
-          $("#CropsId").change(function () {
-                        $("#CropsCatagoryId").empty();
-                        $("#CropsCatagoryId").append('<option value="0">Select One</option>');
-                        console.log($('#CropsId').val());
-                        $.ajax({
-                            type: 'POST',
-                            url: '@Url.Action("GetCropsCatagory", "CropsCatagory")',
+
+
+        $("#CropsId").change(function() {
+            $("#CropsCatagoryId").empty();
+            $("#CropsCatagoryId").append('<option value="0">Select One</option>');
+            console.log($('#CropsId').val());
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetCropsCatagory", "CropsCatagory")',
                             dataType: 'json',
                             data: { cropsId: $("#CropsId").val() },
                             success: function (states) {

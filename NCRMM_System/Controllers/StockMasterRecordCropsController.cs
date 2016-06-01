@@ -21,10 +21,12 @@ namespace NCRMM_System.Controllers
             return View(stockmasterrecordcrops_tbl.ToList());
         }
 
-        public ActionResult GetTempStoreCrops()
+        public JsonResult GetTempStoreCrops()
         {
             if (Session["EmployeeInfo"] != null)
             {
+                StockTempRecord obj=new StockTempRecord();
+                //obj.StockAmount
                 EmployeeRoleTable objEmployee = (EmployeeRoleTable) Session["EmployeeInfo"];
                 ViewBag.UserName = objEmployee.User_tbl.FullName;
                 ViewBag.StorageCompanyId = new SelectList(db.StorageCompany_tbl, "StorageCompanyId", "CompanyName");
@@ -34,7 +36,14 @@ namespace NCRMM_System.Controllers
                     "CropsCatagoryName");
                 List<StockTempRecord> stockTempRecordTableInfo =
                     db.StockTempRecords.Where(emp => emp.EmployeerId == objEmployee.EmployeeId).ToList();
-                return Json(new SelectList(stockTempRecordTableInfo));
+                return Json(stockTempRecordTableInfo.Select(x=>new
+                {
+                    tmpStockDetailId=x.tmpStockDetailId,
+                    CropsCatagoryName=x.CropsCatagory_tbl.CropsCatagoryName,
+                    CropsName=x.CropsCatagory_tbl.Crops_tbl.CropsName,
+                    Description=x.Description,
+                    StockAmount=x.StockAmount
+                }), JsonRequestBehavior.AllowGet);
             }
             return Json(new SelectList(new List<StockTempRecord>()));
         }
