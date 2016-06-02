@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
 using NCRMM_System.Models;
@@ -19,6 +20,29 @@ namespace NCRMM_System.Controllers
         {
             var stockmasterrecordcrops_tbl = db.StockMasterRecordCrops_tbl.Include(s => s.StorageCompany_tbl).Include(s => s.EmployeeRoleTable);
             return View(stockmasterrecordcrops_tbl.ToList());
+        }
+
+        public class TempClass
+        {
+            public int CatagoryId { get; set; }
+
+            public string Description { get; set; }
+            public string StockAmount { get; set; }
+
+        }
+
+
+        public JsonResult CropsTempStore(TempClass item)
+        {
+            StockTempRecord objTempRecord= new StockTempRecord();
+            EmployeeRoleTable objEmployee = (EmployeeRoleTable) Session["EmployeeInfo"];
+            objTempRecord.CropsCatagoryId = item.CatagoryId;
+            objTempRecord.Description = item.Description;
+            objTempRecord.StockAmount = Convert.ToDecimal(item.StockAmount);
+            objTempRecord.EmployeerId = objEmployee.EmployeeId;
+            db.StockTempRecords.Add(objTempRecord);
+            var message=db.SaveChanges();
+            return Json(new {msg=message},JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetTempStoreCrops()

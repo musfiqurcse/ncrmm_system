@@ -31,7 +31,7 @@
         <div class="form-group">
             <label class="control-label col-md-2"> Description : </label>
             <div class="col-lg-8">
-                <textarea name="Description" class="form-control" cols="" rows="5"></textarea>
+                <textarea name="Description" id="description" class="form-control" cols="" rows="5"></textarea>
             </div>
         </div>
 
@@ -40,14 +40,14 @@
         <div class="form-group">
             <label class="control-label col-md-2"> Amount : </label>
             <div class="col-lg-8">
-                <input name="Amount" class="form-control"  />
+                <input name="Amount" id="cropsAmount" class="form-control"  />
             </div>
         </div>
 
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" style="background-color: red" />
+            <input type="submit" value="Add Crops Information" id="addCrops" class="btn btn-default" style="background-color:rgb(110, 179, 61);" />
         </div>
     </div>
 
@@ -121,7 +121,7 @@
                         html += '<td>' + item.CropsCatagoryName + '</td>';
                         html += '<td>' + item.Description + '</td>';
                         html += '<td>' + item.StockAmount + '</td>';
-                        //html += '<td><a href="#" onclick="return _getById(' + item.StudentId + ')">Edit</a> | <a href="#" onclick="return _delete(' + item.StudentId + ')">Delete</a></td>';
+                        html += '<td><a href="#" class="btn btn-success" onclick="return _getById(' + item.StudentId + ')">Edit</a> | <a href="#" class="btn btn-danger" onclick="return _delete(' + item.StudentId + ')">Delete</a></td>';
                         html += '</tr>';
                     });
                     console.log(check);
@@ -146,6 +146,7 @@
                             data: { cropsId: $("#CropsId").val() },
                             success: function (states) {
                                 //alert(states);
+                                console.log(states);
                                 $.each(states, function (i, state) {
                                     $("#CropsCatagoryId").append('<option value="' + state.Value + '">' +
                                         state.Text + '</option>');
@@ -159,8 +160,47 @@
           });
 
         getCropsDetails();
+        $('#addCrops').on('click', function(e) {
+            e.preventDefault();
+            var item = {
+          CatagoryId: parseInt($('#CropsCatagoryId').val()),
+           
+         Description: $('#description').val(),
+            StockAmount:  $('#cropsAmount').val()
+            }
+            
+            
+            if (((item.CatagoryId == "0") || item.CatagoryId == "") || (item.Description == "") || (item.StockAmount == "")) {
+                alert("Crops Information is missing");
+            } else {
+                console.log(item.CatagoryId + "-" + item.Description + "-" + item.StockAmount);
+                console.log(JSON.stringify(item));
+                $.ajax({
+                    url: '@Url.Action("CropsTempStore","StockMasterRecordCrops")',
+                    data: JSON.stringify(item),
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        getCropsDetails();
+                        //console.log("updated check");
+                        $('#CropsCatagoryId').val('0');
+                        $('#description').val('');
+                        $('#cropsAmount').val('');
 
-        
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+
+
+               
+                
+            }
+        });
+
+
     });
 
     
