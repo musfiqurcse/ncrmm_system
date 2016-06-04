@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations.Sql;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -43,6 +44,14 @@ namespace NCRMM_System.Controllers
             db.StockTempRecords.Add(objTempRecord);
             var message=db.SaveChanges();
             return Json(new {msg=message},JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CropsTempDelete(int id=0)
+        {
+            StockTempRecord objTempRecord = db.StockTempRecords.FirstOrDefault(d => d.tmpStockDetailId == id);
+            db.StockTempRecords.Remove(objTempRecord);
+           var message= db.SaveChanges();
+            return Json(new {msg = message});
         }
 
         public JsonResult GetTempStoreCrops()

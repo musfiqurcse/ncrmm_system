@@ -111,7 +111,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2"> Date : </label>
                     <div class="col-lg-8">
-                        <input type="text" value="" class="form-control" name="StockDate" />
+                        <input type="text" value="" class="form-control" id="StockDate" name="StockDate" readonly="true"/>
                     </div>
                 </div>
             </div>
@@ -142,5 +142,12 @@
             @Html.Partial("_CropsRecordDetails", ViewData["CropsTempItem"])
 
         </form>
+        <script>
+            $(document).ready(function() {
+                $('#StockDate').datepicker({
+                    autoclose:true
+                });
+            })
+        </script>
     </div>
 </div>

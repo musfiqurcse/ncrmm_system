@@ -40,19 +40,19 @@
         <div class="form-group">
             <label class="control-label col-md-2"> Amount : </label>
             <div class="col-lg-8">
-                <input name="Amount" id="cropsAmount" class="form-control"  />
+                <input name="Amount" id="cropsAmount" class="form-control"/>
             </div>
         </div>
 
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Add Crops Information" id="addCrops" class="btn btn-default" style="background-color:rgb(110, 179, 61);" />
+            <input type="submit" value="Add Crops Information" id="addCrops" class="btn btn-default" style="background-color: rgb(110, 179, 61);"/>
         </div>
     </div>
 
     <div class="col-md-12" id="list">
-        <label id="tempId" style="display:none"></label>
+        <label id="tempId" style="display: none"></label>
         <table class="table table-responsive table-bordered">
             <tr>
                 <th>
@@ -72,7 +72,7 @@
                 </th>
             </tr>
             <tbody id="contentpart">
-            
+
             </tbody>
             @*@foreach (var item in Model)
             {
@@ -103,6 +103,62 @@
 </fieldset>
 <script>
     $(document).ready(function() {
+        $("button").on('click', function (e) {
+            e.preventDefault();
+            var id = $(this).attr('id');
+            alert(id);
+        });
+    })
+</script>
+<script>
+    function showDelete(val) {
+        if (val== 1) {
+            $.gritter.add({
+                title: 'Delete Record!',
+                text: "Deleted crops information successfully!",
+                sticky: false,
+                // (int | optional) the time you want it to be alive for before fading out
+                time: '1500'
+            });
+        }
+    };
+    function _delete(storeId) {
+        var cf = confirm('Are you sure want to permanently delete this row?');
+        if (cf) {
+            console.log("ready to delete");
+            console.log(storeId);
+            $.ajax({
+                url: '/StockMasterRecordCrops/CropsTempDelete/'+storeId,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+              
+
+                success: function (result) {
+                    
+                    showDelete(result);
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+    };
+    
+        
+    $(document).ready(function () {
+        $("button").on('click', function (e) {
+            e.preventDefault();
+            var id = $(this).attr('id');
+            alert(id);
+        });
+        
+        $(".delete .btn .btn-danger").click(function (e) {
+            e.preventDefault();
+            var id = $(this).attr('id');
+            alert(id);
+
+        });
         function getCropsDetails() {
 
             $.ajax({
@@ -121,7 +177,7 @@
                         html += '<td>' + item.CropsCatagoryName + '</td>';
                         html += '<td>' + item.Description + '</td>';
                         html += '<td>' + item.StockAmount + '</td>';
-                        html += '<td><a href="#" class="btn btn-success" onclick="return _getById(' + item.StudentId + ')">Edit</a> | <a href="#" class="btn btn-danger" onclick="return _delete(' + item.StudentId + ')">Delete</a></td>';
+                        html += '<td><a href="#" id=' + item.tmpStockDetailId + ' class="spec btn btn-success" onclick="_getById(' + item.tmpStockDetailId + ')">Edit</a> | <button  id=' + item.tmpStockDetailId + ' class="delete btn btn-danger" ">Delete</button></td>';
                         html += '</tr>';
                     });
                     console.log(check);
@@ -132,8 +188,12 @@
                     alert(error);
                 }
             });
-        }
+        };
 
+       
+       
+      
+       
 
         $("#CropsId").change(function() {
             $("#CropsCatagoryId").empty();
@@ -142,31 +202,33 @@
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetCropsCatagory", "CropsCatagory")',
-                            dataType: 'json',
-                            data: { cropsId: $("#CropsId").val() },
-                            success: function (states) {
-                                //alert(states);
-                                console.log(states);
-                                $.each(states, function (i, state) {
-                                    $("#CropsCatagoryId").append('<option value="' + state.Value + '">' +
-                                        state.Text + '</option>');
-                                });
-                            },
-                            error: function (ex) {
-                                alert('Failed to retrieve states.' + ex);
-                            }
-                        });
-                        return false;
-          });
+                dataType: 'json',
+                data: { cropsId: $("#CropsId").val() },
+                success: function (states) {
+                    //alert(states);
+                    console.log(states);
+                    $.each(states, function (i, state) {
+                        $("#CropsCatagoryId").append('<option value="' + state.Value + '">' +
+                            state.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        });
 
         getCropsDetails();
+
+      
         $('#addCrops').on('click', function(e) {
             e.preventDefault();
             var item = {
-          CatagoryId: parseInt($('#CropsCatagoryId').val()),
+                CatagoryId: parseInt($('#CropsCatagoryId').val()),
            
-         Description: $('#description').val(),
-            StockAmount:  $('#cropsAmount').val()
+                Description: $('#description').val(),
+                StockAmount:  $('#cropsAmount').val()
             }
             
             
@@ -203,8 +265,7 @@
 
     });
 
-    
-   
+
 </script>
 
 
