@@ -342,6 +342,7 @@
     <Content Include="assets\js\gallery-v2.demo.min.js" />
     <Content Include="assets\js\gallery.demo.min.js" />
     <Content Include="assets\js\inbox.demo.min.js" />
+    <Content Include="assets\js\jqueryu.min.js" />
     <Content Include="assets\js\login-v2.demo.min.js" />
     <Content Include="assets\js\map-google.demo.min.js" />
     <Content Include="assets\js\map-vector.demo.min.js" />

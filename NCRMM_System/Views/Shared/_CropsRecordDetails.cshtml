@@ -107,19 +107,6 @@
     
         
     $(document).ready(function () {
-        $("button").on('click', function (e) {
-            e.preventDefault();
-            var id = $(this).attr('id');
-            alert(id);
-        });
-        
-        $(".delete .btn .btn-danger").click(function (e) {
-            e.preventDefault();
-            var id = $(this).attr('id');
-            alert(id);
-
-        });
-
         function showDelete(val) {
             if (val == 1) {
                 $.gritter.add({
@@ -127,10 +114,62 @@
                     text: "Deleted crops information successfully!",
                     sticky: false,
                     // (int | optional) the time you want it to be alive for before fading out
-                    time: '1500'
+                    time: '3000'
                 });
             }
         };
+        //$("button").on('click', function (e) {
+        //    e.preventDefault();
+        //    var id = $(this).attr('id');
+        //    alert(id);
+        //});
+        function getCropsDetails() {
+
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetTempStoreCrops", "StockMasterRecordCrops")',
+                datatype: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (cropsRecord) {
+                    var html = '';
+                    var check = '';
+                    console.log(cropsRecord);
+                    $.each(cropsRecord, function (i, item) {
+                        check += item.CropsName + " - " + item.CropsCatagoryName + " - " + item.StockAmount;
+                        html += '<tr>';
+                        html += '<td>' + item.CropsName + '</td>';
+                        html += '<td>' + item.CropsCatagoryName + '</td>';
+                        html += '<td>' + item.Description + '</td>';
+                        html += '<td>' + item.StockAmount + '</td>';
+                        html += '<td><a href="#" id=' + item.tmpStockDetailId + ' class="editI btn btn-success" onclick="_getById(' + item.tmpStockDetailId + ')">Edit</a> | <button  id=' + item.tmpStockDetailId + ' class="delete btn btn-danger">Delete</button></td>';
+                        html += '</tr>';
+                    });
+                    console.log(check);
+                    $("#contentpart").html(html);
+
+                },
+                error: function (error) {
+                    alert(error);
+                }
+            });
+        };
+
+        getCropsDetails();
+        
+        $(document).on("click",".delete",function (e) {
+            e.preventDefault();
+            var id = $(this).attr('id');
+            showDelete(1);
+            alert(id);
+            
+
+        });
+        $(document).on("click",".editI",function(e) {
+            e.preventDefault();
+            var chk = $(this).attr('id');
+        })
+
+      
         function pp(storeId) {
             var cf = confirm('Are you sure want to permanently delete this row?');
             if (cf) {
@@ -154,41 +193,12 @@
             }
         };
 
-        $('.delete').live(function(e) {
-            e.stopPropagation();
-            e.preventDefault();
-            alert($(this).attr('id'));
-        });
-        function getCropsDetails() {
-
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetTempStoreCrops", "StockMasterRecordCrops")',
-                datatype: 'json',
-                contentType: "application/json; charset=utf-8",
-                success: function(cropsRecord) {
-                    var html = '';
-                    var check = '';
-                    console.log(cropsRecord);
-                    $.each(cropsRecord, function (i, item) {
-                        check += item.CropsName + " - " + item.CropsCatagoryName+" - "+item.StockAmount;
-                        html += '<tr>';
-                        html += '<td>' + item.CropsName + '</td>';
-                        html += '<td>' + item.CropsCatagoryName + '</td>';
-                        html += '<td>' + item.Description + '</td>';
-                        html += '<td>' + item.StockAmount + '</td>';
-                        html += '<td><a href="#" id=' + item.tmpStockDetailId + ' class="spec btn btn-success" onclick="_getById(' + item.tmpStockDetailId + ')">Edit</a> | <button  id=' + item.tmpStockDetailId + ' class="delete btn btn-delete">Delete</button></td>';
-                        html += '</tr>';
-                    });
-                    console.log(check);
-                    $("#contentpart").html(html);
-
-                },
-                error: function(error) {
-                    alert(error);
-                }
-            });
-        };
+        //$('.delete').live(function(e) {
+        //    e.stopPropagation();
+        //    e.preventDefault();
+        //    alert($(this).attr('id'));
+        //});
+        
 
        
        
@@ -219,7 +229,7 @@
             return false;
         });
 
-        getCropsDetails();
+    
 
       
         $('#addCrops').on('click', function(e) {
