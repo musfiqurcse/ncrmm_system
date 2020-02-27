@@ -1,6 +1,6 @@
 # National Crops Reservation Monitoring Management System
 
-#### An on demand cloud based solution to provide local shop keepers to know about the demand of crops in the market.
+An on demand cloud based solution to provide local shop keepers to know about the demand of crops in the market.
 
 ##### Stack
 1. C# , ASP.NET MVC Framework
